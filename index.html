@@ -23,6 +23,13 @@
             padding: 0;
             font-family: 'Outfit', sans-serif;
         }
+body {
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
 
         body {
             background-color: var(--dark);
@@ -86,7 +93,8 @@
         }
 
         h1 {
-            font-size: 3rem;
+                    font-size: clamp(1.5rem, 6.5vw, 3rem);
+
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 12px;
