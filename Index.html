@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chingonamics | Pure Mexican Crypto Heat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #006847;
+            --white: #FFFFFF;
+            --red: #CE252B;
+            --gold: #FFD700;
+            --dark: #0A0A0A;
+            --card-bg: #141414;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .bg-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(206,37,43,0.3) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            top: 20%;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 2px solid #222;
+            border-radius: 24px;
+            padding: 40px 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        .flag-bar {
+            display: flex;
+            height: 6px;
+            width: 100%;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .flag-bar .g { background: var(--green); flex: 1; }
+        .flag-bar .w { background: var(--white); flex: 1; }
+        .flag-bar .r { background: var(--red); flex: 1; }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #FFF 0%, #AAA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 1.15rem;
+            color: #888;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .cta-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px 24px;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-pump {
+            background: linear-gradient(135deg, #006847 0%, #00B377 100%);
+            color: var(--white);
+            box-shadow: 0 8px 25px rgba(0, 179, 119, 0.3);
+        }
+
+        .btn-pump:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 179, 119, 0.5);
+        }
+
+        .btn-x {
+            background: #111;
+            color: var(--white);
+            border: 1px solid #333;
+        }
+
+        .btn-x:hover {
+            background: #1A1A1A;
+            border-color: #555;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 36px;
+            padding-top: 28px;
+            border-top: 1px solid #222;
+        }
+
+        .feature-item h3 {
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+
+        .feature-item p {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <div class="container">
+        <div class="flag-bar">
+            <div class="g"></div>
+            <div class="w"></div>
+            <div class="r"></div>
+        </div>
+
+        <span class="badge">🔥 Next Launch Pending</span>
+
+        <h1>CHINGONAMICS</h1>
+        <p class="subtitle">The factory for high-octane, Mexican-themed meme coins on Solana. No boring tokens allowed—only pure <i>chingonería</i>.</p>
+
+        <div class="cta-box">
+            <a href="https://pump.fun/join/Chingonamics" target="_blank" class="btn btn-pump">
+                <span>🚀 Join on Pump.fun</span>
+            </a>
+            <a href="https://x.com/chingonamics?s=11" target="_blank" class="btn btn-x">
+                <span>𝕏 Follow @chingonamics</span>
+            </a>
+        </div>
+
+        <div class="features">
+            <div class="feature-item">
+                <h3>100%</h3>
+                <p>Pure Culture</p>
+            </div>
+            <div class="feature-item">
+                <h3>SOL</h3>
+                <p>Chain Native</p>
+            </div>
+            <div class="feature-item">
+                <h3>⚡</h3>
+                <p>Fast Drops</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Chingonamics. NFA. DYOR.
+    </footer>
+
+</body>
+</html>
