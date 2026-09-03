@@ -63,6 +63,7 @@ body {
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             position: relative;
             z-index: 1;
+            margin-bottom: 40px;
         }
 
         .flag-bar {
@@ -93,8 +94,7 @@ body {
         }
 
         h1 {
-                    font-size: clamp(1.5rem, 6.5vw, 3rem);
-
+            font-size: clamp(1.5rem, 6.5vw, 3rem);
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 12px;
@@ -177,10 +177,115 @@ body {
             letter-spacing: 1px;
         }
 
+        /* Tokens Section */
+        .tokens-section {
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .tokens-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tokens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .token-card {
+            background: var(--card-bg);
+            border: 2px solid #222;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .token-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .token-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .token-content {
+            padding: 20px;
+        }
+
+        .token-ticker {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .token-name {
+            font-size: 1.3rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: var(--white);
+            text-transform: uppercase;
+        }
+
+        .token-description {
+            font-size: 0.9rem;
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .token-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #006847 0%, #00B377 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .token-button:hover {
+            box-shadow: 0 8px 20px rgba(0, 179, 119, 0.4);
+            transform: translateY(-2px);
+        }
+
         footer {
             margin-top: 30px;
             font-size: 0.8rem;
             color: #444;
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
@@ -221,6 +326,51 @@ body {
             <div class="feature-item">
                 <h3>⚡</h3>
                 <p>Fast Drops</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tokens Section -->
+    <div class="tokens-section">
+        <h2 class="tokens-title">🎬 Our Launches</h2>
+        <div class="tokens-grid">
+            <!-- The Homies -->
+            <div class="token-card">
+                <img src="IMG_0440.jpeg" alt="The Homies" class="token-image">
+                <div class="token-content">
+                    <span class="token-ticker">$TheHomies</span>
+                    <h3 class="token-name">The Homies</h3>
+                    <p class="token-description">Whether crusin Sunset Blvd. Or getting in a fight with Giants fans at Dodgers Stadium - The Homies got your back ese</p>
+                    <a href="https://pump.fun/coin/HSag" target="_blank" class="token-button">
+                        <span>🚀 Trade Now</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- The Hector Cinematic Universe -->
+            <div class="token-card">
+                <img src="IMG_0403.jpeg" alt="The Hector Cinematic Universe" class="token-image">
+                <div class="token-content">
+                    <span class="token-ticker">$HECTOR</span>
+                    <h3 class="token-name">Hector Cinematic Universe</h3>
+                    <p class="token-description">The "Hector Cinematic Universe" is a fan-made joke and viral meme about American character actor Noel Gugliemi, who has played characters named Hector across more than a dozen unrelated movies and TV shows.</p>
+                    <a href="https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump" target="_blank" class="token-button">
+                        <span>🚀 Trade Now</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- La Chancla -->
+            <div class="token-card">
+                <img src="IMG_0406.jpeg" alt="La Chancla" class="token-image">
+                <div class="token-content">
+                    <span class="token-ticker">$CHANCLA</span>
+                    <h3 class="token-name">La Chancla</h3>
+                    <p class="token-description">Beware the power of La Chancla - a cultural phenomenon that transcends memes and becomes reality on the blockchain.</p>
+                    <a href="https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump" target="_blank" class="token-button">
+                        <span>🚀 Trade Now</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
