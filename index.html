@@ -465,7 +465,7 @@
             <div class="r"></div>
         </div>
 
-        <span class="badge">🔥 Next Launch Pending</span>
+        <span class="badge" id="launch-status-badge">🔥 Loading launches…</span>
 
         <h1>CHINGONAMICS</h1>
         <p class="hero-tagline">The Mexican Meme Machine.</p>
@@ -564,6 +564,13 @@
             }
         ];
 
+        function updateLaunchStatusBadge() {
+            const badge = document.getElementById('launch-status-badge');
+            if (!badge) return;
+
+            badge.textContent = pumpCoins.length > 0 ? '🔥 Active Launches' : '🚀 Next Launch Pending';
+        }
+
         function renderPumpCoins() {
             const container = document.getElementById('portfolio-grid');
             if (!container) return;
@@ -595,6 +602,7 @@
         }
 
         renderPumpCoins();
+        updateLaunchStatusBadge();
 
         document.addEventListener('click', (event) => {
             const shareButton = event.target.closest('[data-share]');
