@@ -275,11 +275,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .portfolio-card {
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -550,19 +545,10 @@
 
         const pumpCoins = [
             {
-                name: 'Chingonamics',
-                ticker: '$CHINGO',
-                status: 'Latest',
-                image: 'IMG_0325.png',
-                contract: '5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
-                pumpUrl: 'https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
-                about: 'Official Chingonamics Pump account coin: pure meme energy, community chaos, and the latest wave of the Chingonamics fun house.'
-            },
-            {
                 name: 'Elsa',
                 ticker: '$ELSA',
                 status: 'In Account',
-                image: 'IMG_0324.jpeg?v=20260904',
+                image: 'IMG_0403.jpeg',
                 contract: '5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
                 pumpUrl: 'https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
                 about: 'Frosty meme energy, icy attitude, and a strong place in the Chingonamics Pump account collection.'
@@ -571,7 +557,7 @@
                 name: 'Selena',
                 ticker: '$SELENA',
                 status: 'In Account',
-                image: 'IMG_0440.jpeg?v=20260904',
+                image: 'IMG_0440.jpeg',
                 contract: 'Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump',
                 pumpUrl: 'https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump',
                 about: 'Iconic Selena energy with a fresh meme punch and a bright spot in the Chingonamics Pump account lineup.'
@@ -610,26 +596,30 @@
 
         renderPumpCoins();
 
-        document.querySelectorAll('[data-share]').forEach((button) => {
-            button.addEventListener('click', () => {
-                shareUrl('Join the Chingonamics Meme Machine 🔥', window.location.href, button.dataset.share);
-            });
-        });
+        document.addEventListener('click', (event) => {
+            const shareButton = event.target.closest('[data-share]');
+            if (shareButton) {
+                event.preventDefault();
+                shareUrl('Join the Chingonamics Meme Machine 🔥', window.location.href, shareButton.dataset.share);
+                return;
+            }
 
-        document.querySelectorAll('[data-share-token]').forEach((button) => {
-            button.addEventListener('click', () => {
-                shareUrl(`Check out ${button.dataset.shareToken} on Chingonamics 🔥`, button.dataset.shareUrl, 'x');
-            });
-        });
+            const coinShareButton = event.target.closest('[data-share-token]');
+            if (coinShareButton) {
+                event.preventDefault();
+                shareUrl(`Check out ${coinShareButton.dataset.shareToken} on Chingonamics 🔥`, coinShareButton.dataset.shareUrl, 'x');
+                return;
+            }
 
-        document.querySelectorAll('[data-contract]').forEach((button) => {
-            button.addEventListener('click', () => {
-                copyText(button.dataset.contract).then(() => {
-                    const previousText = button.textContent;
-                    button.textContent = 'Copied!';
-                    setTimeout(() => { button.textContent = previousText; }, 1500);
+            const contractButton = event.target.closest('[data-contract]');
+            if (contractButton) {
+                event.preventDefault();
+                copyText(contractButton.dataset.contract).then(() => {
+                    const previousText = contractButton.textContent;
+                    contractButton.textContent = 'Copied!';
+                    setTimeout(() => { contractButton.textContent = previousText; }, 1500);
                 });
-            });
+            }
         });
     </script>
 
