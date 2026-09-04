@@ -196,6 +196,31 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .carousel-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin: -14px 0 16px;
+        }
+
+        .carousel-control {
+            width: 42px;
+            height: 42px;
+            border: 1px solid #555;
+            border-radius: 50%;
+            background: var(--card-bg);
+            color: var(--white);
+            font-size: 1.4rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .carousel-control:hover,
+        .carousel-control:focus-visible {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
         .carousel-track {
             display: flex;
             gap: 24px;
@@ -203,6 +228,8 @@
             scroll-snap-type: x mandatory;
             padding-bottom: 12px;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scroll-behavior: smooth;
         }
 
         .carousel-track::-webkit-scrollbar {
@@ -329,10 +356,10 @@
         <p class="subtitle">The factory for high-octane, Mexican-themed meme coins on Solana. No boring tokens allowed—only pure <i>chingonería</i>.</p>
 
         <div class="cta-box">
-            <a href="https://pump.fun/join/Chingonamics" target="_blank" class="btn btn-pump">
+            <a href="https://pump.fun/join/Chingonamics" target="_blank" rel="noopener noreferrer" class="btn btn-pump">
                 <span>🚀 Join on Pump.fun</span>
             </a>
-            <a href="https://x.com/chingonamics?s=11" target="_blank" class="btn btn-x">
+            <a href="https://x.com/chingonamics?s=11" target="_blank" rel="noopener noreferrer" class="btn btn-x">
                 <span>𝕏 Follow @chingonamics</span>
             </a>
         </div>
@@ -341,7 +368,11 @@
     <!-- Carousel Section -->
     <div class="carousel-section">
         <h2 class="carousel-title">🎬 Our Launches</h2>
-        <div class="carousel-track">
+        <div class="carousel-controls" aria-label="Launch carousel controls">
+            <button type="button" class="carousel-control" data-direction="previous" aria-label="Previous Pump.fun listing">‹</button>
+            <button type="button" class="carousel-control" data-direction="next" aria-label="Next Pump.fun listing">›</button>
+        </div>
+        <div class="carousel-track" aria-label="Pump.fun launch listings">
             <!-- The Hector Cinematic Universe -->
             <div class="token-card">
                 <img src="IMG_0403.jpeg" alt="The Hector Cinematic Universe" class="token-image">
@@ -349,7 +380,7 @@
                     <span class="token-ticker">$HECTOR</span>
                     <h3 class="token-name">Hector Cinematic Universe</h3>
                     <p class="token-description">The "Hector Cinematic Universe" is a fan-made joke and viral meme about American character actor Noel Gugliemi, who has played characters named Hector across more than a dozen unrelated movies and TV shows.</p>
-                    <a href="https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump" target="_blank" class="token-button">
+                    <a href="https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump" target="_blank" rel="noopener noreferrer" class="token-button">
                         <span>🚀 Trade Now</span>
                     </a>
                 </div>
@@ -362,7 +393,7 @@
                     <span class="token-ticker">$CHANCLA</span>
                     <h3 class="token-name">La Chancla</h3>
                     <p class="token-description">Beware the power of La Chancla - a cultural phenomenon that transcends memes and becomes reality on the blockchain.</p>
-                    <a href="https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump" target="_blank" class="token-button">
+                    <a href="https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump" target="_blank" rel="noopener noreferrer" class="token-button">
                         <span>🚀 Trade Now</span>
                     </a>
                 </div>
@@ -373,6 +404,21 @@
     <footer>
         &copy; 2026 Chingonamics. NFA. DYOR.
     </footer>
+
+    <script>
+        const launchCarousel = document.querySelector('.carousel-track');
+        const launchCards = launchCarousel.querySelector('.token-card');
+
+        document.querySelectorAll('.carousel-control').forEach((button) => {
+            button.addEventListener('click', () => {
+                const direction = button.dataset.direction === 'next' ? 1 : -1;
+                launchCarousel.scrollBy({
+                    left: direction * (launchCards.offsetWidth + 24),
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
