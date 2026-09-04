@@ -247,7 +247,7 @@
         }
 
         /* Carousel Section */
-        .carousel-section {
+        .portfolio-section {
             max-width: 1000px;
             width: 100%;
             position: relative;
@@ -255,7 +255,7 @@
             margin-bottom: 40px;
         }
 
-        .carousel-title {
+        .portfolio-title {
             font-size: 2rem;
             font-weight: 900;
             margin-bottom: 30px;
@@ -265,65 +265,9 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .carousel-track {
-            display: flex;
-            transition: transform 0.3s ease;
-        }
-
-        .carousel-viewport {
+        .portfolio-card {
             max-width: 560px;
             margin: 0 auto;
-            overflow: hidden;
-        }
-
-        .carousel-controls {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 18px;
-        }
-
-        .carousel-dot {
-            width: 10px;
-            height: 10px;
-            padding: 0;
-            border: 1px solid var(--gold);
-            border-radius: 50%;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        .carousel-dot.active {
-            background: var(--gold);
-        }
-
-        .carousel-control {
-            width: 44px;
-            height: 44px;
-            border: 1px solid var(--gold);
-            border-radius: 50%;
-            background: rgba(255, 215, 0, 0.1);
-            color: var(--gold);
-            font-size: 1.5rem;
-            line-height: 1;
-            cursor: pointer;
-        }
-
-        .carousel-control:hover:not(:disabled) {
-            background: var(--gold);
-            color: var(--dark);
-        }
-
-        .carousel-control:disabled {
-            cursor: not-allowed;
-            opacity: 0.35;
         }
 
         .token-card {
@@ -457,14 +401,14 @@
         @media (prefers-reduced-motion: reduce) {
             .hero-video { display: none; }
             .video-hero { background: url('IMG_0325.png') center / cover; min-height: 220px; }
-            .carousel-track, .btn, .token-card { transition: none; }
+                .btn, .token-card { transition: none; }
         }
 
         @media (max-width: 480px) {
             body { padding: 12px; }
             .container { padding: 28px 18px; }
             .share-buttons, .official-links { grid-template-columns: 1fr; }
-            .carousel-title { font-size: 1.65rem; }
+            .portfolio-title { font-size: 1.65rem; }
         }
 
         footer {
@@ -521,54 +465,30 @@
         </div>
     </section>
 
-    <!-- Carousel Section -->
-    <div class="carousel-section">
-        <h2 class="carousel-title">🎬 Our Launches</h2>
-        <div class="carousel-viewport" aria-live="polite">
-            <div class="carousel-track" id="launch-track">
-                <!-- The Hector Cinematic Universe -->
-                <div class="token-card">
-                    <img src="IMG_0403.jpeg" alt="The Hector Cinematic Universe meme" class="token-image" loading="lazy">
-                    <div class="token-content">
-                        <div class="token-meta">
-                            <span class="token-ticker">$HECTOR</span>
-                            <span class="launch-status">● Live</span>
-                        </div>
-                        <h3 class="token-name">Hector Cinematic Universe</h3>
-                        <p class="token-description">One actor. Dozens of Hectors. A cinematic universe nobody asked for.</p>
-                        <div class="contract-row"><span>CA: 7hH1...pump</span><button class="copy-contract" type="button" data-contract="7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump">Copy</button></div>
-                        <div class="token-actions">
-                            <a href="https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Launch</a>
-                            <button class="token-share" type="button" data-share-token="Hector Cinematic Universe" data-share-url="https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump">Share</button>
-                        </div>
+    <section class="portfolio-section" aria-labelledby="portfolio-heading">
+        <h2 class="portfolio-title" id="portfolio-heading">🪙 Coins in the Pump Account</h2>
+        <div class="portfolio-card">
+            <div class="token-card">
+                <img src="IMG_0325.png" alt="Featured Chingonamics coin artwork" class="token-image">
+                <div class="token-content">
+                    <div class="token-meta">
+                        <span class="token-ticker">Latest Coin</span>
+                        <span class="launch-status">● Featured</span>
                     </div>
-                </div>
-
-                <!-- La Chancla -->
-                <div class="token-card">
-                    <img src="IMG_0406.jpeg" alt="La Chancla meme" class="token-image" loading="lazy">
-                    <div class="token-content">
-                        <div class="token-meta">
-                            <span class="token-ticker">$CHANCLA</span>
-                            <span class="launch-status">● Live</span>
-                        </div>
-                        <h3 class="token-name">La Chancla</h3>
-                        <p class="token-description">The legendary household boomerang has entered the meme economy.</p>
-                        <div class="contract-row"><span>CA: 4PDy...pump</span><button class="copy-contract" type="button" data-contract="4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump">Copy</button></div>
-                        <div class="token-actions">
-                            <a href="https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Launch</a>
-                            <button class="token-share" type="button" data-share-token="La Chancla" data-share-url="https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump">Share</button>
-                        </div>
+                    <h3 class="token-name">Newest Chingonamics Coin</h3>
+                    <p class="token-description">The newest coin connected to the Chingonamics Pump account—fresh from the meme machine.</p>
+                    <div class="contract-row">
+                        <span>CA: CzHK...Wzy2</span>
+                        <button class="copy-contract" type="button" data-contract="CzHKpnGbFSBtrhLXy5LL9Un5sAg3Gcxx5ftaK3UWXzy2">Copy</button>
+                    </div>
+                    <div class="token-actions">
+                        <a href="https://pump.fun/coin/CzHKpnGbFSBtrhLXy5LL9Un5sAg3Gcxx5ftaK3UWXzy2" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                        <button class="token-share" type="button" data-share-token="the latest Chingonamics coin" data-share-url="https://pump.fun/coin/CzHKpnGbFSBtrhLXy5LL9Un5sAg3Gcxx5ftaK3UWXzy2">Share</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="carousel-controls" aria-label="Launch navigation">
-            <button class="carousel-control" id="previous-launch" type="button" aria-label="Previous launch">←</button>
-            <button class="carousel-control" id="next-launch" type="button" aria-label="Next launch">→</button>
-        </div>
-        <div class="carousel-dots" id="carousel-dots" aria-label="Choose a launch"></div>
-    </div>
+    </section>
 
     <section class="community-section" aria-labelledby="community-heading">
         <h2 class="section-heading" id="community-heading">🔥 Meme of the Day</h2>
@@ -585,66 +505,6 @@
     </footer>
 
     <script>
-        const launchTrack = document.getElementById('launch-track');
-        const previousLaunch = document.getElementById('previous-launch');
-        const nextLaunch = document.getElementById('next-launch');
-        const carouselDots = document.getElementById('carousel-dots');
-        const launchCount = launchTrack.children.length;
-        let currentLaunch = 0;
-        let touchStartX = 0;
-
-        function updateLaunchCarousel() {
-            launchTrack.style.transform = `translateX(-${currentLaunch * 100}%)`;
-            previousLaunch.disabled = currentLaunch === 0;
-            nextLaunch.disabled = currentLaunch === launchCount - 1;
-            [...carouselDots.children].forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentLaunch);
-                dot.setAttribute('aria-current', index === currentLaunch ? 'true' : 'false');
-            });
-        }
-
-        for (let index = 0; index < launchCount; index += 1) {
-            const dot = document.createElement('button');
-            dot.className = 'carousel-dot';
-            dot.type = 'button';
-            dot.setAttribute('aria-label', `Show launch ${index + 1}`);
-            dot.addEventListener('click', () => {
-                currentLaunch = index;
-                updateLaunchCarousel();
-            });
-            carouselDots.appendChild(dot);
-        }
-
-        previousLaunch.addEventListener('click', () => {
-            if (currentLaunch > 0) {
-                currentLaunch -= 1;
-                updateLaunchCarousel();
-            }
-        });
-
-        nextLaunch.addEventListener('click', () => {
-            if (currentLaunch < launchCount - 1) {
-                currentLaunch += 1;
-                updateLaunchCarousel();
-            }
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowLeft') previousLaunch.click();
-            if (event.key === 'ArrowRight') nextLaunch.click();
-        });
-
-        launchTrack.addEventListener('touchstart', (event) => {
-            touchStartX = event.changedTouches[0].screenX;
-        }, { passive: true });
-
-        launchTrack.addEventListener('touchend', (event) => {
-            const distance = event.changedTouches[0].screenX - touchStartX;
-            if (Math.abs(distance) > 40) {
-                distance < 0 ? nextLaunch.click() : previousLaunch.click();
-            }
-        }, { passive: true });
-
         function shareUrl(message, url, platform) {
             const encodedMessage = encodeURIComponent(message);
             const encodedUrl = encodeURIComponent(url);
@@ -680,8 +540,6 @@
                 });
             });
         });
-
-        updateLaunchCarousel();
     </script>
 
 </body>
