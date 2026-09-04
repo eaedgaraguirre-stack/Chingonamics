@@ -1,1 +1,105 @@
-.github/workflows/site-audit.yml
+name: Site Health Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  site-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # --- 1. LINK CHECKING (internal + external) ---
+      - name: Check for broken links
+        id: links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --verbose
+            --no-progress
+            --exclude-mail
+            --accept 200,206,301,302,429
+            './**/*.html'
+          format: markdown
+          output: ./lychee-report.md
+        continue-on-error: true
+
+      # --- 2. SERVE THE SITE LOCALLY FOR SCANNING ---
+      - name: Serve site
+        run: npx serve . -l 5000 &
+        continue-on-error: true
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:5000 --timeout 30000
+        continue-on-error: true
+
+      # --- 3. ACCESSIBILITY CHECK ---
+      - name: Run accessibility audit (axe)
+        run: |
+          npm install -g @axe-core/cli
+          axe http://localhost:5000 --exit --save axe-report.json
+        continue-on-error: true
+
+      # --- 4. LIGHTHOUSE (performance, SEO, best practices) ---
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://localhost:5000
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+        continue-on-error: true
+
+      # --- 5. POST RESULTS TO PR ---
+      - name: Post results to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let linkReport = '';
+            try {
+              linkReport = fs.readFileSync('./lychee-report.md', 'utf8');
+            } catch (e) {
+              linkReport = '_No link report generated._';
+            }
+
+            const linksStatus = '${{ steps.links.outcome }}';
+
+            const body = `## 🔍 Site Health Check Results
+
+            **Links:** ${linksStatus === 'success' ? '✅ No broken links' : '⚠️ Issues found'}
+
+            <details>
+            <summary>Link check details</summary>
+
+            ${linkReport}
+
+            </details>
+
+            See the Actions run for full accessibility and Lighthouse reports.
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
+
+      - name: Upload reports as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-audit-reports
+          path: |
+            lychee-report.md
+            axe-report.json
