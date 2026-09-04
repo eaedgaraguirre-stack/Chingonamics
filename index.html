@@ -221,13 +221,13 @@
             margin-bottom: 14px;
         }
 
-        .share-buttons, .official-links {
+        .share-buttons {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
 
-        .share-button, .official-link {
+        .share-button {
             border: 1px solid #333;
             border-radius: 10px;
             padding: 12px;
@@ -238,7 +238,7 @@
             cursor: pointer;
         }
 
-        .share-button:hover, .official-link:hover {
+        .share-button:hover {
             border-color: var(--gold);
             color: var(--gold);
         }
@@ -270,7 +270,6 @@
         }
 
         .token-card {
-            flex: 0 0 100%;
             background: var(--card-bg);
             border: 2px solid #222;
             border-radius: 16px;
@@ -410,7 +409,7 @@
         @media (max-width: 480px) {
             body { padding: 12px; }
             .container { padding: 28px 18px; }
-            .share-buttons, .official-links { grid-template-columns: 1fr; }
+            .share-buttons { grid-template-columns: 1fr; }
         }
 
         footer {
@@ -473,12 +472,8 @@
     </section>
 
     <section class="community-section" aria-labelledby="community-heading">
-        <h2 class="section-heading" id="community-heading">🔥 Meme of the Day</h2>
+        <h2 class="section-heading" id="community-heading">🔥 Join the Community</h2>
         <p class="community-copy">Bring your best reaction image to the Meme Machine. Tag <strong>@chingonamics</strong> on X for a chance to be featured. Keep it funny, original, and respectful—no harassment, scams, or impersonation.</p>
-        <div class="official-links">
-            <a class="official-link" href="https://x.com/chingonamics?s=11" target="_blank" rel="noopener noreferrer">𝕏 Official X</a>
-            <a class="official-link" href="https://pump.fun/join/Chingonamics" target="_blank" rel="noopener noreferrer">🚀 Official Pump.fun</a>
-        </div>
         <p class="risk-note">Meme coins are highly volatile and risky. This site is for entertainment only. NFA. DYOR.</p>
     </section>
 
@@ -561,7 +556,7 @@
                             </div>
                             <div class="token-actions">
                                 <a href="${coin.pumpUrl}" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
-                                <button class="token-share" type="button" data-share-token="${coin.name}" data-share-url="${coin.pumpUrl}">Share</button>
+                                <button class="token-share" type="button" data-share-token="${coin.name}" data-share-url="${coin.pumpUrl}">Share on X</button>
                             </div>
                         </div>
                     </article>
