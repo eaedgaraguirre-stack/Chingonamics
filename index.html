@@ -270,6 +270,14 @@
             margin: 0 auto;
         }
 
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
         .token-card {
             flex: 0 0 100%;
             background: var(--card-bg);
@@ -409,6 +417,7 @@
             .container { padding: 28px 18px; }
             .share-buttons, .official-links { grid-template-columns: 1fr; }
             .portfolio-title { font-size: 1.65rem; }
+            .portfolio-grid { grid-template-columns: 1fr; }
         }
 
         footer {
@@ -467,7 +476,7 @@
 
     <section class="portfolio-section" aria-labelledby="portfolio-heading">
         <h2 class="portfolio-title" id="portfolio-heading">🪙 Coins in the Pump Account</h2>
-        <div class="portfolio-card">
+        <div class="portfolio-grid">
             <div class="token-card">
                 <img src="IMG_0325.png" alt="Featured Chingonamics coin artwork" class="token-image">
                 <div class="token-content">
@@ -484,6 +493,25 @@
                     <div class="token-actions">
                         <a href="https://pump.fun/coin/CzHKpnGbFSBtrhLXy5LL9Un5sAg3Gcxx5ftaK3UWXzy2" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
                         <button class="token-share" type="button" data-share-token="the latest Chingonamics coin" data-share-url="https://pump.fun/coin/CzHKpnGbFSBtrhLXy5LL9Un5sAg3Gcxx5ftaK3UWXzy2">Share</button>
+                    </div>
+                </div>
+                <div class="token-card">
+                    <img src="IMG_0324.jpeg" alt="Elsa meme coin artwork" class="token-image" loading="lazy">
+                    <div class="token-content">
+                        <div class="token-meta">
+                            <span class="token-ticker">$ELSA</span>
+                            <span class="launch-status">● In Account</span>
+                        </div>
+                        <h3 class="token-name">Elsa</h3>
+                        <p class="token-description">A fresh Chingonamics coin with icy meme energy and a place in the Pump account collection.</p>
+                        <div class="contract-row">
+                            <span>CA: 5i2t...pump</span>
+                            <button class="copy-contract" type="button" data-contract="5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Copy</button>
+                        </div>
+                        <div class="token-actions">
+                            <a href="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                            <button class="token-share" type="button" data-share-token="Elsa" data-share-url="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Share</button>
+                        </div>
                     </div>
                 </div>
             </div>
