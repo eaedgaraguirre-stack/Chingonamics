@@ -3,7 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chingonamics | Pure Mexican Crypto Heat</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="description" content="Chingonamics is the Mexican meme machine: discover chaotic community launches, share the memes, and join the fun.">
+    <link rel="canonical" href="https://chingonamics.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chingonamics.com/">
+    <meta property="og:title" content="Chingonamics | The Mexican Meme Machine">
+    <meta property="og:description" content="Pure Mexican meme energy. Discover the latest Chingonamics launches and join the community.">
+    <meta property="og:image" content="https://chingonamics.com/IMG_0325.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Chingonamics | The Mexican Meme Machine">
+    <meta name="twitter:description" content="Pure Mexican meme energy. Discover the latest launches and join the community.">
+    <meta name="twitter:image" content="https://chingonamics.com/IMG_0325.png">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Chingonamics",
+            "url": "https://chingonamics.com/",
+            "sameAs": ["https://x.com/chingonamics?s=11", "https://pump.fun/join/Chingonamics"]
+        }
+    </script>
+    <title>Chingonamics | The Mexican Meme Machine</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
@@ -66,6 +89,13 @@
             display: block;
             width: 100%;
             height: auto;
+        }
+
+        .hero-tagline {
+            color: var(--gold);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: -4px 0 14px;
         }
 
         .video-overlay {
@@ -177,8 +207,50 @@
             transform: translateY(-2px);
         }
 
+        .share-section, .community-section {
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .section-heading {
+            color: var(--gold);
+            font-size: 1.45rem;
+            margin-bottom: 14px;
+        }
+
+        .share-buttons, .official-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .share-button, .official-link {
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 12px;
+            background: #111;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .share-button:hover, .official-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .community-copy, .risk-note {
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
         /* Carousel Section */
-        .carousel-section {
+        .portfolio-section {
             max-width: 1000px;
             width: 100%;
             position: relative;
@@ -186,7 +258,7 @@
             margin-bottom: 40px;
         }
 
-        .carousel-title {
+        .portfolio-title {
             font-size: 2rem;
             font-weight: 900;
             margin-bottom: 30px;
@@ -196,44 +268,17 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .carousel-track {
-            display: flex;
-            transition: transform 0.3s ease;
-        }
-
-        .carousel-viewport {
+        .portfolio-card {
             max-width: 560px;
             margin: 0 auto;
-            overflow: hidden;
         }
 
-        .carousel-controls {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .carousel-control {
-            width: 44px;
-            height: 44px;
-            border: 1px solid var(--gold);
-            border-radius: 50%;
-            background: rgba(255, 215, 0, 0.1);
-            color: var(--gold);
-            font-size: 1.5rem;
-            line-height: 1;
-            cursor: pointer;
-        }
-
-        .carousel-control:hover:not(:disabled) {
-            background: var(--gold);
-            color: var(--dark);
-        }
-
-        .carousel-control:disabled {
-            cursor: not-allowed;
-            opacity: 0.35;
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .token-card {
@@ -278,6 +323,45 @@
             margin-bottom: 12px;
         }
 
+        .token-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .launch-status {
+            color: #61e294;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .contract-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            color: #777;
+            font-size: 0.75rem;
+        }
+
+        .copy-contract {
+            border: 1px solid #444;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--gold);
+            padding: 4px 7px;
+            cursor: pointer;
+        }
+
+        .token-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
         .token-name {
             font-size: 1.3rem;
             font-weight: 900;
@@ -316,6 +400,29 @@
             transform: translateY(-2px);
         }
 
+        .token-share {
+            border: 1px solid var(--green);
+            border-radius: 10px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-video { display: none; }
+            .video-hero { background: url('IMG_0325.png') center / cover; min-height: 220px; }
+                .btn, .token-card { transition: none; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .container { padding: 28px 18px; }
+            .share-buttons, .official-links { grid-template-columns: 1fr; }
+            .portfolio-title { font-size: 1.65rem; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+        }
+
         footer {
             margin-top: 30px;
             font-size: 0.8rem;
@@ -330,7 +437,7 @@
     <div class="bg-glow"></div>
 
     <div class="video-hero">
-        <video autoplay muted loop playsinline class="hero-video">
+        <video autoplay muted loop playsinline poster="IMG_0325.png" class="hero-video">
             <source src="_users_b7c824c7-4b1c-403b-93b7-0ec6eff1df3c_generated_b8b7bb04-0586-46dd-bab8-cee206c3e80b_generated_video.mp4" type="video/mp4">
             Your browser doesn't support HTML5 video.
         </video>
@@ -347,11 +454,12 @@
         <span class="badge">🔥 Next Launch Pending</span>
 
         <h1>CHINGONAMICS</h1>
-        <p class="subtitle">The factory for high-octane, Mexican-themed meme coins. No boring tokens allowed—only pure <i>chingonería</i>.</p>
+        <p class="hero-tagline">The Mexican Meme Machine.</p>
+        <p class="subtitle">High-octane community launches, legendary memes, and pure <i>chingonería</i>. No boring tokens allowed.</p>
 
         <div class="cta-box">
             <a href="https://pump.fun/join/Chingonamics" target="_blank" class="btn btn-pump">
-                <span>🚀 Join on Pump.fun</span>
+                <span>🚀 Join the Meme Machine</span>
             </a>
             <a href="https://x.com/chingonamics?s=11" target="_blank" class="btn btn-x">
                 <span>𝕏 Follow @chingonamics</span>
@@ -359,76 +467,110 @@
         </div>
     </div>
 
-    <!-- Carousel Section -->
-    <div class="carousel-section">
-        <h2 class="carousel-title">🎬 Our Launches</h2>
-        <div class="carousel-viewport">
-            <div class="carousel-track" id="launch-track">
-                <!-- The Hector Cinematic Universe -->
-                <div class="token-card">
-                    <img src="IMG_0403.jpeg" alt="The Hector Cinematic Universe" class="token-image">
-                    <div class="token-content">
-                        <span class="token-ticker">$HECTOR</span>
-                        <h3 class="token-name">Hector Cinematic Universe</h3>
-                        <p class="token-description">The "Hector Cinematic Universe" is a fan-made joke and viral meme about American character actor Noel Gugliemi, who has played characters named Hector across more than a dozen unrelated movies and TV shows.</p>
-                        <a href="https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump" target="_blank" class="token-button">
-                            <span>🚀 Trade Now</span>
-                        </a>
+    <section class="share-section" aria-labelledby="share-heading">
+        <h2 class="section-heading" id="share-heading">Spread the Chingonería</h2>
+        <div class="share-buttons">
+            <button class="share-button" type="button" data-share="x">𝕏 Share on X</button>
+            <button class="share-button" type="button" data-share="telegram">✈️ Telegram</button>
+            <button class="share-button" type="button" data-share="whatsapp">💬 WhatsApp</button>
+            <button class="share-button" type="button" data-share="copy">🔗 Copy Link</button>
+        </div>
+    </section>
+
+    <section class="portfolio-section" aria-labelledby="portfolio-heading">
+        <h2 class="portfolio-title" id="portfolio-heading">🪙 Coins in the Pump Account</h2>
+        <div class="portfolio-grid">
+            <div class="token-card">
+                <img src="IMG_0324.jpeg?v=20260904" alt="Elsa meme coin artwork" class="token-image" loading="lazy">
+                <div class="token-content">
+                    <div class="token-meta">
+                        <span class="token-ticker">$ELSA</span>
+                        <span class="launch-status">● In Account</span>
+                    </div>
+                    <h3 class="token-name">Elsa</h3>
+                    <p class="token-description">A fresh Chingonamics coin with icy meme energy and a place in the Pump account collection.</p>
+                    <div class="contract-row">
+                        <span>CA: 5i2t...pump</span>
+                        <button class="copy-contract" type="button" data-contract="5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Copy</button>
+                    </div>
+                    <div class="token-actions">
+                        <a href="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                        <button class="token-share" type="button" data-share-token="Elsa" data-share-url="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Share</button>
                     </div>
                 </div>
-
-                <!-- La Chancla -->
-                <div class="token-card">
-                    <img src="IMG_0406.jpeg" alt="La Chancla" class="token-image">
-                    <div class="token-content">
-                        <span class="token-ticker">$CHANCLA</span>
-                        <h3 class="token-name">La Chancla</h3>
-                        <p class="token-description">Beware the power of La Chancla - a cultural phenomenon that transcends memes and becomes reality on the blockchain.</p>
-                        <a href="https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump" target="_blank" class="token-button">
-                            <span>🚀 Trade Now</span>
-                        </a>
+            </div>
+            <div class="token-card">
+                <img src="IMG_0440.jpeg?v=20260904" alt="Selena meme coin artwork" class="token-image" loading="lazy">
+                <div class="token-content">
+                    <div class="token-meta">
+                        <span class="token-ticker">$SELENA</span>
+                        <span class="launch-status">● In Account</span>
+                    </div>
+                    <h3 class="token-name">Selena</h3>
+                    <p class="token-description">A new Chingonamics coin bringing iconic Selena energy to the Pump account collection.</p>
+                    <div class="contract-row">
+                        <span>CA: Gzt4...pump</span>
+                        <button class="copy-contract" type="button" data-contract="Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump">Copy</button>
+                    </div>
+                    <div class="token-actions">
+                        <a href="https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                        <button class="token-share" type="button" data-share-token="Selena" data-share-url="https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump">Share</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="carousel-controls" aria-label="Launch navigation">
-            <button class="carousel-control" id="previous-launch" type="button" aria-label="Previous launch">←</button>
-            <button class="carousel-control" id="next-launch" type="button" aria-label="Next launch">→</button>
+    </section>
+
+    <section class="community-section" aria-labelledby="community-heading">
+        <h2 class="section-heading" id="community-heading">🔥 Meme of the Day</h2>
+        <p class="community-copy">Bring your best reaction image to the Meme Machine. Tag <strong>@chingonamics</strong> on X for a chance to be featured. Keep it funny, original, and respectful—no harassment, scams, or impersonation.</p>
+        <div class="official-links">
+            <a class="official-link" href="https://x.com/chingonamics?s=11" target="_blank" rel="noopener noreferrer">𝕏 Official X</a>
+            <a class="official-link" href="https://pump.fun/join/Chingonamics" target="_blank" rel="noopener noreferrer">🚀 Official Pump.fun</a>
         </div>
-    </div>
+        <p class="risk-note">Meme coins are highly volatile and risky. This site is for entertainment only. NFA. DYOR.</p>
+    </section>
 
     <footer>
         &copy; 2026 Chingonamics. NFA. DYOR.
     </footer>
 
     <script>
-        const launchTrack = document.getElementById('launch-track');
-        const previousLaunch = document.getElementById('previous-launch');
-        const nextLaunch = document.getElementById('next-launch');
-        const launchCount = launchTrack.children.length;
-        let currentLaunch = 0;
-
-        function updateLaunchCarousel() {
-            launchTrack.style.transform = `translateX(-${currentLaunch * 100}%)`;
-            previousLaunch.disabled = currentLaunch === 0;
-            nextLaunch.disabled = currentLaunch === launchCount - 1;
+        function shareUrl(message, url, platform) {
+            const encodedMessage = encodeURIComponent(message);
+            const encodedUrl = encodeURIComponent(url);
+            const shareLinks = {
+                x: `https://twitter.com/intent/tweet?text=${encodedMessage}&url=${encodedUrl}`,
+                telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedMessage}`,
+                whatsapp: `https://api.whatsapp.com/send?text=${encodedMessage}%20${encodedUrl}`
+            };
+            if (platform === 'copy') {
+                navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
+            } else {
+                window.open(shareLinks[platform], '_blank', 'noopener,noreferrer');
+            }
         }
 
-        previousLaunch.addEventListener('click', () => {
-            if (currentLaunch > 0) {
-                currentLaunch -= 1;
-                updateLaunchCarousel();
-            }
+        document.querySelectorAll('[data-share]').forEach((button) => {
+            button.addEventListener('click', () => {
+                shareUrl('Join the Chingonamics Meme Machine 🔥', window.location.href, button.dataset.share);
+            });
         });
 
-        nextLaunch.addEventListener('click', () => {
-            if (currentLaunch < launchCount - 1) {
-                currentLaunch += 1;
-                updateLaunchCarousel();
-            }
+        document.querySelectorAll('[data-share-token]').forEach((button) => {
+            button.addEventListener('click', () => {
+                shareUrl(`Check out ${button.dataset.shareToken} on Chingonamics 🔥`, button.dataset.shareUrl, 'x');
+            });
         });
 
-        updateLaunchCarousel();
+        document.querySelectorAll('[data-contract]').forEach((button) => {
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(button.dataset.contract).then(() => {
+                    button.textContent = 'Copied!';
+                    setTimeout(() => { button.textContent = 'Copy'; }, 1500);
+                });
+            });
+        });
     </script>
 
 </body>
