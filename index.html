@@ -249,7 +249,150 @@
             margin-bottom: 16px;
         }
 
-        /* Carousel Section */
+        .launches-section {
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .launch-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .carousel-arrow {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #444;
+            background: #111;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .carousel-arrow:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .carousel-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 0;
+            background: rgba(255,255,255,0.25);
+            cursor: pointer;
+        }
+
+        .carousel-dot.is-active {
+            background: var(--gold);
+            box-shadow: 0 0 10px rgba(255,215,0,0.8);
+        }
+
+        .launch-carousel {
+            overflow: hidden;
+        }
+
+        .launch-track {
+            display: flex;
+            transition: transform 0.35s ease;
+        }
+
+        .launch-slide {
+            min-width: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .launch-slide.is-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .launch-card {
+            display: grid;
+            grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
+            background: var(--card-bg);
+            border: 2px solid #222;
+            border-radius: 18px;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .launch-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            min-height: 220px;
+        }
+
+        .launch-copy {
+            padding: 24px;
+        }
+
+        .launch-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 700;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            margin-bottom: 14px;
+        }
+
+        .launch-copy h3 {
+            font-size: clamp(1.5rem, 2vw, 2rem);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .launch-copy p {
+            color: #aaa;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        .launch-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 18px;
+            color: #777;
+            font-size: 0.8rem;
+        }
+
+        .launch-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
         .portfolio-section {
             max-width: 1000px;
             width: 100%;
@@ -275,7 +418,7 @@
 
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 20px;
             max-width: 1000px;
             margin: 0 auto;
@@ -296,6 +439,11 @@
             transform: translateY(-8px);
             border-color: var(--gold);
             box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .featured-token-card {
+            border-color: rgba(255, 215, 0, 0.8);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.15);
         }
 
         .token-image {
@@ -412,15 +560,20 @@
         @media (prefers-reduced-motion: reduce) {
             .hero-video { display: none; }
             .video-hero { background: url('IMG_0325.png') center / cover; min-height: 220px; }
-                .btn, .token-card { transition: none; }
+            .btn, .token-card, .launch-slide { transition: none; }
+        }
+
+        @media (max-width: 860px) {
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .launch-card { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 480px) {
             body { padding: 12px; }
             .container { padding: 28px 18px; }
-            .share-buttons, .official-links { grid-template-columns: 1fr; }
+            .share-buttons, .official-links, .launch-actions { grid-template-columns: 1fr; }
             .portfolio-title { font-size: 1.65rem; }
-            .portfolio-grid { grid-template-columns: 1fr; }
+            .launch-header { flex-direction: column; align-items: flex-start; }
         }
 
         footer {
@@ -477,10 +630,105 @@
         </div>
     </section>
 
+    <section class="launches-section" aria-labelledby="launches-heading">
+        <div class="launch-header">
+            <h2 class="section-heading" id="launches-heading">🚀 Our Launches</h2>
+            <div class="carousel-controls" aria-label="Launch carousel controls">
+                <button class="carousel-arrow prev" type="button" aria-label="Previous launch">&#10094;</button>
+                <div class="carousel-dots" aria-label="Launch positions">
+                    <button type="button" class="carousel-dot is-active" aria-label="Go to launch 1" data-index="0"></button>
+                    <button type="button" class="carousel-dot" aria-label="Go to launch 2" data-index="1"></button>
+                    <button type="button" class="carousel-dot" aria-label="Go to launch 3" data-index="2"></button>
+                </div>
+                <button class="carousel-arrow next" type="button" aria-label="Next launch">&#10095;</button>
+            </div>
+        </div>
+
+        <div class="launch-carousel" aria-live="polite">
+            <div class="launch-track">
+                <article class="launch-slide is-active">
+                    <div class="launch-card">
+                        <img src="IMG_0325.png" alt="Featured Chingonamics launch artwork" loading="lazy">
+                        <div class="launch-copy">
+                            <span class="launch-badge">Latest Pump launch</span>
+                            <h3>Chingonamics</h3>
+                            <p>The latest meme machine drop from the community with max chaos energy, strong vibes, and a playful Mexican street-culture identity.</p>
+                            <div class="launch-meta">
+                                <span>CA: 5i2t...pump</span>
+                                <button class="copy-contract" type="button" data-contract="5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Copy</button>
+                            </div>
+                            <div class="launch-actions">
+                                <a href="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                                <button class="token-share" type="button" data-share-token="Chingonamics" data-share-url="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Share</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="launch-slide">
+                    <div class="launch-card">
+                        <img src="IMG_0324.jpeg?v=20260904" alt="Elsa meme coin artwork" loading="lazy">
+                        <div class="launch-copy">
+                            <span class="launch-badge">Seasoned favorite</span>
+                            <h3>Elsa</h3>
+                            <p>Frosty meme energy with an icy twist and a growing place in the Chingonamics Pump account collection.</p>
+                            <div class="launch-meta">
+                                <span>CA: 5i2t...pump</span>
+                                <button class="copy-contract" type="button" data-contract="5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Copy</button>
+                            </div>
+                            <div class="launch-actions">
+                                <a href="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                                <button class="token-share" type="button" data-share-token="Elsa" data-share-url="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Share</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="launch-slide">
+                    <div class="launch-card">
+                        <img src="IMG_0440.jpeg?v=20260904" alt="Selena meme coin artwork" loading="lazy">
+                        <div class="launch-copy">
+                            <span class="launch-badge">High heat</span>
+                            <h3>Selena</h3>
+                            <p>A vibrant new coin with standout iconography and a bright meme identity ready to bounce across the community.</p>
+                            <div class="launch-meta">
+                                <span>CA: Gzt4...pump</span>
+                                <button class="copy-contract" type="button" data-contract="Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump">Copy</button>
+                            </div>
+                            <div class="launch-actions">
+                                <a href="https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                                <button class="token-share" type="button" data-share-token="Selena" data-share-url="https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump">Share</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <section class="portfolio-section" aria-labelledby="portfolio-heading">
-        <h2 class="portfolio-title" id="portfolio-heading">🪙 Coins in the Pump Account</h2>
+        <h2 class="portfolio-title" id="portfolio-heading">🪙 Pump Account Showcase</h2>
         <div class="portfolio-grid">
-            <div class="token-card">
+            <article class="token-card featured-token-card">
+                <img src="IMG_0325.png" alt="Featured Chingonamics meme coin artwork" class="token-image" loading="lazy">
+                <div class="token-content">
+                    <div class="token-meta">
+                        <span class="token-ticker">$CHINGO</span>
+                        <span class="launch-status">● Featured</span>
+                    </div>
+                    <h3 class="token-name">Chingonamics</h3>
+                    <p class="token-description">The latest and loudest Pump account coin, spotlighting the brand's chaotic meme energy and community-first launch culture.</p>
+                    <div class="contract-row">
+                        <span>CA: 5i2t...pump</span>
+                        <button class="copy-contract" type="button" data-contract="5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Copy</button>
+                    </div>
+                    <div class="token-actions">
+                        <a href="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                        <button class="token-share" type="button" data-share-token="Chingonamics" data-share-url="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Share</button>
+                    </div>
+                </div>
+            </article>
+            <article class="token-card">
                 <img src="IMG_0324.jpeg?v=20260904" alt="Elsa meme coin artwork" class="token-image" loading="lazy">
                 <div class="token-content">
                     <div class="token-meta">
@@ -498,8 +746,8 @@
                         <button class="token-share" type="button" data-share-token="Elsa" data-share-url="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Share</button>
                     </div>
                 </div>
-            </div>
-            <div class="token-card">
+            </article>
+            <article class="token-card">
                 <img src="IMG_0440.jpeg?v=20260904" alt="Selena meme coin artwork" class="token-image" loading="lazy">
                 <div class="token-content">
                     <div class="token-meta">
@@ -517,7 +765,7 @@
                         <button class="token-share" type="button" data-share-token="Selena" data-share-url="https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump">Share</button>
                     </div>
                 </div>
-            </div>
+            </article>
         </div>
     </section>
 
@@ -536,6 +784,23 @@
     </footer>
 
     <script>
+        function copyText(value) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                return navigator.clipboard.writeText(value);
+            }
+
+            const tempInput = document.createElement('textarea');
+            tempInput.value = value;
+            tempInput.setAttribute('readonly', '');
+            tempInput.style.position = 'fixed';
+            tempInput.style.top = '-9999px';
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            return Promise.resolve();
+        }
+
         function shareUrl(message, url, platform) {
             const encodedMessage = encodeURIComponent(message);
             const encodedUrl = encodeURIComponent(url);
@@ -545,10 +810,58 @@
                 whatsapp: `https://api.whatsapp.com/send?text=${encodedMessage}%20${encodedUrl}`
             };
             if (platform === 'copy') {
-                navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
+                copyText(url).then(() => alert('Link copied!'));
             } else {
                 window.open(shareLinks[platform], '_blank', 'noopener,noreferrer');
             }
+        }
+
+        const carouselSlides = Array.from(document.querySelectorAll('.launch-slide'));
+        const carouselDots = Array.from(document.querySelectorAll('.carousel-dot'));
+        const prevButton = document.querySelector('.carousel-arrow.prev');
+        const nextButton = document.querySelector('.carousel-arrow.next');
+
+        if (carouselSlides.length > 0) {
+            let currentIndex = 0;
+
+            function updateCarousel(nextIndex) {
+                currentIndex = (nextIndex + carouselSlides.length) % carouselSlides.length;
+                carouselSlides.forEach((slide, index) => {
+                    slide.classList.toggle('is-active', index === currentIndex);
+                });
+                carouselDots.forEach((dot, index) => {
+                    dot.classList.toggle('is-active', index === currentIndex);
+                    dot.setAttribute('aria-current', index === currentIndex ? 'true' : 'false');
+                });
+            }
+
+            prevButton.addEventListener('click', () => updateCarousel(currentIndex - 1));
+            nextButton.addEventListener('click', () => updateCarousel(currentIndex + 1));
+
+            carouselDots.forEach((dot) => {
+                dot.addEventListener('click', () => updateCarousel(Number(dot.dataset.index)));
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowLeft') updateCarousel(currentIndex - 1);
+                if (event.key === 'ArrowRight') updateCarousel(currentIndex + 1);
+            });
+
+            let touchStartX = 0;
+            const carouselElement = document.querySelector('.launch-carousel');
+
+            carouselElement.addEventListener('touchstart', (event) => {
+                touchStartX = event.changedTouches[0].screenX;
+            }, { passive: true });
+
+            carouselElement.addEventListener('touchend', (event) => {
+                const touchEndX = event.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+
+                if (Math.abs(diff) > 50) {
+                    updateCarousel(diff < 0 ? currentIndex + 1 : currentIndex - 1);
+                }
+            }, { passive: true });
         }
 
         document.querySelectorAll('[data-share]').forEach((button) => {
@@ -565,9 +878,10 @@
 
         document.querySelectorAll('[data-contract]').forEach((button) => {
             button.addEventListener('click', () => {
-                navigator.clipboard.writeText(button.dataset.contract).then(() => {
+                copyText(button.dataset.contract).then(() => {
+                    const previousText = button.textContent;
                     button.textContent = 'Copied!';
-                    setTimeout(() => { button.textContent = 'Copy'; }, 1500);
+                    setTimeout(() => { button.textContent = previousText; }, 1500);
                 });
             });
         });
