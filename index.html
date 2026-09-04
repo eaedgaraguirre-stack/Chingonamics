@@ -23,15 +23,13 @@
             padding: 0;
             font-family: 'Outfit', sans-serif;
         }
-body {
-    background-image: url('bg.jpg.PNG');
-    background-size: 300px auto;
-    background-position: 0 0;
-    background-repeat: repeat;
-    background-attachment: fixed;
-}
 
         body {
+            background-image: url('bg.jpg.PNG');
+            background-size: 300px auto;
+            background-position: 0 0;
+            background-repeat: repeat;
+            background-attachment: fixed;
             background-color: var(--dark);
             color: var(--white);
             display: flex;
@@ -51,6 +49,30 @@ body {
             background: radial-gradient(circle, rgba(206,37,43,0.3) 0%, rgba(0,0,0,0) 70%);
             z-index: 0;
             top: 20%;
+        }
+
+        .video-hero {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            z-index: 1;
+        }
+
+        .hero-video {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(10,10,10,0.6) 100%);
+            pointer-events: none;
         }
 
         .container {
@@ -155,30 +177,8 @@ body {
             transform: translateY(-2px);
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 36px;
-            padding-top: 28px;
-            border-top: 1px solid #222;
-        }
-
-        .feature-item h3 {
-            font-size: 1.1rem;
-            color: var(--gold);
-            margin-bottom: 4px;
-        }
-
-        .feature-item p {
-            font-size: 0.75rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Tokens Section */
-        .tokens-section {
+        /* Carousel Section */
+        .carousel-section {
             max-width: 1000px;
             width: 100%;
             position: relative;
@@ -186,7 +186,7 @@ body {
             margin-bottom: 40px;
         }
 
-        .tokens-title {
+        .carousel-title {
             font-size: 2rem;
             font-weight: 900;
             margin-bottom: 30px;
@@ -196,19 +196,34 @@ body {
             -webkit-text-fill-color: transparent;
         }
 
-        .tokens-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        .carousel-track {
+            display: flex;
             gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 12px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .carousel-track::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 4px;
         }
 
         .token-card {
+            flex: 0 0 280px;
+            scroll-snap-align: start;
             background: var(--card-bg);
             border: 2px solid #222;
             border-radius: 16px;
             overflow: hidden;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            text-align: left;
         }
 
         .token-card:hover {
@@ -292,20 +307,15 @@ body {
 <body>
 
     <div class="bg-glow"></div>
-292| <body>
-293| 
-294|     <div class="bg-glow"></div>
-295|
-296|     <div class="video-hero">
-297|         <video autoplay muted loop playsinline class="hero-video">
-298|             <source src="your-video.mp4" type="video/mp4">
-299|             <source src="your-video.webm" type="video/webm">
-300|             Your browser doesn't support HTML5 video.
-301|         </video>
-302|         <div class="video-overlay"></div>
-303|     </div>
-304|
-305|     <div class="container">
+
+    <div class="video-hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="_users_b7c824c7-4b1c-403b-93b7-0ec6eff1df3c_generated_b8b7bb04-0586-46dd-bab8-cee206c3e80b_generated_video.mp4" type="video/mp4">
+            Your browser doesn't support HTML5 video.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
     <div class="container">
         <div class="flag-bar">
             <div class="g"></div>
@@ -326,27 +336,12 @@ body {
                 <span>𝕏 Follow @chingonamics</span>
             </a>
         </div>
-
-        <div class="features">
-            <div class="feature-item">
-                <h3>100%</h3>
-                <p>Pure Culture</p>
-            </div>
-            <div class="feature-item">
-                <h3>SOL</h3>
-                <p>Chain Native</p>
-            </div>
-            <div class="feature-item">
-                <h3>⚡</h3>
-                <p>Fast Drops</p>
-            </div>
-        </div>
     </div>
 
-    <!-- Tokens Section -->
-    <div class="tokens-section">
-        <h2 class="tokens-title">🎬 Our Launches</h2>
-        <div class="tokens-grid">
+    <!-- Carousel Section -->
+    <div class="carousel-section">
+        <h2 class="carousel-title">🎬 Our Launches</h2>
+        <div class="carousel-track">
             <!-- The Hector Cinematic Universe -->
             <div class="token-card">
                 <img src="IMG_0403.jpeg" alt="The Hector Cinematic Universe" class="token-image">
