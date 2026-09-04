@@ -198,25 +198,46 @@
 
         .carousel-track {
             display: flex;
-            gap: 24px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding-bottom: 12px;
-            -webkit-overflow-scrolling: touch;
+            transition: transform 0.3s ease;
         }
 
-        .carousel-track::-webkit-scrollbar {
-            height: 8px;
+        .carousel-viewport {
+            max-width: 560px;
+            margin: 0 auto;
+            overflow: hidden;
         }
 
-        .carousel-track::-webkit-scrollbar-thumb {
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .carousel-control {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .carousel-control:hover:not(:disabled) {
             background: var(--gold);
-            border-radius: 4px;
+            color: var(--dark);
+        }
+
+        .carousel-control:disabled {
+            cursor: not-allowed;
+            opacity: 0.35;
         }
 
         .token-card {
-            flex: 0 0 280px;
-            scroll-snap-align: start;
+            flex: 0 0 100%;
             background: var(--card-bg);
             border: 2px solid #222;
             border-radius: 16px;
@@ -326,7 +347,7 @@
         <span class="badge">🔥 Next Launch Pending</span>
 
         <h1>CHINGONAMICS</h1>
-        <p class="subtitle">The factory for high-octane, Mexican-themed meme coins on Solana. No boring tokens allowed—only pure <i>chingonería</i>.</p>
+        <p class="subtitle">The factory for high-octane, Mexican-themed meme coins. No boring tokens allowed—only pure <i>chingonería</i>.</p>
 
         <div class="cta-box">
             <a href="https://pump.fun/join/Chingonamics" target="_blank" class="btn btn-pump">
@@ -341,38 +362,74 @@
     <!-- Carousel Section -->
     <div class="carousel-section">
         <h2 class="carousel-title">🎬 Our Launches</h2>
-        <div class="carousel-track">
-            <!-- The Hector Cinematic Universe -->
-            <div class="token-card">
-                <img src="IMG_0403.jpeg" alt="The Hector Cinematic Universe" class="token-image">
-                <div class="token-content">
-                    <span class="token-ticker">$HECTOR</span>
-                    <h3 class="token-name">Hector Cinematic Universe</h3>
-                    <p class="token-description">The "Hector Cinematic Universe" is a fan-made joke and viral meme about American character actor Noel Gugliemi, who has played characters named Hector across more than a dozen unrelated movies and TV shows.</p>
-                    <a href="https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump" target="_blank" class="token-button">
-                        <span>🚀 Trade Now</span>
-                    </a>
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="launch-track">
+                <!-- The Hector Cinematic Universe -->
+                <div class="token-card">
+                    <img src="IMG_0403.jpeg" alt="The Hector Cinematic Universe" class="token-image">
+                    <div class="token-content">
+                        <span class="token-ticker">$HECTOR</span>
+                        <h3 class="token-name">Hector Cinematic Universe</h3>
+                        <p class="token-description">The "Hector Cinematic Universe" is a fan-made joke and viral meme about American character actor Noel Gugliemi, who has played characters named Hector across more than a dozen unrelated movies and TV shows.</p>
+                        <a href="https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump" target="_blank" class="token-button">
+                            <span>🚀 Trade Now</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <!-- La Chancla -->
-            <div class="token-card">
-                <img src="IMG_0406.jpeg" alt="La Chancla" class="token-image">
-                <div class="token-content">
-                    <span class="token-ticker">$CHANCLA</span>
-                    <h3 class="token-name">La Chancla</h3>
-                    <p class="token-description">Beware the power of La Chancla - a cultural phenomenon that transcends memes and becomes reality on the blockchain.</p>
-                    <a href="https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump" target="_blank" class="token-button">
-                        <span>🚀 Trade Now</span>
-                    </a>
+                <!-- La Chancla -->
+                <div class="token-card">
+                    <img src="IMG_0406.jpeg" alt="La Chancla" class="token-image">
+                    <div class="token-content">
+                        <span class="token-ticker">$CHANCLA</span>
+                        <h3 class="token-name">La Chancla</h3>
+                        <p class="token-description">Beware the power of La Chancla - a cultural phenomenon that transcends memes and becomes reality on the blockchain.</p>
+                        <a href="https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump" target="_blank" class="token-button">
+                            <span>🚀 Trade Now</span>
+                        </a>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="carousel-controls" aria-label="Launch navigation">
+            <button class="carousel-control" id="previous-launch" type="button" aria-label="Previous launch">←</button>
+            <button class="carousel-control" id="next-launch" type="button" aria-label="Next launch">→</button>
         </div>
     </div>
 
     <footer>
         &copy; 2026 Chingonamics. NFA. DYOR.
     </footer>
+
+    <script>
+        const launchTrack = document.getElementById('launch-track');
+        const previousLaunch = document.getElementById('previous-launch');
+        const nextLaunch = document.getElementById('next-launch');
+        const launchCount = launchTrack.children.length;
+        let currentLaunch = 0;
+
+        function updateLaunchCarousel() {
+            launchTrack.style.transform = `translateX(-${currentLaunch * 100}%)`;
+            previousLaunch.disabled = currentLaunch === 0;
+            nextLaunch.disabled = currentLaunch === launchCount - 1;
+        }
+
+        previousLaunch.addEventListener('click', () => {
+            if (currentLaunch > 0) {
+                currentLaunch -= 1;
+                updateLaunchCarousel();
+            }
+        });
+
+        nextLaunch.addEventListener('click', () => {
+            if (currentLaunch < launchCount - 1) {
+                currentLaunch += 1;
+                updateLaunchCarousel();
+            }
+        });
+
+        updateLaunchCarousel();
+    </script>
 
 </body>
 </html>
