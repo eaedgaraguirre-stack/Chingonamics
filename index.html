@@ -257,16 +257,6 @@
             margin-bottom: 40px;
         }
 
-        .portfolio-title {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -294,11 +284,6 @@
             transform: translateY(-8px);
             border-color: var(--gold);
             box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
-        }
-
-        .featured-token-card {
-            border-color: rgba(255, 215, 0, 0.8);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.15);
         }
 
         .token-image {
@@ -426,7 +411,6 @@
             body { padding: 12px; }
             .container { padding: 28px 18px; }
             .share-buttons, .official-links { grid-template-columns: 1fr; }
-            .portfolio-title { font-size: 1.65rem; }
         }
 
         footer {
@@ -537,15 +521,6 @@
 
         const pumpCoins = [
             {
-                name: 'Chingonamics',
-                ticker: '$CHINGO',
-                status: 'Latest',
-                image: 'IMG_0325.png',
-                contract: '5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
-                pumpUrl: 'https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
-                about: 'Official Chingonamics Pump account coin: pure meme energy, community chaos, and the latest wave of the Chingonamics fun house.'
-            },
-            {
                 name: 'Elsa',
                 ticker: '$ELSA',
                 status: 'In Account',
@@ -569,10 +544,9 @@
             const container = document.getElementById('portfolio-grid');
             if (!container) return;
 
-            container.innerHTML = pumpCoins.map((coin, index) => {
-                const isFeatured = index === 0;
+            container.innerHTML = pumpCoins.map((coin) => {
                 return `
-                    <article class="token-card ${isFeatured ? 'featured-token-card' : ''}">
+                    <article class="token-card">
                         <img src="${coin.image}" alt="${coin.name} meme coin artwork" class="token-image" loading="lazy">
                         <div class="token-content">
                             <div class="token-meta">
