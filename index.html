@@ -249,7 +249,14 @@
             margin-bottom: 16px;
         }
 
-        /* Carousel Section */
+        .launches-section {
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
         .portfolio-section {
             max-width: 1000px;
             width: 100%;
@@ -275,10 +282,14 @@
 
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
             max-width: 1000px;
             margin: 0 auto;
+            align-items: stretch;
+            max-height: 72vh;
+            overflow-y: auto;
+            padding-right: 6px;
         }
 
         .token-card {
@@ -296,6 +307,11 @@
             transform: translateY(-8px);
             border-color: var(--gold);
             box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .featured-token-card {
+            border-color: rgba(255, 215, 0, 0.8);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.15);
         }
 
         .token-image {
@@ -412,7 +428,11 @@
         @media (prefers-reduced-motion: reduce) {
             .hero-video { display: none; }
             .video-hero { background: url('IMG_0325.png') center / cover; min-height: 220px; }
-                .btn, .token-card { transition: none; }
+            .btn, .token-card { transition: none; }
+        }
+
+        @media (max-width: 860px) {
+            .portfolio-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 480px) {
@@ -420,7 +440,6 @@
             .container { padding: 28px 18px; }
             .share-buttons, .official-links { grid-template-columns: 1fr; }
             .portfolio-title { font-size: 1.65rem; }
-            .portfolio-grid { grid-template-columns: 1fr; }
         }
 
         footer {
@@ -477,48 +496,9 @@
         </div>
     </section>
 
-    <section class="portfolio-section" aria-labelledby="portfolio-heading">
-        <h2 class="portfolio-title" id="portfolio-heading">🪙 Coins in the Pump Account</h2>
-        <div class="portfolio-grid">
-            <div class="token-card">
-                <img src="IMG_0324.jpeg?v=20260904" alt="Elsa meme coin artwork" class="token-image" loading="lazy">
-                <div class="token-content">
-                    <div class="token-meta">
-                        <span class="token-ticker">$ELSA</span>
-                        <span class="launch-status">● In Account</span>
-                    </div>
-                    <h3 class="token-name">Elsa</h3>
-                    <p class="token-description">A fresh Chingonamics coin with icy meme energy and a place in the Pump account collection.</p>
-                    <div class="contract-row">
-                        <span>CA: 5i2t...pump</span>
-                        <button class="copy-contract" type="button" data-contract="5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Copy</button>
-                    </div>
-                    <div class="token-actions">
-                        <a href="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
-                        <button class="token-share" type="button" data-share-token="Elsa" data-share-url="https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump">Share</button>
-                    </div>
-                </div>
-            </div>
-            <div class="token-card">
-                <img src="IMG_0440.jpeg?v=20260904" alt="Selena meme coin artwork" class="token-image" loading="lazy">
-                <div class="token-content">
-                    <div class="token-meta">
-                        <span class="token-ticker">$SELENA</span>
-                        <span class="launch-status">● In Account</span>
-                    </div>
-                    <h3 class="token-name">Selena</h3>
-                    <p class="token-description">A new Chingonamics coin bringing iconic Selena energy to the Pump account collection.</p>
-                    <div class="contract-row">
-                        <span>CA: Gzt4...pump</span>
-                        <button class="copy-contract" type="button" data-contract="Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump">Copy</button>
-                    </div>
-                    <div class="token-actions">
-                        <a href="https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
-                        <button class="token-share" type="button" data-share-token="Selena" data-share-url="https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump">Share</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="launches-section" aria-labelledby="launches-heading">
+        <h2 class="section-heading" id="launches-heading">🚀 Our Launches</h2>
+        <div class="portfolio-grid" id="portfolio-grid"></div>
     </section>
 
     <section class="community-section" aria-labelledby="community-heading">
@@ -536,6 +516,23 @@
     </footer>
 
     <script>
+        function copyText(value) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                return navigator.clipboard.writeText(value);
+            }
+
+            const tempInput = document.createElement('textarea');
+            tempInput.value = value;
+            tempInput.setAttribute('readonly', '');
+            tempInput.style.position = 'fixed';
+            tempInput.style.top = '-9999px';
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            return Promise.resolve();
+        }
+
         function shareUrl(message, url, platform) {
             const encodedMessage = encodeURIComponent(message);
             const encodedUrl = encodeURIComponent(url);
@@ -545,11 +542,73 @@
                 whatsapp: `https://api.whatsapp.com/send?text=${encodedMessage}%20${encodedUrl}`
             };
             if (platform === 'copy') {
-                navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
+                copyText(url).then(() => alert('Link copied!'));
             } else {
                 window.open(shareLinks[platform], '_blank', 'noopener,noreferrer');
             }
         }
+
+        const pumpCoins = [
+            {
+                name: 'Chingonamics',
+                ticker: '$CHINGO',
+                status: 'Latest',
+                image: 'IMG_0325.png',
+                contract: '5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
+                pumpUrl: 'https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
+                about: 'Official Chingonamics Pump account coin: pure meme energy, community chaos, and the latest wave of the Chingonamics fun house.'
+            },
+            {
+                name: 'Elsa',
+                ticker: '$ELSA',
+                status: 'In Account',
+                image: 'IMG_0324.jpeg?v=20260904',
+                contract: '5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
+                pumpUrl: 'https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
+                about: 'Frosty meme energy, icy attitude, and a strong place in the Chingonamics Pump account collection.'
+            },
+            {
+                name: 'Selena',
+                ticker: '$SELENA',
+                status: 'In Account',
+                image: 'IMG_0440.jpeg?v=20260904',
+                contract: 'Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump',
+                pumpUrl: 'https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump',
+                about: 'Iconic Selena energy with a fresh meme punch and a bright spot in the Chingonamics Pump account lineup.'
+            }
+        ];
+
+        function renderPumpCoins() {
+            const container = document.getElementById('portfolio-grid');
+            if (!container) return;
+
+            container.innerHTML = pumpCoins.map((coin, index) => {
+                const isFeatured = index === 0;
+                return `
+                    <article class="token-card ${isFeatured ? 'featured-token-card' : ''}">
+                        <img src="${coin.image}" alt="${coin.name} meme coin artwork" class="token-image" loading="lazy">
+                        <div class="token-content">
+                            <div class="token-meta">
+                                <span class="token-ticker">${coin.ticker}</span>
+                                <span class="launch-status">● ${coin.status}</span>
+                            </div>
+                            <h3 class="token-name">${coin.name}</h3>
+                            <p class="token-description">${coin.about}</p>
+                            <div class="contract-row">
+                                <span>CA: ${coin.contract.slice(0, 4)}...pump</span>
+                                <button class="copy-contract" type="button" data-contract="${coin.contract}">Copy</button>
+                            </div>
+                            <div class="token-actions">
+                                <a href="${coin.pumpUrl}" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                                <button class="token-share" type="button" data-share-token="${coin.name}" data-share-url="${coin.pumpUrl}">Share</button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        renderPumpCoins();
 
         document.querySelectorAll('[data-share]').forEach((button) => {
             button.addEventListener('click', () => {
@@ -565,9 +624,10 @@
 
         document.querySelectorAll('[data-contract]').forEach((button) => {
             button.addEventListener('click', () => {
-                navigator.clipboard.writeText(button.dataset.contract).then(() => {
+                copyText(button.dataset.contract).then(() => {
+                    const previousText = button.textContent;
                     button.textContent = 'Copied!';
-                    setTimeout(() => { button.textContent = 'Copy'; }, 1500);
+                    setTimeout(() => { button.textContent = previousText; }, 1500);
                 });
             });
         });
