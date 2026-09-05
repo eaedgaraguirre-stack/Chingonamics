@@ -10,9 +10,25 @@
   {
     "name": "Selena",
     "ticker": "$SELENA",
-    "image": "",
+    "image": "IMG_0456.jpeg?v=20260905",
     "contract": "Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump",
     "pumpUrl": "https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump",
     "created": 0
+  },
+  {
+    "name": "Yamamoto",
+    "ticker": "$YAMAMOTO",
+    "image": "IMG_0327.jpeg?v=20260905",
+    "contract": "3eXDKRQf6SJeEhBHa4ZShYBfXRHNuf6zjKQA2sqRpump",
+    "pumpUrl": "https://pump.fun/coin/3eXDKRQf6SJeEhBHa4ZShYBfXRHNuf6zjKQA2sqRpump",
+    "created": -2
+  },
+  {
+    "name": "Hector",
+    "ticker": "$HECTOR",
+    "image": "IMG_0403.jpeg?v=20260905",
+    "contract": "7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump",
+    "pumpUrl": "https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump",
+    "created": -3
   }
 ]
