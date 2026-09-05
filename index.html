@@ -8,6 +8,7 @@
     <meta http-equiv="Expires" content="0">
     <meta name="description" content="Chingonamics is the Mexican meme machine: discover chaotic community launches, share the memes, and join the fun.">
     <link rel="canonical" href="https://chingonamics.com/">
+    <link rel="icon" type="image/png" href="favicon.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://chingonamics.com/">
     <meta property="og:title" content="Chingonamics | The Mexican Meme Machine">
@@ -89,6 +90,7 @@
             display: block;
             width: 100%;
             height: auto;
+            aspect-ratio: 16 / 9;
         }
 
         .hero-tagline {
@@ -431,8 +433,9 @@
 
     <div class="bg-glow"></div>
 
+    <main>
     <div class="video-hero">
-        <video autoplay muted loop playsinline poster="IMG_0325.png" class="hero-video">
+        <video autoplay muted loop playsinline poster="IMG_0325.png" preload="metadata" class="hero-video" aria-hidden="true">
             <source src="_users_b7c824c7-4b1c-403b-93b7-0ec6eff1df3c_generated_b8b7bb04-0586-46dd-bab8-cee206c3e80b_generated_video.mp4" type="video/mp4">
             Your browser doesn't support HTML5 video.
         </video>
@@ -446,17 +449,17 @@
             <div class="r"></div>
         </div>
 
-        <span class="badge">🔥 Next Launch Pending</span>
+        <span class="badge">🔥 9 Launches and Counting</span>
 
         <h1>CHINGONAMICS</h1>
         <p class="hero-tagline">The Mexican Meme Machine.</p>
         <p class="subtitle">High-octane community launches, legendary memes, and pure <i>chingonería</i>. No boring tokens allowed.</p>
 
         <div class="cta-box">
-            <a href="https://pump.fun/join/Chingonamics" target="_blank" class="btn btn-pump">
+            <a href="https://pump.fun/join/Chingonamics" target="_blank" rel="noopener noreferrer" class="btn btn-pump">
                 <span>🚀 Join the Meme Machine</span>
             </a>
-            <a href="https://x.com/chingonamics?s=11" target="_blank" class="btn btn-x">
+            <a href="https://x.com/chingonamics?s=11" target="_blank" rel="noopener noreferrer" class="btn btn-x">
                 <span>𝕏 Follow @chingonamics</span>
             </a>
         </div>
@@ -476,8 +479,7 @@
         <h2 class="section-heading" id="launches-heading">🚀 Our Launches</h2>
         <div class="portfolio-grid" id="portfolio-grid"></div>
     </section>
-
-    
+    </main>
 
     <footer>
         &copy; 2026 Chingonamics. NFA. DYOR.
