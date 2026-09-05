@@ -5,7 +5,7 @@
     "image": "IMG_0460.jpeg?v=20260905",
     "contract": "5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump",
     "pumpUrl": "https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump",
-    "created": 1
+    "created": 10
   },
   {
     "name": "Selena",
@@ -13,7 +13,15 @@
     "image": "IMG_0456.jpeg?v=20260905",
     "contract": "Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump",
     "pumpUrl": "https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump",
-    "created": 0
+    "created": 9
+  },
+  {
+    "name": "AOC",
+    "ticker": "$AOC",
+    "image": "IMG_0451.jpeg?v=20260905",
+    "contract": "GhEPCjcNzByoQotmn9Nxo2n5m7mvz4cJ3hzm5zwRpump",
+    "pumpUrl": "https://pump.fun/coin/GhEPCjcNzByoQotmn9Nxo2n5m7mvz4cJ3hzm5zwRpump",
+    "created": 8
   },
   {
     "name": "Yamamoto",
@@ -21,7 +29,23 @@
     "image": "IMG_0327.jpeg?v=20260905",
     "contract": "3eXDKRQf6SJeEhBHa4ZShYBfXRHNuf6zjKQA2sqRpump",
     "pumpUrl": "https://pump.fun/coin/3eXDKRQf6SJeEhBHa4ZShYBfXRHNuf6zjKQA2sqRpump",
-    "created": -2
+    "created": 7
+  },
+  {
+    "name": "Francisco",
+    "ticker": "$FRANCISCO",
+    "image": "IMG_0446.jpeg?v=20260905",
+    "contract": "3CmPRti6ajkqg8EKBR4aD4c3gDfxsgALGGhmKGSvpump",
+    "pumpUrl": "https://pump.fun/coin/3CmPRti6ajkqg8EKBR4aD4c3gDfxsgALGGhmKGSvpump",
+    "created": 6
+  },
+  {
+    "name": "Loteria",
+    "ticker": "$LOTERIA",
+    "image": "IMG_0442.jpeg?v=20260905",
+    "contract": "AYZAWk4Wy5tAkzVpSAnZpaHQYJrj6ExzhFdoPzMZpump",
+    "pumpUrl": "https://pump.fun/coin/AYZAWk4Wy5tAkzVpSAnZpaHQYJrj6ExzhFdoPzMZpump",
+    "created": 5
   },
   {
     "name": "Hector",
@@ -29,6 +53,22 @@
     "image": "IMG_0403.jpeg?v=20260905",
     "contract": "7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump",
     "pumpUrl": "https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump",
-    "created": -3
+    "created": 4
+  },
+  {
+    "name": "Chancla",
+    "ticker": "$CHANCLA",
+    "image": "IMG_0406.jpeg?v=20260905",
+    "contract": "4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump",
+    "pumpUrl": "https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump",
+    "created": 3
+  },
+  {
+    "name": "The Homies",
+    "ticker": "$HOMIES",
+    "image": "IMG_0440.jpeg?v=20260905",
+    "contract": "Hr8CpESJjtyRfKa7nTSKVNAbTSJig7u86YZMuFKWpump",
+    "pumpUrl": "https://pump.fun/coin/Hr8CpESJjtyRfKa7nTSKVNAbTSJig7u86YZMuFKWpump",
+    "created": 2
   }
 ]
