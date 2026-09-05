@@ -577,11 +577,12 @@
                 const name = escapeHtml(coin.name || 'Unknown');
                 const ticker = escapeHtml(coin.ticker || '');
                 const image = escapeHtml(coin.image || '');
-                const contract = escapeHtml(coin.contract || '');
+                const rawContract = String(coin.contract || '');
+                const contract = escapeHtml(rawContract);
                 const pumpUrl = escapeHtml(coin.pumpUrl || '#');
                 const about = escapeHtml(coin.about || '');
                 const status = escapeHtml(coin.status || (isFeatured ? 'Latest' : ''));
-                const shortContract = contract ? escapeHtml(contract.slice(0, 4)) + '...pump' : '';
+                const shortContract = rawContract ? escapeHtml(rawContract.slice(0, 4)) + '...pump' : '';
                 return `
                     <article class="token-card ${isFeatured ? 'featured-token-card' : ''}">
                         ${image ? `<img src="${image}" alt="${name} meme coin artwork" class="token-image" loading="lazy">` : ''}

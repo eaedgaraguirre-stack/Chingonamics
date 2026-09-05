@@ -25,7 +25,8 @@ jobs:
           set -euo pipefail
 
           CREATOR="Chingonamics"
-          API_URL="https://frontend-api-v3.pump.fun/coins/user-created-coins/${CREATOR}?limit=50&offset=0&includeNsfw=false"
+          BASE_URL="https://frontend-api-v3.pump.fun/coins/user-created-coins/${CREATOR}"
+          LIMIT=50
 
           HEADERS=(-H "Accept: application/json" -H "User-Agent: Mozilla/5.0 (GitHub Actions)")
           if [ -n "${PUMP_FUN_AUTH_TOKEN:-}" ]; then
@@ -33,17 +34,44 @@ jobs:
           fi
 
           echo "Fetching coins for creator: ${CREATOR}"
-          HTTP_STATUS=$(curl -sS -o /tmp/pump_coins_raw.json -w "%{http_code}" "${HEADERS[@]}" "$API_URL" || true)
-          echo "HTTP status: ${HTTP_STATUS}"
 
-          if [ "$HTTP_STATUS" != "200" ]; then
-            echo "::warning::pump.fun API returned ${HTTP_STATUS}. Keeping existing coins.json."
-            exit 0
-          fi
+          # Paginate until a page returns fewer than LIMIT results so we
+          # capture every launch, not just the first 50.
+          OFFSET=0
+          > /tmp/pump_coins_pages.jsonl
+          while : ; do
+            API_URL="${BASE_URL}?limit=${LIMIT}&offset=${OFFSET}&includeNsfw=false"
+            HTTP_STATUS=$(curl -sS -o /tmp/pump_page.json -w "%{http_code}" "${HEADERS[@]}" "$API_URL" || true)
+            echo "offset=${OFFSET} http=${HTTP_STATUS}"
 
-          # Validate we got a JSON array
-          if ! jq -e 'if type=="array" then true else false end' /tmp/pump_coins_raw.json > /dev/null 2>&1; then
-            echo "::warning::API did not return a JSON array. Keeping existing coins.json."
+            if [ "$HTTP_STATUS" != "200" ]; then
+              echo "::warning::pump.fun API returned ${HTTP_STATUS} at offset ${OFFSET}."
+              break
+            fi
+
+            if ! jq -e 'type=="array"' /tmp/pump_page.json > /dev/null 2>&1; then
+              echo "::warning::API did not return a JSON array at offset ${OFFSET}."
+              break
+            fi
+
+            COUNT=$(jq 'length' /tmp/pump_page.json)
+            echo "  got ${COUNT} coin(s)"
+            jq -c '.[]' /tmp/pump_page.json >> /tmp/pump_coins_pages.jsonl
+
+            if [ "$COUNT" -lt "$LIMIT" ]; then
+              break
+            fi
+            OFFSET=$((OFFSET + LIMIT))
+          done
+
+          # Combine all pages into a single array. Each line is one coin object,
+          # so a plain slurp (-s) already yields the array we want.
+          jq -s '.' /tmp/pump_coins_pages.jsonl > /tmp/pump_coins_raw.json
+
+          # Require a non-empty array; otherwise keep the existing coins.json
+          # so a transient API issue doesn't wipe the list.
+          if ! jq -e 'type=="array" and length > 0' /tmp/pump_coins_raw.json > /dev/null 2>&1; then
+            echo "::warning::No coins returned. Keeping existing coins.json."
             exit 0
           fi
 
