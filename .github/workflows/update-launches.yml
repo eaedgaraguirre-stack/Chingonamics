@@ -24,10 +24,13 @@ jobs:
         run: |
           set -euo pipefail
 
-          # The pump.fun "user-created-coins" endpoint takes the creator's
-          # wallet address, not their display name/handle, so we resolve the
-          # address first from a known Chingonamics-launched coin (Selena)
-          # before listing every coin created by that wallet.
+          # The "official" endpoints that take a display name/handle (e.g.
+          # /coins/user-created-coins/{userId}) actually expect the creator's
+          # wallet address, and even then 404/500 in practice. The endpoint
+          # that reliably works is /coins?creator=<walletAddress>, so we
+          # first resolve the Chingonamics wallet address from a known
+          # Chingonamics-launched coin (Selena), then list all coins by
+          # that creator address.
           KNOWN_MINT="Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump"
           LIMIT=50
 
@@ -38,7 +41,7 @@ jobs:
 
           echo "Resolving Chingonamics creator wallet from known mint: ${KNOWN_MINT}"
           COIN_HTTP_STATUS=$(curl -sS -o /tmp/known_coin.json -w "%{http_code}" "${HEADERS[@]}" "https://frontend-api-v3.pump.fun/coins/${KNOWN_MINT}" || true)
-          echo "Full known coin JSON:"; cat /tmp/known_coin.json; echo
+          echo "known coin lookup http=${COIN_HTTP_STATUS}"
 
           CREATOR=""
           if [ "$COIN_HTTP_STATUS" == "200" ] && jq -e '.creator' /tmp/known_coin.json > /dev/null 2>&1; then
@@ -50,21 +53,7 @@ jobs:
             exit 0
           fi
 
-          echo "=== Probing /users/{creator} ==="
-          curl -sS -w "\nHTTP:%{http_code}\n" "${HEADERS[@]}" "https://frontend-api-v3.pump.fun/users/${CREATOR}"
-          echo
-
-          echo "=== Probing /coins/user-created-coins/{creator} (retry) ==="
-          curl -sS -w "\nHTTP:%{http_code}\n" "${HEADERS[@]}" "https://frontend-api-v3.pump.fun/coins/user-created-coins/${CREATOR}?limit=50&offset=0&includeNsfw=false"
-          echo
-
-          echo "=== Probing /coins?creator= ==="
-          curl -sS -w "\nHTTP:%{http_code}\n" "${HEADERS[@]}" "https://frontend-api-v3.pump.fun/coins?creator=${CREATOR}&limit=50&offset=0"
-          echo
-
-          exit 0
-
-          BASE_URL="https://advanced-api-v2.pump.fun/coins-v2/user-created-coins/${CREATOR}"
+          BASE_URL="https://frontend-api-v3.pump.fun/coins"
 
           echo "Fetching coins for creator: ${CREATOR}"
 
@@ -73,19 +62,17 @@ jobs:
           OFFSET=0
           > /tmp/pump_coins_pages.jsonl
           while : ; do
-            API_URL="${BASE_URL}?limit=${LIMIT}&offset=${OFFSET}"
+            API_URL="${BASE_URL}?creator=${CREATOR}&limit=${LIMIT}&offset=${OFFSET}"
             HTTP_STATUS=$(curl -sS -o /tmp/pump_page.json -w "%{http_code}" "${HEADERS[@]}" "$API_URL" || true)
             echo "offset=${OFFSET} http=${HTTP_STATUS}"
 
             if [ "$HTTP_STATUS" != "200" ]; then
               echo "::warning::pump.fun API returned ${HTTP_STATUS} at offset ${OFFSET}."
-              echo "Response body:"; cat /tmp/pump_page.json
               break
             fi
 
             if ! jq -e 'type=="array"' /tmp/pump_page.json > /dev/null 2>&1; then
               echo "::warning::API did not return a JSON array at offset ${OFFSET}."
-              echo "Response body:"; cat /tmp/pump_page.json
               break
             fi
 
@@ -118,7 +105,7 @@ jobs:
                 contract: (.mint // ""),
                 pumpUrl: ("https://pump.fun/coin/" + (.mint // "")),
                 created: (.created_timestamp // 0)
-              }] | sort_by(.created) | reverse' \
+              }] | unique_by(.contract) | sort_by(.created) | reverse' \
             /tmp/pump_coins_raw.json > coins.json
 
           echo "Wrote coins.json with $(jq length coins.json) coin(s)"
