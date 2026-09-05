@@ -38,7 +38,7 @@ jobs:
 
           echo "Resolving Chingonamics creator wallet from known mint: ${KNOWN_MINT}"
           COIN_HTTP_STATUS=$(curl -sS -o /tmp/known_coin.json -w "%{http_code}" "${HEADERS[@]}" "https://frontend-api-v3.pump.fun/coins/${KNOWN_MINT}" || true)
-          echo "known coin lookup http=${COIN_HTTP_STATUS}"
+          echo "Full known coin JSON:"; cat /tmp/known_coin.json; echo
 
           CREATOR=""
           if [ "$COIN_HTTP_STATUS" == "200" ] && jq -e '.creator' /tmp/known_coin.json > /dev/null 2>&1; then
@@ -49,6 +49,20 @@ jobs:
             echo "::warning::Could not resolve creator wallet address. Keeping existing coins.json."
             exit 0
           fi
+
+          echo "=== Probing /users/{creator} ==="
+          curl -sS -w "\nHTTP:%{http_code}\n" "${HEADERS[@]}" "https://frontend-api-v3.pump.fun/users/${CREATOR}"
+          echo
+
+          echo "=== Probing /coins/user-created-coins/{creator} (retry) ==="
+          curl -sS -w "\nHTTP:%{http_code}\n" "${HEADERS[@]}" "https://frontend-api-v3.pump.fun/coins/user-created-coins/${CREATOR}?limit=50&offset=0&includeNsfw=false"
+          echo
+
+          echo "=== Probing /coins?creator= ==="
+          curl -sS -w "\nHTTP:%{http_code}\n" "${HEADERS[@]}" "https://frontend-api-v3.pump.fun/coins?creator=${CREATOR}&limit=50&offset=0"
+          echo
+
+          exit 0
 
           BASE_URL="https://advanced-api-v2.pump.fun/coins-v2/user-created-coins/${CREATOR}"
 
