@@ -540,20 +540,9 @@
             }
         }
 
-        const pumpCoins = [
-            
-
-                    {
-      name: 'Elsa',
-      ticker: '$ELSA',
-      status: 'Latest',
-      image: 'IMG_0324.jpeg?v=20260904',
-      contract: 'PASTE_ELSA_ACTUAL_CONTRACT_HERE',
-      pumpUrl: 'https://pump.fun/coin/PASTE_ELSA_ACTUAL_CONTRACT_HERE',
-      about: 'Frosty meme energy, icy attitude, and a strong place in the Chingonamics Pump account collection.'
-    },
-
-            },
+        // Fallback data (used only if coins.json hasn't been generated yet).
+        // The GitHub Actions workflow keeps coins.json up to date automatically.
+        const fallbackPumpCoins = [
             {
                 name: 'Selena',
                 ticker: '$SELENA',
@@ -565,29 +554,53 @@
             }
         ];
 
-        function renderPumpCoins() {
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderPumpCoins(coins) {
             const container = document.getElementById('portfolio-grid');
             if (!container) return;
 
-            container.innerHTML = pumpCoins.map((coin, index) => {
+            if (!Array.isArray(coins) || coins.length === 0) {
+                container.innerHTML = '<p class="community-copy">No launches found yet. Stay tuned!</p>';
+                return;
+            }
+
+            container.innerHTML = coins.map((coin, index) => {
                 const isFeatured = index === 0;
+                const name = escapeHtml(coin.name || 'Unknown');
+                const ticker = escapeHtml(coin.ticker || '');
+                const image = escapeHtml(coin.image || '');
+                const rawContract = String(coin.contract || '');
+                const contract = escapeHtml(rawContract);
+                const pumpUrl = escapeHtml(coin.pumpUrl || '#');
+                const about = escapeHtml(coin.about || '');
+                const status = escapeHtml(coin.status || (isFeatured ? 'Latest' : ''));
+                const shortContract = rawContract ? escapeHtml(rawContract.slice(0, 4)) + '...pump' : '';
                 return `
                     <article class="token-card ${isFeatured ? 'featured-token-card' : ''}">
-                        <img src="${coin.image}" alt="${coin.name} meme coin artwork" class="token-image" loading="lazy">
+                        ${image ? `<img src="${image}" alt="${name} meme coin artwork" class="token-image" loading="lazy">` : ''}
                         <div class="token-content">
                             <div class="token-meta">
-                                <span class="token-ticker">${coin.ticker}</span>
-                                <span class="launch-status">● ${coin.status}</span>
+                                <span class="token-ticker">${ticker}</span>
+                                ${status ? `<span class="launch-status">● ${status}</span>` : ''}
                             </div>
-                            <h3 class="token-name">${coin.name}</h3>
-                            <p class="token-description">${coin.about}</p>
+                            <h3 class="token-name">${name}</h3>
+                            ${about ? `<p class="token-description">${about}</p>` : ''}
+                            ${contract ? `
                             <div class="contract-row">
-                                <span>CA: ${coin.contract.slice(0, 4)}...pump</span>
-                                <button class="copy-contract" type="button" data-contract="${coin.contract}">Copy</button>
-                            </div>
+                                <span>CA: ${shortContract}</span>
+                                <button class="copy-contract" type="button" data-contract="${contract}">Copy</button>
+                            </div>` : ''}
                             <div class="token-actions">
-                                <a href="${coin.pumpUrl}" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
-                                <button class="token-share" type="button" data-share-token="${coin.name}" data-share-url="${coin.pumpUrl}">Share</button>
+                                <a href="${pumpUrl}" target="_blank" rel="noopener noreferrer" class="token-button">🚀 View Coin</a>
+                                <button class="token-share" type="button" data-share-token="${name}" data-share-url="${pumpUrl}">Share</button>
                             </div>
                         </div>
                     </article>
@@ -595,27 +608,42 @@
             }).join('');
         }
 
-        renderPumpCoins();
+        function bindLaunchInteractions() {
+            document.querySelectorAll('[data-share-token]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    shareUrl(`Check out ${button.dataset.shareToken} on Chingonamics 🔥`, button.dataset.shareUrl, 'x');
+                });
+            });
+
+            document.querySelectorAll('[data-contract]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    copyText(button.dataset.contract).then(() => {
+                        const previousText = button.textContent;
+                        button.textContent = 'Copied!';
+                        setTimeout(() => { button.textContent = previousText; }, 1500);
+                    });
+                });
+            });
+        }
+
+        async function loadPumpCoins() {
+            try {
+                // Cache-bust so visitors always get the freshest list the workflow produced.
+                const response = await fetch('coins.json?v=' + Date.now(), { cache: 'no-store' });
+                if (!response.ok) throw new Error('coins.json not available');
+                const coins = await response.json();
+                renderPumpCoins(coins);
+            } catch (err) {
+                renderPumpCoins(fallbackPumpCoins);
+            }
+            bindLaunchInteractions();
+        }
+
+        loadPumpCoins();
 
         document.querySelectorAll('[data-share]').forEach((button) => {
             button.addEventListener('click', () => {
                 shareUrl('Join the Chingonamics Meme Machine 🔥', window.location.href, button.dataset.share);
-            });
-        });
-
-        document.querySelectorAll('[data-share-token]').forEach((button) => {
-            button.addEventListener('click', () => {
-                shareUrl(`Check out ${button.dataset.shareToken} on Chingonamics 🔥`, button.dataset.shareUrl, 'x');
-            });
-        });
-
-        document.querySelectorAll('[data-contract]').forEach((button) => {
-            button.addEventListener('click', () => {
-                copyText(button.dataset.contract).then(() => {
-                    const previousText = button.textContent;
-                    button.textContent = 'Copied!';
-                    setTimeout(() => { button.textContent = previousText; }, 1500);
-                });
             });
         });
     </script>

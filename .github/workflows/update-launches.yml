@@ -1,0 +1,103 @@
+name: Update Pump.fun Launches
+
+on:
+  schedule:
+    # Run every 6 hours to pick up new Chingonamics launches automatically
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-launches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch Chingonamics pump.fun coins
+        env:
+          # Optional: if the pump.fun API ever requires auth, add a
+          # PUMP_FUN_AUTH_TOKEN secret in the repo settings.
+          PUMP_FUN_AUTH_TOKEN: ${{ secrets.PUMP_FUN_AUTH_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          CREATOR="Chingonamics"
+          BASE_URL="https://frontend-api-v3.pump.fun/coins/user-created-coins/${CREATOR}"
+          LIMIT=50
+
+          HEADERS=(-H "Accept: application/json" -H "User-Agent: Mozilla/5.0 (GitHub Actions)")
+          if [ -n "${PUMP_FUN_AUTH_TOKEN:-}" ]; then
+            HEADERS+=(-H "Authorization: ******")
+          fi
+
+          echo "Fetching coins for creator: ${CREATOR}"
+
+          # Paginate until a page returns fewer than LIMIT results so we
+          # capture every launch, not just the first 50.
+          OFFSET=0
+          > /tmp/pump_coins_pages.jsonl
+          while : ; do
+            API_URL="${BASE_URL}?limit=${LIMIT}&offset=${OFFSET}&includeNsfw=false"
+            HTTP_STATUS=$(curl -sS -o /tmp/pump_page.json -w "%{http_code}" "${HEADERS[@]}" "$API_URL" || true)
+            echo "offset=${OFFSET} http=${HTTP_STATUS}"
+
+            if [ "$HTTP_STATUS" != "200" ]; then
+              echo "::warning::pump.fun API returned ${HTTP_STATUS} at offset ${OFFSET}."
+              break
+            fi
+
+            if ! jq -e 'type=="array"' /tmp/pump_page.json > /dev/null 2>&1; then
+              echo "::warning::API did not return a JSON array at offset ${OFFSET}."
+              break
+            fi
+
+            COUNT=$(jq 'length' /tmp/pump_page.json)
+            echo "  got ${COUNT} coin(s)"
+            jq -c '.[]' /tmp/pump_page.json >> /tmp/pump_coins_pages.jsonl
+
+            if [ "$COUNT" -lt "$LIMIT" ]; then
+              break
+            fi
+            OFFSET=$((OFFSET + LIMIT))
+          done
+
+          # Combine all pages into a single array. Each line is one coin object,
+          # so a plain slurp (-s) already yields the array we want.
+          jq -s '.' /tmp/pump_coins_pages.jsonl > /tmp/pump_coins_raw.json
+
+          # Require a non-empty array; otherwise keep the existing coins.json
+          # so a transient API issue doesn't wipe the list.
+          if ! jq -e 'type=="array" and length > 0' /tmp/pump_coins_raw.json > /dev/null 2>&1; then
+            echo "::warning::No coins returned. Keeping existing coins.json."
+            exit 0
+          fi
+
+          # Map to the shape index.html expects, sorted latest -> oldest
+          jq '[.[] | {
+                name: (.name // "Unknown"),
+                ticker: ("$" + (.symbol // .ticker // "")),
+                image: (.image_uri // .image // ""),
+                contract: (.mint // ""),
+                pumpUrl: ("https://pump.fun/coin/" + (.mint // "")),
+                created: (.created_timestamp // 0)
+              }] | sort_by(.created) | reverse' \
+            /tmp/pump_coins_raw.json > coins.json
+
+          echo "Wrote coins.json with $(jq length coins.json) coin(s)"
+
+      - name: Commit updated coins.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet coins.json 2>/dev/null; then
+            echo "No changes to coins.json"
+            exit 0
+          fi
+
+          git add coins.json
+          git commit -m "chore: update pump.fun launches [skip ci]"
+          git push
