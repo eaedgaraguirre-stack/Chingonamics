@@ -26,24 +26,25 @@ jobs:
           args: >
             --verbose
             --no-progress
-            --exclude-mail
             --accept 200,206,301,302,429
             './**/*.html'
           format: markdown
           output: ./lychee-report.md
-        continue-on-error: true
 
       # --- 2. SERVE THE SITE LOCALLY FOR SCANNING ---
       - name: Serve site
+        if: always()
         run: npx serve . -l 5000 &
         continue-on-error: true
 
       - name: Wait for server
+        if: always()
         run: npx wait-on http://localhost:5000 --timeout 30000
         continue-on-error: true
 
       # --- 3. ACCESSIBILITY CHECK ---
       - name: Run accessibility audit (axe)
+        if: always()
         run: |
           npm install -g @axe-core/cli
           axe http://localhost:5000 --exit --save axe-report.json
@@ -51,6 +52,7 @@ jobs:
 
       # --- 4. LIGHTHOUSE (performance, SEO, best practices) ---
       - name: Run Lighthouse CI
+        if: always()
         uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
@@ -61,7 +63,7 @@ jobs:
 
       # --- 5. POST RESULTS TO PR ---
       - name: Post results to PR
-        if: github.event_name == 'pull_request'
+        if: always() && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
@@ -97,6 +99,7 @@ jobs:
             });
 
       - name: Upload reports as artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: site-audit-reports

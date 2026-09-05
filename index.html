@@ -207,7 +207,7 @@
             transform: translateY(-2px);
         }
 
-        .share-section, .community-section {
+        .share-section {
             max-width: 600px;
             width: 100%;
             position: relative;
@@ -221,13 +221,13 @@
             margin-bottom: 14px;
         }
 
-        .share-buttons, .official-links {
+        .share-buttons {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
 
-        .share-button, .official-link {
+        .share-button {
             border: 1px solid #333;
             border-radius: 10px;
             padding: 12px;
@@ -238,12 +238,12 @@
             cursor: pointer;
         }
 
-        .share-button:hover, .official-link:hover {
+        .share-button:hover {
             border-color: var(--gold);
             color: var(--gold);
         }
 
-        .community-copy, .risk-note {
+        .community-copy {
             color: #aaa;
             line-height: 1.5;
             margin-bottom: 16px;
@@ -255,29 +255,6 @@
             position: relative;
             z-index: 1;
             margin-bottom: 40px;
-        }
-
-        .portfolio-section {
-            max-width: 1000px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 40px;
-        }
-
-        .portfolio-title {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .portfolio-card {
-            max-width: 560px;
-            margin: 0 auto;
         }
 
         .portfolio-grid {
@@ -359,7 +336,7 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 14px;
-            color: #777;
+            color: #8f8f8f;
             font-size: 0.75rem;
         }
 
@@ -438,14 +415,13 @@
         @media (max-width: 480px) {
             body { padding: 12px; }
             .container { padding: 28px 18px; }
-            .share-buttons, .official-links { grid-template-columns: 1fr; }
-            .portfolio-title { font-size: 1.65rem; }
+            .share-buttons { grid-template-columns: 1fr; }
         }
 
         footer {
             margin-top: 30px;
             font-size: 0.8rem;
-            color: #444;
+            color: #808080;
             position: relative;
             z-index: 1;
         }
