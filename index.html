@@ -464,7 +464,6 @@
         <h2 class="section-heading" id="share-heading">Spread the Chingonería</h2>
         <div class="share-buttons">
             <button class="share-button" type="button" data-share="x">𝕏 Share on X</button>
-            <button class="share-button" type="button" data-share="telegram">✈️ Telegram</button>
             <button class="share-button" type="button" data-share="whatsapp">💬 WhatsApp</button>
             <button class="share-button" type="button" data-share="copy">🔗 Copy Link</button>
         </div>
@@ -503,7 +502,6 @@
             const encodedUrl = encodeURIComponent(url);
             const shareLinks = {
                 x: `https://twitter.com/intent/tweet?text=${encodedMessage}&url=${encodedUrl}`,
-                telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedMessage}`,
                 whatsapp: `https://api.whatsapp.com/send?text=${encodedMessage}%20${encodedUrl}`
             };
             if (platform === 'copy') {
