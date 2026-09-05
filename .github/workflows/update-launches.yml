@@ -24,14 +24,33 @@ jobs:
         run: |
           set -euo pipefail
 
-          CREATOR="Chingonamics"
-          BASE_URL="https://frontend-api-v3.pump.fun/coins/user-created-coins/${CREATOR}"
+          # The pump.fun "user-created-coins" endpoint takes the creator's
+          # wallet address, not their display name/handle, so we resolve the
+          # address first from a known Chingonamics-launched coin (Selena)
+          # before listing every coin created by that wallet.
+          KNOWN_MINT="Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump"
           LIMIT=50
 
           HEADERS=(-H "Accept: application/json" -H "User-Agent: Mozilla/5.0 (GitHub Actions)")
           if [ -n "${PUMP_FUN_AUTH_TOKEN:-}" ]; then
             HEADERS+=(-H "Authorization: ******")
           fi
+
+          echo "Resolving Chingonamics creator wallet from known mint: ${KNOWN_MINT}"
+          COIN_HTTP_STATUS=$(curl -sS -o /tmp/known_coin.json -w "%{http_code}" "${HEADERS[@]}" "https://frontend-api-v3.pump.fun/coins/${KNOWN_MINT}" || true)
+          echo "known coin lookup http=${COIN_HTTP_STATUS}"
+
+          CREATOR=""
+          if [ "$COIN_HTTP_STATUS" == "200" ] && jq -e '.creator' /tmp/known_coin.json > /dev/null 2>&1; then
+            CREATOR=$(jq -r '.creator' /tmp/known_coin.json)
+          fi
+
+          if [ -z "$CREATOR" ] || [ "$CREATOR" == "null" ]; then
+            echo "::warning::Could not resolve creator wallet address. Keeping existing coins.json."
+            exit 0
+          fi
+
+          BASE_URL="https://frontend-api-v3.pump.fun/coins/user-created-coins/${CREATOR}"
 
           echo "Fetching coins for creator: ${CREATOR}"
 
