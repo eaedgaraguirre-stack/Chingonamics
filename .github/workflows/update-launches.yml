@@ -50,7 +50,7 @@ jobs:
             exit 0
           fi
 
-          BASE_URL="https://frontend-api-v3.pump.fun/coins/user-created-coins/${CREATOR}"
+          BASE_URL="https://frontend-api-v3.pump.fun/coins/search"
 
           echo "Fetching coins for creator: ${CREATOR}"
 
@@ -59,17 +59,19 @@ jobs:
           OFFSET=0
           > /tmp/pump_coins_pages.jsonl
           while : ; do
-            API_URL="${BASE_URL}?limit=${LIMIT}&offset=${OFFSET}&includeNsfw=false"
+            API_URL="${BASE_URL}?limit=${LIMIT}&offset=${OFFSET}&sort=created_timestamp&order=DESC&includeNsfw=false&creator=${CREATOR}"
             HTTP_STATUS=$(curl -sS -o /tmp/pump_page.json -w "%{http_code}" "${HEADERS[@]}" "$API_URL" || true)
             echo "offset=${OFFSET} http=${HTTP_STATUS}"
 
             if [ "$HTTP_STATUS" != "200" ]; then
               echo "::warning::pump.fun API returned ${HTTP_STATUS} at offset ${OFFSET}."
+              echo "Response body:"; cat /tmp/pump_page.json
               break
             fi
 
             if ! jq -e 'type=="array"' /tmp/pump_page.json > /dev/null 2>&1; then
               echo "::warning::API did not return a JSON array at offset ${OFFSET}."
+              echo "Response body:"; cat /tmp/pump_page.json
               break
             fi
 
