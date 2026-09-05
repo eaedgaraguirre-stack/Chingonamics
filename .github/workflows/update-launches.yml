@@ -50,7 +50,7 @@ jobs:
             exit 0
           fi
 
-          BASE_URL="https://frontend-api-v3.pump.fun/coins/search"
+          BASE_URL="https://advanced-api-v2.pump.fun/coins-v2/user-created-coins/${CREATOR}"
 
           echo "Fetching coins for creator: ${CREATOR}"
 
@@ -59,7 +59,7 @@ jobs:
           OFFSET=0
           > /tmp/pump_coins_pages.jsonl
           while : ; do
-            API_URL="${BASE_URL}?limit=${LIMIT}&offset=${OFFSET}&sort=created_timestamp&order=DESC&includeNsfw=false&creator=${CREATOR}"
+            API_URL="${BASE_URL}?limit=${LIMIT}&offset=${OFFSET}"
             HTTP_STATUS=$(curl -sS -o /tmp/pump_page.json -w "%{http_code}" "${HEADERS[@]}" "$API_URL" || true)
             echo "offset=${OFFSET} http=${HTTP_STATUS}"
 
