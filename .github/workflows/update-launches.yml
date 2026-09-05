@@ -1,9 +1,13 @@
 name: Update Pump.fun Launches
 
+# Manual trigger only. Coin entries (name, ticker, contract, pumpUrl, and
+# especially the local `image` filename) are curated by hand as new coins
+# are launched: upload the new coin's photo to the repo root, then add its
+# entry to coins.json/index.html. A scheduled auto-run is intentionally
+# disabled here because the pump.fun API response uses `image_uri` (a
+# pump.fun-hosted URL), which would silently overwrite the locally uploaded
+# photo mapping this project relies on.
 on:
-  schedule:
-    # Run every 6 hours to pick up new Chingonamics launches automatically
-    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
