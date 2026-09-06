@@ -694,7 +694,10 @@
                         ? coins.filter((coin) => coin && coin.contract).map((coin) => [coin.contract, coin])
                         : []
                 );
-                const mergedCoins = fallbackPumpCoins.map((coin) => fetchedByContract.get(coin.contract) || coin);
+                const mergedCoins = fallbackPumpCoins.map((coin) => ({
+                    ...coin,
+                    ...(fetchedByContract.get(coin.contract) || {})
+                }));
                 const fallbackContracts = new Set(fallbackPumpCoins.map((coin) => coin.contract));
                 const additionalCoins = Array.isArray(coins)
                     ? coins.filter((coin) => coin && coin.contract && !fallbackContracts.has(coin.contract))
