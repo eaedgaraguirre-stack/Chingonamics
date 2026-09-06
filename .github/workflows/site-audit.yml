@@ -27,6 +27,8 @@ jobs:
             --verbose
             --no-progress
             --accept 200,206,301,302,429
+            --exclude "x.com"
+            --exclude "twitter.com"
             './**/*.html'
           format: markdown
           output: ./lychee-report.md

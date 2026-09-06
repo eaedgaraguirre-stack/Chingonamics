@@ -261,9 +261,6 @@
             max-width: 1000px;
             margin: 0 auto;
             align-items: stretch;
-            max-height: 72vh;
-            overflow-y: auto;
-            padding-right: 6px;
         }
 
         .token-card {
@@ -444,7 +441,7 @@
             <div class="r"></div>
         </div>
 
-        <span class="badge">🔥 9 Launches and Counting</span>
+        <span class="badge">🔥 <span id="launch-count">10</span> Launches and Counting</span>
 
         <h1>CHINGONAMICS</h1>
         <p class="hero-tagline">The Mexican Meme Machine.</p>
@@ -516,6 +513,15 @@
         // Fallback data (used only if coins.json hasn't been generated yet).
         // The GitHub Actions workflow keeps coins.json up to date automatically.
         const fallbackPumpCoins = [
+            {
+                name: "Biggie's Juicy",
+                ticker: '$BIGGIESJUICY',
+                status: 'Latest',
+                image: 'Grok Image 2026-09-06 at 1.07.38 AM.jpeg?v=20260906',
+                contract: '4kMEeRCd1dBjw2uvDs7a6YAQDZAKar9i8M7G8nqbpump',
+                pumpUrl: 'https://join.pump.fun/HSag/l18q8wqd',
+                about: "Biggie's Juicy brings a fresh dose of meme energy to the Chingonamics launch lineup."
+            },
             {
                 name: 'Elsa',
                 ticker: '$ELSA',
@@ -617,6 +623,9 @@
                 return;
             }
 
+            const launchCount = document.getElementById('launch-count');
+            if (launchCount) launchCount.textContent = coins.length;
+
             container.innerHTML = coins.map((coin, index) => {
                 const isFeatured = index === 0;
                 const name = escapeHtml(coin.name || 'Unknown');
@@ -677,7 +686,20 @@
                 const response = await fetch('coins.json?v=' + Date.now(), { cache: 'no-store' });
                 if (!response.ok) throw new Error('coins.json not available');
                 const coins = await response.json();
-                renderPumpCoins(coins);
+                const fetchedByContract = new Map(
+                    Array.isArray(coins)
+                        ? coins.filter((coin) => coin && coin.contract).map((coin) => [coin.contract, coin])
+                        : []
+                );
+                const mergedCoins = fallbackPumpCoins.map((coin) => ({
+                    ...coin,
+                    ...(fetchedByContract.get(coin.contract) || {})
+                }));
+                const fallbackContracts = new Set(fallbackPumpCoins.map((coin) => coin.contract));
+                const additionalCoins = Array.isArray(coins)
+                    ? coins.filter((coin) => coin && coin.contract && !fallbackContracts.has(coin.contract))
+                    : [];
+                renderPumpCoins([...mergedCoins, ...additionalCoins]);
             } catch (err) {
                 renderPumpCoins(fallbackPumpCoins);
             }
