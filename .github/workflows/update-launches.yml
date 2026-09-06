@@ -102,14 +102,21 @@ jobs:
           fi
 
           # Map to the shape index.html expects, sorted latest -> oldest
-          jq '[.[] | {
-                name: (.name // "Unknown"),
-                ticker: ("$" + (.symbol // .ticker // "")),
-                image: (.image_uri // .image // ""),
-                contract: (.mint // ""),
-                pumpUrl: ("https://pump.fun/coin/" + (.mint // "")),
-                created: (.created_timestamp // 0)
-              }] | unique_by(.contract) | sort_by(.created) | reverse' \
+          jq --slurpfile existing coins.json '
+            [.[] | (.mint // "") as $mint | {
+              name: (.name // "Unknown"),
+              ticker: ("$" + (.symbol // .ticker // "")),
+              image: (
+                ([$existing[0][] | select(.contract == $mint) | .image] | first)
+                // (.image_uri // .image // "")
+              ),
+              contract: $mint,
+              pumpUrl: ("https://pump.fun/coin/" + $mint),
+              created: (.created_timestamp // 0)
+            }]
+            | unique_by(.contract)
+            | sort_by(.created)
+            | reverse' \
             /tmp/pump_coins_raw.json > coins.json
 
           echo "Wrote coins.json with $(jq length coins.json) coin(s)"
