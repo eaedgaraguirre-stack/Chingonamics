@@ -8,15 +8,16 @@
     <meta http-equiv="Expires" content="0">
     <meta name="description" content="Chingonamics is the Mexican meme machine: discover chaotic community launches, share the memes, and join the fun.">
     <link rel="canonical" href="https://chingonamics.com/">
+    <link rel="icon" type="image/png" href="favicon.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://chingonamics.com/">
     <meta property="og:title" content="Chingonamics | The Mexican Meme Machine">
     <meta property="og:description" content="Pure Mexican meme energy. Discover the latest Chingonamics launches and join the community.">
-    <meta property="og:image" content="https://chingonamics.com/IMG_0325.png">
+    <meta property="og:image" content="https://chingonamics.com/IMG_0325.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Chingonamics | The Mexican Meme Machine">
     <meta name="twitter:description" content="Pure Mexican meme energy. Discover the latest launches and join the community.">
-    <meta name="twitter:image" content="https://chingonamics.com/IMG_0325.png">
+    <meta name="twitter:image" content="https://chingonamics.com/IMG_0325.jpg">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -48,11 +49,6 @@
         }
 
         body {
-            background-image: url('bg.jpg.PNG');
-            background-size: 300px auto;
-            background-position: 0 0;
-            background-repeat: repeat;
-            background-attachment: fixed;
             background-color: var(--dark);
             color: var(--white);
             display: flex;
@@ -89,6 +85,7 @@
             display: block;
             width: 100%;
             height: auto;
+            aspect-ratio: 16 / 9;
         }
 
         .hero-tagline {
@@ -207,7 +204,7 @@
             transform: translateY(-2px);
         }
 
-        .share-section, .community-section {
+        .share-section {
             max-width: 600px;
             width: 100%;
             position: relative;
@@ -221,13 +218,13 @@
             margin-bottom: 14px;
         }
 
-        .share-buttons, .official-links {
+        .share-buttons {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
 
-        .share-button, .official-link {
+        .share-button {
             border: 1px solid #333;
             border-radius: 10px;
             padding: 12px;
@@ -238,12 +235,12 @@
             cursor: pointer;
         }
 
-        .share-button:hover, .official-link:hover {
+        .share-button:hover {
             border-color: var(--gold);
             color: var(--gold);
         }
 
-        .community-copy, .risk-note {
+        .community-copy {
             color: #aaa;
             line-height: 1.5;
             margin-bottom: 16px;
@@ -255,29 +252,6 @@
             position: relative;
             z-index: 1;
             margin-bottom: 40px;
-        }
-
-        .portfolio-section {
-            max-width: 1000px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 40px;
-        }
-
-        .portfolio-title {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .portfolio-card {
-            max-width: 560px;
-            margin: 0 auto;
         }
 
         .portfolio-grid {
@@ -359,7 +333,7 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 14px;
-            color: #777;
+            color: #8f8f8f;
             font-size: 0.75rem;
         }
 
@@ -427,7 +401,7 @@
 
         @media (prefers-reduced-motion: reduce) {
             .hero-video { display: none; }
-            .video-hero { background: url('IMG_0325.png') center / cover; min-height: 220px; }
+            .video-hero { background: url('IMG_0325.jpg') center / cover; min-height: 220px; }
             .btn, .token-card { transition: none; }
         }
 
@@ -438,14 +412,13 @@
         @media (max-width: 480px) {
             body { padding: 12px; }
             .container { padding: 28px 18px; }
-            .share-buttons, .official-links { grid-template-columns: 1fr; }
-            .portfolio-title { font-size: 1.65rem; }
+            .share-buttons { grid-template-columns: 1fr; }
         }
 
         footer {
             margin-top: 30px;
             font-size: 0.8rem;
-            color: #444;
+            color: #808080;
             position: relative;
             z-index: 1;
         }
@@ -455,8 +428,9 @@
 
     <div class="bg-glow"></div>
 
+    <main>
     <div class="video-hero">
-        <video autoplay muted loop playsinline poster="IMG_0325.png" class="hero-video">
+        <video autoplay muted loop playsinline poster="IMG_0325.jpg" preload="metadata" class="hero-video" aria-hidden="true">
             <source src="_users_b7c824c7-4b1c-403b-93b7-0ec6eff1df3c_generated_b8b7bb04-0586-46dd-bab8-cee206c3e80b_generated_video.mp4" type="video/mp4">
             Your browser doesn't support HTML5 video.
         </video>
@@ -470,17 +444,17 @@
             <div class="r"></div>
         </div>
 
-        <span class="badge">🔥 Next Launch Pending</span>
+        <span class="badge">🔥 9 Launches and Counting</span>
 
         <h1>CHINGONAMICS</h1>
         <p class="hero-tagline">The Mexican Meme Machine.</p>
         <p class="subtitle">High-octane community launches, legendary memes, and pure <i>chingonería</i>. No boring tokens allowed.</p>
 
         <div class="cta-box">
-            <a href="https://pump.fun/join/Chingonamics" target="_blank" class="btn btn-pump">
+            <a href="https://pump.fun/join/Chingonamics" target="_blank" rel="noopener noreferrer" class="btn btn-pump">
                 <span>🚀 Join the Meme Machine</span>
             </a>
-            <a href="https://x.com/chingonamics?s=11" target="_blank" class="btn btn-x">
+            <a href="https://x.com/chingonamics?s=11" target="_blank" rel="noopener noreferrer" class="btn btn-x">
                 <span>𝕏 Follow @chingonamics</span>
             </a>
         </div>
@@ -500,8 +474,7 @@
         <h2 class="section-heading" id="launches-heading">🚀 Our Launches</h2>
         <div class="portfolio-grid" id="portfolio-grid"></div>
     </section>
-
-    
+    </main>
 
     <footer>
         &copy; 2026 Chingonamics. NFA. DYOR.
@@ -544,13 +517,85 @@
         // The GitHub Actions workflow keeps coins.json up to date automatically.
         const fallbackPumpCoins = [
             {
+                name: 'Elsa',
+                ticker: '$ELSA',
+                status: 'Latest',
+                image: 'IMG_0460.jpeg?v=20260905',
+                contract: '5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
+                pumpUrl: 'https://pump.fun/coin/5i2twcR4WnMxgedk4Af94XZ3FCFYgDRpcfTLYdTipump',
+                about: 'The newest Chingonamics launch, honoring golden-era icon Elsa Aguirre with a fresh meme punch.'
+            },
+            {
                 name: 'Selena',
                 ticker: '$SELENA',
-                status: 'Latest',
-                image: 'IMG_0440.jpeg?v=20260904',
+                status: '',
+                image: 'IMG_0456.jpeg?v=20260905',
                 contract: 'Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump',
                 pumpUrl: 'https://pump.fun/coin/Gzt4drLVHDkoNrjJ4JfZg1Zx62DePRpwtX8vB9C1pump',
                 about: 'Iconic Selena energy with a fresh meme punch and a bright spot in the Chingonamics Pump account lineup.'
+            },
+            {
+                name: 'AOC',
+                ticker: '$AOC',
+                status: '',
+                image: 'IMG_0451.jpeg?v=20260905',
+                contract: 'GhEPCjcNzByoQotmn9Nxo2n5m7mvz4cJ3hzm5zwRpump',
+                pumpUrl: 'https://pump.fun/coin/GhEPCjcNzByoQotmn9Nxo2n5m7mvz4cJ3hzm5zwRpump',
+                about: 'A bold Chingonamics meme launch, part of the Pump account lineup.'
+            },
+            {
+                name: 'Yamamoto',
+                ticker: '$YAMAMOTO',
+                status: '',
+                image: 'IMG_0327.jpeg?v=20260905',
+                contract: '3eXDKRQf6SJeEhBHa4ZShYBfXRHNuf6zjKQA2sqRpump',
+                pumpUrl: 'https://pump.fun/coin/3eXDKRQf6SJeEhBHa4ZShYBfXRHNuf6zjKQA2sqRpump',
+                about: 'Chingonamics goes global with the Yamamoto launch, straight from the Pump account lineup.'
+            },
+            {
+                name: 'Francisco',
+                ticker: '$FRANCISCO',
+                status: '',
+                image: 'IMG_0446.jpeg?v=20260905',
+                contract: '3CmPRti6ajkqg8EKBR4aD4c3gDfxsgALGGhmKGSvpump',
+                pumpUrl: 'https://pump.fun/coin/3CmPRti6ajkqg8EKBR4aD4c3gDfxsgALGGhmKGSvpump',
+                about: 'The Francisco launch, another chingón addition to the Pump account lineup.'
+            },
+            {
+                name: 'Loteria',
+                ticker: '$LOTERIA',
+                status: '',
+                image: 'IMG_0442.jpeg?v=20260905',
+                contract: 'AYZAWk4Wy5tAkzVpSAnZpaHQYJrj6ExzhFdoPzMZpump',
+                pumpUrl: 'https://pump.fun/coin/AYZAWk4Wy5tAkzVpSAnZpaHQYJrj6ExzhFdoPzMZpump',
+                about: 'La Loteria brings classic Mexican game night vibes to the Chingonamics Pump account lineup.'
+            },
+            {
+                name: 'Hector',
+                ticker: '$HECTOR',
+                status: '',
+                image: 'IMG_0403.jpeg?v=20260905',
+                contract: '7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump',
+                pumpUrl: 'https://pump.fun/coin/7hH1NfFTjZASJXHXswiFL5YmtR9oFzPhsCKfB3XPpump',
+                about: 'The legendary Hector meme lives on as a Chingonamics Pump account launch.'
+            },
+            {
+                name: 'Chancla',
+                ticker: '$CHANCLA',
+                status: '',
+                image: 'IMG_0406.jpeg?v=20260905',
+                contract: '4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump',
+                pumpUrl: 'https://pump.fun/coin/4PDyjLvPGB5sqzyDFeTjuYFXhYek4Bhiza3jhCJfpump',
+                about: 'La chancla arrives — the classic disciplinary meme becomes a Chingonamics Pump account launch.'
+            },
+            {
+                name: 'The Homies',
+                ticker: '$HOMIES',
+                status: '',
+                image: 'IMG_0440.jpeg?v=20260905',
+                contract: 'Hr8CpESJjtyRfKa7nTSKVNAbTSJig7u86YZMuFKWpump',
+                pumpUrl: 'https://pump.fun/coin/Hr8CpESJjtyRfKa7nTSKVNAbTSJig7u86YZMuFKWpump',
+                about: 'The one that started it all — The Homies, the original Chingonamics Pump account launch.'
             }
         ];
 
