@@ -514,6 +514,15 @@
         // The GitHub Actions workflow keeps coins.json up to date automatically.
         const fallbackPumpCoins = [
             {
+                name: 'ur girl',
+                ticker: '$PAGE',
+                status: 'Featured',
+                image: 'Grok Image 2026-09-06 at 11.03.31 AM.jpeg?v=20260906',
+                contract: 'PAGE',
+                pumpUrl: 'https://pump.fun/',
+                about: 'Featured page listing for ur girl, updated in the launches section.'
+            },
+            {
                 name: "Biggie's Juicy",
                 ticker: '$BIGGIESJUICY',
                 status: 'Latest',
@@ -610,7 +619,7 @@
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
+                .replace(/\"/g, '&quot;')
                 .replace(/'/g, '&#39;');
         }
 
@@ -682,7 +691,6 @@
 
         async function loadPumpCoins() {
             try {
-                // Cache-bust so visitors always get the freshest list the workflow produced.
                 const response = await fetch('coins.json?v=' + Date.now(), { cache: 'no-store' });
                 if (!response.ok) throw new Error('coins.json not available');
                 const coins = await response.json();
