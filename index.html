@@ -689,7 +689,17 @@
                 const response = await fetch('coins.json?v=' + Date.now(), { cache: 'no-store' });
                 if (!response.ok) throw new Error('coins.json not available');
                 const coins = await response.json();
-                renderPumpCoins(coins);
+                const fetchedByContract = new Map(
+                    Array.isArray(coins)
+                        ? coins.filter((coin) => coin && coin.contract).map((coin) => [coin.contract, coin])
+                        : []
+                );
+                const mergedCoins = fallbackPumpCoins.map((coin) => fetchedByContract.get(coin.contract) || coin);
+                const fallbackContracts = new Set(fallbackPumpCoins.map((coin) => coin.contract));
+                const additionalCoins = Array.isArray(coins)
+                    ? coins.filter((coin) => coin && coin.contract && !fallbackContracts.has(coin.contract))
+                    : [];
+                renderPumpCoins([...mergedCoins, ...additionalCoins]);
             } catch (err) {
                 renderPumpCoins(fallbackPumpCoins);
             }
