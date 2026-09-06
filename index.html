@@ -444,7 +444,7 @@
             <div class="r"></div>
         </div>
 
-        <span class="badge">🔥 9 Launches and Counting</span>
+        <span class="badge">🔥 <span id="launch-count">10</span> Launches and Counting</span>
 
         <h1>CHINGONAMICS</h1>
         <p class="hero-tagline">The Mexican Meme Machine.</p>
@@ -625,6 +625,9 @@
                 container.innerHTML = '<p class="community-copy">No launches found yet. Stay tuned!</p>';
                 return;
             }
+
+            const launchCount = document.getElementById('launch-count');
+            if (launchCount) launchCount.textContent = coins.length;
 
             container.innerHTML = coins.map((coin, index) => {
                 const isFeatured = index === 0;
