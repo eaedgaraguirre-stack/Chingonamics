@@ -268,6 +268,8 @@
             margin-bottom: 28px;
         }
 
+        .playlist[hidden] { display: none; }
+
         .playlist button {
             width: 100%;
             display: flex;
@@ -314,6 +316,68 @@
         }
 
         .radio-fallback strong { color: var(--orange); }
+
+        .featured-heading {
+            display: block;
+            color: var(--orange);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .featured-player {
+            background: #101010;
+            border: 2px solid #242424;
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+
+        .featured-player iframe {
+            display: block;
+            width: 100%;
+            border: 0;
+            border-radius: 10px;
+        }
+
+        .featured-list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            text-align: left;
+            margin-bottom: 28px;
+        }
+
+        .featured-list button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: #111;
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: var(--white);
+            font-weight: 700;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .featured-list button:hover,
+        .featured-list button:focus-visible {
+            border-color: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        .featured-list button[aria-current="true"] {
+            border-color: var(--orange);
+            box-shadow: 0 10px 26px rgba(255, 122, 24, 0.18);
+        }
 
         .cta-box {
             display: flex;
@@ -435,6 +499,17 @@
             <p><strong>The booth is warming up.</strong> New Chingonamics Radio tracks are dropping soon.</p>
             <p>Until then, catch every drop on <a href="https://x.com/chingonamics?s=11" target="_blank" rel="noopener noreferrer" style="color:var(--gold);">𝕏 @chingonamics</a> or watch the videos below.</p>
         </div>
+
+        <h2 class="featured-heading">🔥 Featured Drops</h2>
+        <div class="featured-player">
+            <iframe id="featured-iframe" title="Chingonamics featured track on SoundCloud"
+                loading="lazy"
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                height="120"></iframe>
+        </div>
+        <ul class="featured-list" id="featured-list"></ul>
 
         <div class="cta-box">
             <a href="/videos.html" class="btn btn-x">
@@ -649,6 +724,70 @@
             .then((response) => (response.ok ? response.json() : Promise.reject(new Error('radio.json unavailable'))))
             .then((data) => startStation(Array.isArray(data) ? data : (data && data.tracks)))
             .catch(() => startStation(fallbackRadioTracks));
+    </script>
+
+    <script>
+        // Featured Drops: individual SoundCloud tracks highlighted outside the self-hosted
+        // player above. Only one SoundCloud embed is ever loaded at a time (whichever track
+        // is selected below), which keeps this section lightweight no matter how many tracks
+        // are listed. To add a track, append { title, url } to this array (newest last).
+        const featuredTracks = [
+            { title: 'Drop #1', url: 'https://on.soundcloud.com/vwRVJ1HGsjAtyAEmo5ams' },
+            { title: 'Drop #2', url: 'https://on.soundcloud.com/ezZIklnOmwhONNtBR8' },
+            { title: 'Drop #3', url: 'https://on.soundcloud.com/Ryq7AJZWiITp0045tC' },
+            { title: 'Drop #4', url: 'https://on.soundcloud.com/boYKZ2vr735rde3IT1' },
+            { title: 'Drop #5', url: 'https://on.soundcloud.com/2IjyAY95tvt2Wjqe06' },
+            { title: 'Drop #6', url: 'https://on.soundcloud.com/UtzKIyjmUHxS8WVvK5' },
+            { title: 'Drop #7', url: 'https://on.soundcloud.com/YV3JmyPdrbfhwAQ3Fm' },
+            { title: 'Drop #8', url: 'https://on.soundcloud.com/1EDdykrhSS1fZqDiFM' },
+            { title: 'Drop #9', url: 'https://on.soundcloud.com/rAKiaCwv9QCOSgOhmg' },
+            { title: 'Drop #10', url: 'https://on.soundcloud.com/dmQdlGlzI6YGIxWzVm' },
+            { title: 'Drop #11', url: 'https://on.soundcloud.com/xY3X0hnBLTBuMRoPo4' },
+            { title: 'Drop #12', url: 'https://on.soundcloud.com/lp0ZnLav7pBw5moCpD' },
+            { title: 'Drop #13', url: 'https://on.soundcloud.com/FplSRuVLusonkFyo6t' },
+            { title: 'Drop #14', url: 'https://on.soundcloud.com/rtL4pz0fT5iAe1rbDF' },
+            { title: 'Drop #15', url: 'https://on.soundcloud.com/iUCLg5TJCw4O7DDoLu' },
+            { title: 'Drop #16', url: 'https://on.soundcloud.com/IQSIPAeAvkOMpxZvvW' },
+            { title: 'Drop #17', url: 'https://on.soundcloud.com/DMtEmMoS8VgRgCFCXC' },
+            { title: 'Drop #18', url: 'https://on.soundcloud.com/CprfTfHCmLrwXnWsOZ' },
+            { title: 'Drop #19', url: 'https://on.soundcloud.com/6CBJZwbXafNjNMSSfU' },
+            { title: 'Drop #20', url: 'https://on.soundcloud.com/QwgjarLAfv5lnCIVHG' },
+            { title: 'Drop #21', url: 'https://on.soundcloud.com/07aVIxEXcceKP6jfwI' },
+        ];
+
+        const featuredIframe = document.getElementById('featured-iframe');
+        const featuredListEl = document.getElementById('featured-list');
+        let currentFeaturedIndex = 0;
+
+        function buildFeaturedEmbedUrl(trackUrl) {
+            const encoded = encodeURIComponent(trackUrl);
+            return `https://w.soundcloud.com/player/?url=${encoded}&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
+        }
+
+        function loadFeaturedTrack(index) {
+            if (!featuredTracks.length) return;
+            currentFeaturedIndex = (index + featuredTracks.length) % featuredTracks.length;
+            featuredIframe.src = buildFeaturedEmbedUrl(featuredTracks[currentFeaturedIndex].url);
+            renderFeaturedList();
+        }
+
+        function renderFeaturedList() {
+            featuredListEl.innerHTML = '';
+            featuredTracks.forEach((track, index) => {
+                const item = document.createElement('li');
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = track.title;
+                button.setAttribute('aria-current', index === currentFeaturedIndex ? 'true' : 'false');
+                button.addEventListener('click', () => loadFeaturedTrack(index));
+                item.appendChild(button);
+                featuredListEl.appendChild(item);
+            });
+        }
+
+        if (featuredTracks.length) {
+            loadFeaturedTrack(0);
+        }
     </script>
 </body>
 </html>
