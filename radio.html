@@ -730,6 +730,7 @@
         let scIsPlaying = false;
         let scLoadTimer = null;
         let scRequestToken = 0;
+        let scUnresolved = false;
         const resolvedUrlCache = new Map();
         // How long to wait for the SoundCloud player before offering a direct link instead.
         const SC_LOAD_TIMEOUT_MS = 10000;
@@ -830,6 +831,7 @@
 
             widgetReady = false;
             scDuration = 0;
+            scUnresolved = false;
             const requestToken = ++scRequestToken;
             renderFeaturedList();
 
@@ -847,6 +849,7 @@
 
             resolveTrackUrl(track.url).then((resolution) => {
                 if (requestToken !== scRequestToken) return;
+                scUnresolved = !resolution.ok;
                 if (!resolution.ok && mode === 'soundcloud') {
                     // Share links the widget cannot resolve would otherwise hang on "Loading".
                     window.clearTimeout(scLoadTimer);
@@ -858,7 +861,7 @@
                     featuredIframe.src = buildFeaturedEmbedUrl(resolution.url, autoplay);
                     if (mode === 'soundcloud') {
                         window.clearTimeout(scLoadTimer);
-                        setStatusWithLink('Use the embedded player above, or', track, openLinkLabel(track));
+                        setStatusWithLink('Use the embedded player above, or', track, `open ${track.title} on SoundCloud ↗`);
                     }
                     return;
                 }
@@ -894,7 +897,10 @@
             if (mode !== 'soundcloud') return;
             widget.setVolume(Number(volumeBar.value) * 100);
             setControlsEnabled(true, featuredTracks.length);
-            statusEl.textContent = 'Ready to play.';
+            if (!scUnresolved) {
+                // Keep the direct-link warning when the share link could not be resolved.
+                statusEl.textContent = 'Ready to play.';
+            }
             seekBar.step = 1;
             seekBar.disabled = true;
             widget.getDuration((duration) => {
@@ -964,13 +970,20 @@
         }
 
         function startSoundCloudMode() {
-            if (!featuredTracks.length || !scApiAvailable()) {
+            if (!featuredTracks.length) {
                 showEmptyStation();
-                if (featuredTracks.length) {
-                    fallbackEl.hidden = true;
-                    selectFeaturedTrack(0, false);
-                    statusEl.textContent = 'Play the drops from the Featured Drops player below.';
-                }
+                return;
+            }
+
+            if (!scApiAvailable()) {
+                // The embed still plays on its own, it just can't be remote-controlled.
+                playlistEl.hidden = true;
+                playlistHeadingEl.hidden = true;
+                fallbackEl.hidden = true;
+                setControlsEnabled(false, 0);
+                selectFeaturedTrack(0, false);
+                metaEl.textContent = 'Chingonamics on SoundCloud';
+                statusEl.textContent = 'Play the drops from the Featured Drops player below.';
                 return;
             }
 
