@@ -794,7 +794,15 @@
             });
         }
 
+        function openLinkLabel(track) {
+            return `Open ${track.title} on SoundCloud ↗`;
+        }
+
         function setStatusWithLink(message, track, linkText) {
+            if (!track) {
+                statusEl.textContent = message;
+                return;
+            }
             statusEl.textContent = `${message} `;
             const link = document.createElement('a');
             link.className = 'status-link';
@@ -809,7 +817,7 @@
             window.clearTimeout(scLoadTimer);
             scLoadTimer = window.setTimeout(() => {
                 if (!widgetReady && requestToken === scRequestToken) {
-                    setStatusWithLink('The SoundCloud player is taking too long to load.', track, `Open ${track.title} on SoundCloud ↗`);
+                    setStatusWithLink('The SoundCloud player is taking too long to load.', track, openLinkLabel(track));
                 }
             }, SC_LOAD_TIMEOUT_MS);
         }
@@ -841,7 +849,8 @@
                 if (requestToken !== scRequestToken) return;
                 if (!resolution.ok && mode === 'soundcloud') {
                     // Share links the widget cannot resolve would otherwise hang on "Loading".
-                    setStatusWithLink('This drop could not be resolved for the embedded player.', track, `Open ${track.title} on SoundCloud ↗`);
+                    window.clearTimeout(scLoadTimer);
+                    setStatusWithLink('This drop could not be resolved for the embedded player.', track, openLinkLabel(track));
                 }
                 if (!scApiAvailable()) {
                     // Without the widget API the embed still plays, it just can't be
@@ -849,7 +858,7 @@
                     featuredIframe.src = buildFeaturedEmbedUrl(resolution.url, autoplay);
                     if (mode === 'soundcloud') {
                         window.clearTimeout(scLoadTimer);
-                        setStatusWithLink('Use the embedded player above, or', track, `open ${track.title} on SoundCloud ↗`);
+                        setStatusWithLink('Use the embedded player above, or', track, openLinkLabel(track));
                     }
                     return;
                 }
@@ -862,7 +871,10 @@
                         show_user: true,
                         show_reposts: false,
                         show_teaser: false,
-                        callback: () => onWidgetReady(track, requestToken)
+                        callback: () => {
+                            bindWidgetEvents();
+                            onWidgetReady(track, requestToken);
+                        }
                     });
                     return;
                 }
@@ -884,10 +896,12 @@
             setControlsEnabled(true, featuredTracks.length);
             statusEl.textContent = 'Ready to play.';
             seekBar.step = 1;
+            seekBar.disabled = true;
             widget.getDuration((duration) => {
                 scDuration = duration || 0;
                 durationEl.textContent = formatTime(scDuration / 1000);
                 seekBar.max = scDuration > 0 ? scDuration : 100;
+                seekBar.disabled = scDuration <= 0;
             });
             widget.getCurrentSound((sound) => {
                 if (sound && sound.title) {
@@ -898,6 +912,14 @@
         }
 
         function bindWidgetEvents() {
+            [
+                SC.Widget.Events.PLAY,
+                SC.Widget.Events.PAUSE,
+                SC.Widget.Events.FINISH,
+                SC.Widget.Events.PLAY_PROGRESS,
+                SC.Widget.Events.ERROR
+            ].forEach((eventName) => widget.unbind(eventName));
+
             widget.bind(SC.Widget.Events.PLAY, () => {
                 scIsPlaying = true;
                 if (mode !== 'soundcloud') return;
@@ -934,6 +956,7 @@
             widget.bind(SC.Widget.Events.ERROR, () => {
                 if (mode !== 'soundcloud') return;
                 const track = featuredTracks[scIndex];
+                if (!track) return;
                 window.clearTimeout(scLoadTimer);
                 setStatusWithLink('That drop could not be loaded here.', track, 'Open it on SoundCloud ↗');
                 setPlayingUI(false);
@@ -944,6 +967,7 @@
             if (!featuredTracks.length || !scApiAvailable()) {
                 showEmptyStation();
                 if (featuredTracks.length) {
+                    fallbackEl.hidden = true;
                     selectFeaturedTrack(0, false);
                     statusEl.textContent = 'Play the drops from the Featured Drops player below.';
                 }
