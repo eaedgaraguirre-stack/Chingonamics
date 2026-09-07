@@ -102,6 +102,43 @@
             pointer-events: none;
         }
 
+        .soundcloud-section {
+            max-width: 600px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 2px solid #ff5500;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 30px rgba(255, 85, 0, 0.18);
+            position: relative;
+            z-index: 1;
+        }
+
+        .soundcloud-section .section-heading {
+            color: #ff8a4c;
+            margin-bottom: 8px;
+        }
+
+        .soundcloud-copy {
+            color: #aaa;
+            margin-bottom: 16px;
+        }
+
+        .soundcloud-player {
+            display: block;
+            width: 100%;
+            height: 166px;
+            border: 0;
+            border-radius: 12px;
+            margin-bottom: 14px;
+        }
+
+        .soundcloud-link {
+            color: #ff8a4c;
+            font-weight: 700;
+        }
+
         .container {
             max-width: 600px;
             width: 100%;
@@ -433,6 +470,19 @@
         </video>
         <div class="video-overlay"></div>
     </div>
+
+    <section class="soundcloud-section" aria-labelledby="soundcloud-heading">
+        <h2 class="section-heading" id="soundcloud-heading">🎵 Chingonamics Radio</h2>
+        <p class="soundcloud-copy">Press play for the sounds behind the Mexican Meme Machine.</p>
+        <iframe
+            class="soundcloud-player"
+            title="Chingonamics on SoundCloud"
+            src="https://w.soundcloud.com/player/?url=https%3A//on.soundcloud.com/r7FP55rkpDVPqs9rcJ&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false"
+            loading="lazy"
+            allow="autoplay">
+        </iframe>
+        <a class="soundcloud-link" href="https://on.soundcloud.com/r7FP55rkpDVPqs9rcJ" target="_blank" rel="noopener noreferrer">Open Chingonamics on SoundCloud ↗</a>
+    </section>
 
     <div class="container">
         <div class="flag-bar">
