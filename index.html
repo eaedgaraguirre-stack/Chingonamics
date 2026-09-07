@@ -37,6 +37,7 @@
             --white: #FFFFFF;
             --red: #CE252B;
             --gold: #FFD700;
+            --orange: #FF7A18;
             --dark: #0A0A0A;
             --card-bg: #141414;
         }
@@ -202,6 +203,41 @@
             background: #1A1A1A;
             border-color: #555;
             transform: translateY(-2px);
+        }
+
+        .btn-radio {
+            background: linear-gradient(135deg, var(--orange) 0%, #FFB347 100%);
+            color: #1A1A1A;
+            box-shadow: 0 8px 25px rgba(255, 122, 24, 0.28);
+        }
+
+        .btn-radio:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 122, 24, 0.45);
+        }
+
+        .btn-equalizer {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 16px;
+        }
+
+        .btn-equalizer i {
+            width: 4px;
+            height: 30%;
+            border-radius: 2px;
+            background: #1A1A1A;
+            animation: btn-bounce 900ms ease-in-out infinite;
+        }
+
+        .btn-equalizer i:nth-child(2) { animation-delay: 150ms; }
+        .btn-equalizer i:nth-child(3) { animation-delay: 300ms; }
+        .btn-equalizer i:nth-child(4) { animation-delay: 450ms; }
+
+        @keyframes btn-bounce {
+            0%, 100% { height: 30%; }
+            50% { height: 100%; }
         }
 
         .share-section {
@@ -400,6 +436,7 @@
             .hero-video { display: none; }
             .video-hero { background: url('IMG_0325.jpg') center / cover; min-height: 220px; }
             .btn, .token-card { transition: none; }
+            .btn-equalizer i { animation: none; height: 60%; }
         }
 
         @media (max-width: 860px) {
@@ -456,6 +493,10 @@
             </a>
             <a href="/videos.html" class="btn btn-x">
                 <span>📺 Watch the Videos</span>
+            </a>
+            <a href="/radio.html" class="btn btn-radio">
+                <span>📻 Chingonamics Radio</span>
+                <span class="btn-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
             </a>
         </div>
     </div>

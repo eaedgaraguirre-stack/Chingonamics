@@ -28,6 +28,7 @@
             --white: #FFFFFF;
             --red: #CE252B;
             --gold: #FFD700;
+            --orange: #FF7A18;
             --dark: #0A0A0A;
             --card-bg: #141414;
         }
@@ -182,6 +183,17 @@
             transform: translateY(-2px);
         }
 
+        .btn-radio {
+            background: linear-gradient(135deg, var(--orange) 0%, #FFB347 100%);
+            color: #1A1A1A;
+            box-shadow: 0 8px 25px rgba(255, 122, 24, 0.28);
+        }
+
+        .btn-radio:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 122, 24, 0.45);
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .btn { transition: none; }
         }
@@ -304,6 +316,9 @@
         </div>
 
         <div class="cta-box">
+            <a href="/radio.html" class="btn btn-radio">
+                <span>📻 Chingonamics Radio</span>
+            </a>
             <a href="https://x.com/chingonamics?s=11" target="_blank" rel="noopener noreferrer" class="btn btn-x">
                 <span>𝕏 Follow @chingonamics</span>
             </a>

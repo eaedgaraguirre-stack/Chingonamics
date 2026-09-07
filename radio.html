@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="description" content="Chingonamics Radio: stream the official Chingonamics tracks, meme anthems and community drops. Pure Mexican meme machine sound.">
+    <link rel="canonical" href="https://chingonamics.com/radio.html">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chingonamics.com/radio.html">
+    <meta property="og:title" content="Chingonamics Radio | Meme Machine Sound">
+    <meta property="og:description" content="Stream Chingonamics Radio: meme anthems, community drops and pure chingonería.">
+    <meta property="og:image" content="https://chingonamics.com/IMG_0325.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Chingonamics Radio | Meme Machine Sound">
+    <meta name="twitter:description" content="Stream Chingonamics Radio: meme anthems, community drops and pure chingonería.">
+    <meta name="twitter:image" content="https://chingonamics.com/IMG_0325.jpg">
+    <title>Chingonamics Radio | Meme Machine Sound</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #006847;
+            --white: #FFFFFF;
+            --red: #CE252B;
+            --gold: #FFD700;
+            --orange: #FF7A18;
+            --dark: #0A0A0A;
+            --card-bg: #141414;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .bg-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,122,24,0.28) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            top: 20%;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 2px solid #222;
+            border-radius: 24px;
+            padding: 40px 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .flag-bar {
+            display: flex;
+            height: 6px;
+            width: 100%;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .flag-bar .g { background: var(--green); flex: 1; }
+        .flag-bar .w { background: var(--white); flex: 1; }
+        .flag-bar .r { background: var(--red); flex: 1; }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 122, 24, 0.12);
+            color: var(--orange);
+            border: 1px solid var(--orange);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(1.5rem, 6.5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #FFF 0%, #AAA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 1.15rem;
+            color: #888;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .player {
+            background: #101010;
+            border: 2px solid #242424;
+            border-radius: 20px;
+            padding: 24px 20px;
+            text-align: left;
+            margin-bottom: 28px;
+        }
+
+        .now-playing-label {
+            color: var(--orange);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .now-playing-title {
+            font-size: 1.35rem;
+            font-weight: 900;
+            margin: 6px 0 4px;
+        }
+
+        .now-playing-meta {
+            color: #8f8f8f;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .equalizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 34px;
+            margin-bottom: 16px;
+        }
+
+        .equalizer span {
+            width: 6px;
+            border-radius: 3px;
+            background: linear-gradient(180deg, var(--gold) 0%, var(--orange) 100%);
+            height: 20%;
+        }
+
+        .equalizer.is-playing span {
+            animation: bounce 900ms ease-in-out infinite;
+        }
+
+        .equalizer span:nth-child(2) { animation-delay: 120ms; }
+        .equalizer span:nth-child(3) { animation-delay: 240ms; }
+        .equalizer span:nth-child(4) { animation-delay: 360ms; }
+        .equalizer span:nth-child(5) { animation-delay: 480ms; }
+        .equalizer span:nth-child(6) { animation-delay: 600ms; }
+        .equalizer span:nth-child(7) { animation-delay: 720ms; }
+
+        @keyframes bounce {
+            0%, 100% { height: 20%; }
+            50% { height: 100%; }
+        }
+
+        .progress-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            color: #8f8f8f;
+            font-size: 0.8rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--orange);
+            cursor: pointer;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            border: 1px solid #333;
+            background: #171717;
+            color: var(--white);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover:not(:disabled) {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .control-btn.primary {
+            background: linear-gradient(135deg, var(--orange) 0%, #FFB347 100%);
+            border-color: transparent;
+            color: #1A1A1A;
+            min-width: 120px;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 160px;
+            flex: 1;
+            color: #8f8f8f;
+            font-size: 0.85rem;
+        }
+
+        .player-status {
+            margin-top: 14px;
+            color: #8f8f8f;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .playlist-heading {
+            display: block;
+            color: var(--orange);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .playlist-heading[hidden] { display: none; }
+
+        .playlist {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            text-align: left;
+            margin-bottom: 28px;
+        }
+
+        .playlist button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: #111;
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: var(--white);
+            font-weight: 700;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .playlist button:hover,
+        .playlist button:focus-visible {
+            border-color: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        .playlist button[aria-current="true"] {
+            border-color: var(--orange);
+            box-shadow: 0 10px 26px rgba(255, 122, 24, 0.18);
+        }
+
+        .track-subtitle {
+            display: block;
+            color: #8f8f8f;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin-top: 4px;
+        }
+
+        .radio-fallback {
+            border: 1px dashed #333;
+            border-radius: 16px;
+            padding: 22px 18px;
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .radio-fallback strong { color: var(--orange); }
+
+        .cta-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px 24px;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-pump {
+            background: linear-gradient(135deg, #006847 0%, #00B377 100%);
+            color: var(--white);
+            box-shadow: 0 8px 25px rgba(0, 179, 119, 0.3);
+        }
+
+        .btn-pump:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 179, 119, 0.5);
+        }
+
+        .btn-x {
+            background: #111;
+            color: var(--white);
+            border: 1px solid #333;
+        }
+
+        .btn-x:hover {
+            background: #1A1A1A;
+            border-color: #555;
+            transform: translateY(-2px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .btn, .control-btn, .playlist button { transition: none; }
+            .equalizer.is-playing span { animation: none; height: 60%; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .container { padding: 28px 18px; }
+            .control-btn { flex: 1; }
+            .volume-control { width: 100%; }
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #808080;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <main class="container">
+        <div class="flag-bar">
+            <div class="g"></div>
+            <div class="w"></div>
+            <div class="r"></div>
+        </div>
+
+        <span class="badge">📻 Chingonamics Radio</span>
+
+        <h1>Chingonamics Radio</h1>
+        <p class="subtitle">Meme anthems, community drops and pure <i>chingonería</i> — straight from the machine, streamed right here. No third-party player required.</p>
+
+        <section class="player" aria-labelledby="player-heading">
+            <h2 class="now-playing-label" id="player-heading">Now Playing</h2>
+            <p class="now-playing-title" id="track-title">Chingonamics Radio</p>
+            <p class="now-playing-meta" id="track-meta">Press play to tune in.</p>
+
+            <div class="equalizer" id="equalizer" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+
+            <div class="progress-row">
+                <span id="current-time">0:00</span>
+                <input type="range" id="seek-bar" min="0" max="100" value="0" step="0.1" aria-label="Seek through the current track" disabled>
+                <span id="duration">0:00</span>
+            </div>
+
+            <div class="controls">
+                <button class="control-btn" type="button" id="prev-btn" aria-label="Previous track" disabled>⏮</button>
+                <button class="control-btn primary" type="button" id="play-btn" disabled>▶ Play</button>
+                <button class="control-btn" type="button" id="next-btn" aria-label="Next track" disabled>⏭</button>
+                <div class="volume-control">
+                    <span aria-hidden="true">🔊</span>
+                    <input type="range" id="volume-bar" min="0" max="1" step="0.05" value="0.8" aria-label="Volume">
+                </div>
+            </div>
+
+            <p class="player-status" id="player-status">Loading the station…</p>
+
+            <audio id="radio-audio" preload="none"></audio>
+        </section>
+
+        <h2 class="playlist-heading" id="playlist-heading">Station Playlist</h2>
+        <ul class="playlist" id="playlist"></ul>
+
+        <div class="radio-fallback" id="radio-fallback" hidden>
+            <p><strong>The booth is warming up.</strong> New Chingonamics Radio tracks are dropping soon.</p>
+            <p>Until then, catch every drop on <a href="https://x.com/chingonamics?s=11" target="_blank" rel="noopener noreferrer" style="color:var(--gold);">𝕏 @chingonamics</a> or watch the videos below.</p>
+        </div>
+
+        <div class="cta-box">
+            <a href="/videos.html" class="btn btn-x">
+                <span>📺 Watch the Videos</span>
+            </a>
+            <a href="https://x.com/chingonamics?s=11" target="_blank" rel="noopener noreferrer" class="btn btn-x">
+                <span>𝕏 Follow @chingonamics</span>
+            </a>
+            <a href="/" class="btn btn-pump">
+                <span>← Back to Chingonamics</span>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Chingonamics. NFA. DYOR.
+    </footer>
+
+    <script>
+        // Add a track: drop the audio file in the repo root and add an entry below
+        // (or to radio.json, which takes priority when present).
+        const fallbackRadioTracks = [];
+
+        const audio = document.getElementById('radio-audio');
+        const playBtn = document.getElementById('play-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const seekBar = document.getElementById('seek-bar');
+        const volumeBar = document.getElementById('volume-bar');
+        const playlistEl = document.getElementById('playlist');
+        const playlistHeadingEl = document.getElementById('playlist-heading');
+        const fallbackEl = document.getElementById('radio-fallback');
+        const statusEl = document.getElementById('player-status');
+        const titleEl = document.getElementById('track-title');
+        const metaEl = document.getElementById('track-meta');
+        const equalizerEl = document.getElementById('equalizer');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+
+        let tracks = [];
+        let currentIndex = 0;
+        let isSeeking = false;
+
+        function formatTime(seconds) {
+            if (!isFinite(seconds) || seconds < 0) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function setControlsEnabled(enabled) {
+            playBtn.disabled = !enabled;
+            seekBar.disabled = !enabled;
+            prevBtn.disabled = !enabled || tracks.length < 2;
+            nextBtn.disabled = !enabled || tracks.length < 2;
+        }
+
+        function renderPlaylist() {
+            playlistEl.innerHTML = '';
+            tracks.forEach((track, index) => {
+                const item = document.createElement('li');
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.setAttribute('aria-current', index === currentIndex ? 'true' : 'false');
+
+                const label = document.createElement('span');
+                label.textContent = track.title;
+                const subtitle = document.createElement('span');
+                subtitle.className = 'track-subtitle';
+                subtitle.textContent = track.description || 'Chingonamics Radio';
+                label.appendChild(subtitle);
+
+                const icon = document.createElement('span');
+                icon.setAttribute('aria-hidden', 'true');
+                icon.textContent = '▶';
+
+                button.appendChild(label);
+                button.appendChild(icon);
+                button.addEventListener('click', () => loadTrack(index, true));
+
+                item.appendChild(button);
+                playlistEl.appendChild(item);
+            });
+        }
+
+        function loadTrack(index, autoplay = false) {
+            if (!tracks.length) return;
+            currentIndex = (index + tracks.length) % tracks.length;
+            const track = tracks[currentIndex];
+            audio.src = track.src;
+            titleEl.textContent = track.title;
+            metaEl.textContent = track.description || 'Chingonamics Radio';
+            statusEl.textContent = 'Ready to play.';
+            renderPlaylist();
+            if (autoplay) {
+                audio.play().catch(handlePlayError);
+            }
+        }
+
+        function handlePlayError() {
+            statusEl.textContent = 'Playback was blocked or the track could not be loaded. Try pressing play again.';
+        }
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().catch(handlePlayError);
+            } else {
+                audio.pause();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => loadTrack(currentIndex - 1, true));
+        nextBtn.addEventListener('click', () => loadTrack(currentIndex + 1, true));
+
+        audio.addEventListener('play', () => {
+            playBtn.textContent = '⏸ Pause';
+            equalizerEl.classList.add('is-playing');
+            statusEl.textContent = 'On air.';
+        });
+
+        audio.addEventListener('pause', () => {
+            playBtn.textContent = '▶ Play';
+            equalizerEl.classList.remove('is-playing');
+            statusEl.textContent = 'Paused.';
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audio.duration);
+            seekBar.max = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 100;
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+            if (!isSeeking) {
+                seekBar.value = audio.currentTime;
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            if (tracks.length > 1) {
+                loadTrack(currentIndex + 1, true);
+            } else {
+                statusEl.textContent = 'Track finished. Press play to run it back.';
+            }
+        });
+
+        audio.addEventListener('error', () => {
+            statusEl.textContent = 'That track could not be loaded. Catch the drops on 𝕏 @chingonamics instead.';
+            equalizerEl.classList.remove('is-playing');
+        });
+
+        seekBar.addEventListener('input', () => {
+            isSeeking = true;
+            currentTimeEl.textContent = formatTime(Number(seekBar.value));
+        });
+
+        seekBar.addEventListener('change', () => {
+            audio.currentTime = Number(seekBar.value);
+            isSeeking = false;
+        });
+
+        ['pointerup', 'pointercancel', 'blur'].forEach((eventName) => {
+            seekBar.addEventListener(eventName, () => { isSeeking = false; });
+        });
+
+        volumeBar.addEventListener('input', () => {
+            audio.volume = Number(volumeBar.value);
+        });
+
+        document.addEventListener('keydown', (event) => {
+            const tag = (event.target.tagName || '').toLowerCase();
+            const isTextEntry = ['input', 'textarea', 'select'].includes(tag);
+            if (isTextEntry || !tracks.length) return;
+            if (event.code === 'Space') {
+                // Let focused buttons and links keep their native activation.
+                if (tag === 'button' || tag === 'a') return;
+                event.preventDefault();
+                playBtn.click();
+            } else if (event.code === 'ArrowRight' && tracks.length > 1) {
+                loadTrack(currentIndex + 1, true);
+            } else if (event.code === 'ArrowLeft' && tracks.length > 1) {
+                loadTrack(currentIndex - 1, true);
+            }
+        });
+
+        function isValidTrack(track) {
+            return track && typeof track.title === 'string' && typeof track.src === 'string' && track.src.trim() !== '';
+        }
+
+        function startStation(list) {
+            tracks = Array.isArray(list) ? list.filter(isValidTrack) : [];
+
+            if (!tracks.length) {
+                fallbackEl.hidden = false;
+                playlistEl.hidden = true;
+                playlistHeadingEl.hidden = true;
+                statusEl.textContent = 'No tracks are on the air yet.';
+                metaEl.textContent = 'New drops are on the way.';
+                setControlsEnabled(false);
+                return;
+            }
+
+            fallbackEl.hidden = true;
+            playlistEl.hidden = false;
+            playlistHeadingEl.hidden = false;
+            audio.volume = Number(volumeBar.value);
+            setControlsEnabled(true);
+            loadTrack(0, false);
+        }
+
+        fetch('radio.json', { cache: 'no-store' })
+            .then((response) => (response.ok ? response.json() : Promise.reject(new Error('radio.json unavailable'))))
+            .then((data) => startStation(Array.isArray(data) ? data : (data && data.tracks)))
+            .catch(() => startStation(fallbackRadioTracks));
+    </script>
+</body>
+</html>
