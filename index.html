@@ -139,6 +139,18 @@
             font-weight: 700;
         }
 
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
         .container {
             max-width: 600px;
             width: 100%;
@@ -472,7 +484,7 @@
     </div>
 
     <section class="soundcloud-section" aria-labelledby="soundcloud-heading">
-        <h2 class="section-heading" id="soundcloud-heading">🎵 Chingonamics Radio</h2>
+        <h2 class="section-heading" id="soundcloud-heading"><span aria-hidden="true">🎵</span> Chingonamics Radio</h2>
         <p class="soundcloud-copy">Press play for the sounds behind the Mexican Meme Machine.</p>
         <iframe
             class="soundcloud-player"
@@ -481,7 +493,7 @@
             loading="lazy"
             allow="autoplay">
         </iframe>
-        <a class="soundcloud-link" href="https://on.soundcloud.com/r7FP55rkpDVPqs9rcJ" target="_blank" rel="noopener noreferrer">Open Chingonamics on SoundCloud ↗</a>
+        <a class="soundcloud-link" href="https://on.soundcloud.com/r7FP55rkpDVPqs9rcJ" target="_blank" rel="noopener noreferrer">Open Chingonamics on SoundCloud <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
     </section>
 
     <div class="container">
