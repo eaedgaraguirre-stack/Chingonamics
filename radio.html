@@ -751,14 +751,11 @@
                     if (!match) throw new Error('no embed html');
                     const src = match[1].replace(/&amp;/g, '&');
                     const embedded = new URL(src, 'https://w.soundcloud.com').searchParams.get('url');
-                    const resolved = embedded || shareUrl;
+                    const resolved = { url: embedded || shareUrl, ok: true };
                     resolvedUrlCache.set(shareUrl, resolved);
                     return resolved;
                 })
-                .catch(() => {
-                    resolvedUrlCache.set(shareUrl, shareUrl);
-                    return shareUrl;
-                });
+                .catch(() => ({ url: shareUrl, ok: false }));
         }
 
         function renderFeaturedList() {
@@ -813,6 +810,12 @@
 
         function selectFeaturedTrack(index, autoplay = false) {
             if (!featuredTracks.length) return;
+            if (typeof SC === 'undefined' || !SC.Widget) {
+                if (mode === 'soundcloud') {
+                    setStatusWithLink('The SoundCloud player could not be loaded.', featuredTracks[(index + featuredTracks.length) % featuredTracks.length], 'Open this drop on SoundCloud ↗');
+                }
+                return;
+            }
             scIndex = (index + featuredTracks.length) % featuredTracks.length;
             const track = featuredTracks[scIndex];
 
@@ -833,10 +836,14 @@
                 scWatchdog(track);
             }
 
-            resolveTrackUrl(track.url).then((resolved) => {
+            resolveTrackUrl(track.url).then((resolution) => {
                 if (requestToken !== scRequestToken) return;
+                if (!resolution.ok && mode === 'soundcloud') {
+                    // Share links the widget cannot resolve would otherwise hang on "Loading".
+                    setStatusWithLink('This drop could not be resolved for the embedded player.', track, `Open ${track.title} on SoundCloud ↗`);
+                }
                 if (widget) {
-                    widget.load(resolved, {
+                    widget.load(resolution.url, {
                         auto_play: autoplay,
                         color: '#ff7a18',
                         hide_related: true,
@@ -844,20 +851,21 @@
                         show_user: true,
                         show_reposts: false,
                         show_teaser: false,
-                        callback: () => onWidgetReady(track)
+                        callback: () => onWidgetReady(track, requestToken)
                     });
                     return;
                 }
                 // The widget can only be controlled once the iframe points at the
                 // SoundCloud player, so the first drop is loaded through the src.
-                featuredIframe.src = buildFeaturedEmbedUrl(resolved, autoplay);
+                featuredIframe.src = buildFeaturedEmbedUrl(resolution.url, autoplay);
                 widget = SC.Widget(featuredIframe);
                 bindWidgetEvents();
-                widget.bind(SC.Widget.Events.READY, () => onWidgetReady(track));
+                widget.bind(SC.Widget.Events.READY, () => onWidgetReady(track, requestToken));
             });
         }
 
-        function onWidgetReady(track) {
+        function onWidgetReady(track, requestToken) {
+            if (requestToken !== scRequestToken) return;
             widgetReady = true;
             window.clearTimeout(scLoadTimer);
             widget.setVolume(Number(volumeBar.value) * 100);
@@ -902,6 +910,7 @@
             });
             widget.bind(SC.Widget.Events.PLAY_PROGRESS, (data) => {
                 if (!data || mode !== 'soundcloud') return;
+                // Guard against a near-zero relativePosition producing a wild duration estimate.
                 if (!scDuration && data.relativePosition > 0.01) {
                     scDuration = data.currentPosition / data.relativePosition;
                     durationEl.textContent = formatTime(scDuration / 1000);
@@ -930,7 +939,7 @@
             playlistEl.hidden = true;
             playlistHeadingEl.hidden = true;
             metaEl.textContent = 'Chingonamics on SoundCloud';
-            statusEl.textContent = 'Loading the drop\u2026';
+            statusEl.textContent = 'Loading the drop…';
             setControlsEnabled(false, featuredTracks.length);
 
             selectFeaturedTrack(0, false);
