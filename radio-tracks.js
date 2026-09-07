@@ -22,5 +22,7 @@ window.chingonamicsTracks = [
     { title: 'Scarlet Pimpernel', url: 'https://soundcloud.com/eaallupinyou/scarlet-pimpernel' },
     { title: 'Thinking About Tomorrow', url: 'https://soundcloud.com/eaallupinyou/thinking-about-tomorrow-2' },
     { title: 'Alivianate', url: 'https://soundcloud.com/eaallupinyou/alivianate' },
-    { title: 'This Is for My Dogs', url: 'https://soundcloud.com/eaallupinyou/this-is-for-my-dogs-7' },
+    // 'This Is for My Dogs' is omitted: external embedding is disabled for that track on
+    // SoundCloud, so the widget shows "this track can't be played outside of SoundCloud".
+    // Re-add it here once embedding is enabled in the track's SoundCloud settings.
 ];
