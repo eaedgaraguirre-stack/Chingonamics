@@ -261,6 +261,46 @@
             margin-top: 8px;
         }
 
+        .soundcloud-top-banner {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+            display: block;
+            background: linear-gradient(135deg, #ff5500 0%, #ff9d00 52%, #FFD700 100%);
+            color: var(--dark);
+            border: 2px solid rgba(255, 255, 255, 0.45);
+            border-radius: 22px;
+            padding: 20px;
+            margin: 0 auto 24px;
+            text-decoration: none;
+            box-shadow: 0 16px 42px rgba(255, 85, 0, 0.42);
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .soundcloud-top-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 50px rgba(255, 85, 0, 0.6);
+        }
+
+        .soundcloud-top-label {
+            display: block;
+            font-size: clamp(1.45rem, 7vw, 3rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .soundcloud-top-copy {
+            display: block;
+            margin-top: 8px;
+            font-size: clamp(0.95rem, 3vw, 1.15rem);
+            font-weight: 900;
+            line-height: 1.3;
+        }
+
         .share-section {
             max-width: 600px;
             width: 100%;
@@ -504,7 +544,7 @@
         @media (prefers-reduced-motion: reduce) {
             .hero-video { display: none; }
             .video-hero { background: url('IMG_0325.jpg') center / cover; min-height: 220px; }
-            .btn, .sound-hero-callout, .token-card { transition: none; }
+            .btn, .soundcloud-top-banner, .sound-hero-callout, .token-card { transition: none; }
         }
 
         @media (max-width: 860px) {
@@ -532,6 +572,11 @@
     <div class="bg-glow"></div>
 
     <main>
+    <a href="https://on.soundcloud.com/r7FP55rkpDVPqs9rcJ" target="_blank" rel="noopener noreferrer" class="soundcloud-top-banner" aria-label="Open the Chingonamics SoundCloud account">
+        <span class="soundcloud-top-label">🎧 SoundCloud</span>
+        <span class="soundcloud-top-copy">Chingonamics Radio is live — tap here for the official soundtrack.</span>
+    </a>
+
     <div class="video-hero">
         <video autoplay muted loop playsinline poster="IMG_0325.jpg" preload="metadata" class="hero-video" aria-hidden="true">
             <source src="_users_b7c824c7-4b1c-403b-93b7-0ec6eff1df3c_generated_b8b7bb04-0586-46dd-bab8-cee206c3e80b_generated_video.mp4" type="video/mp4">
