@@ -317,6 +317,8 @@
 
         .radio-fallback strong { color: var(--orange); }
 
+        .status-link { color: var(--gold); }
+
         .featured-heading {
             display: block;
             color: var(--orange);
@@ -379,6 +381,8 @@
         }
 
         .featured-list button {
+            flex: 1;
+            min-width: 0;
             width: 100%;
             display: flex;
             align-items: center;
@@ -725,11 +729,12 @@
         let scDuration = 0;
         let scIsPlaying = false;
         let scLoadTimer = null;
+        let scRequestToken = 0;
         const resolvedUrlCache = new Map();
 
-        function buildFeaturedEmbedUrl(trackUrl) {
+        function buildFeaturedEmbedUrl(trackUrl, autoplay = false) {
             const encoded = encodeURIComponent(trackUrl);
-            return `https://w.soundcloud.com/player/?url=${encoded}&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
+            return `https://w.soundcloud.com/player/?url=${encoded}&color=%23ff7a18&auto_play=${autoplay}&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
         }
 
         // `on.soundcloud.com` share links are redirects that the SoundCloud widget cannot
@@ -786,11 +791,22 @@
             });
         }
 
+        function setStatusWithLink(message, track, linkText) {
+            statusEl.textContent = `${message} `;
+            const link = document.createElement('a');
+            link.className = 'status-link';
+            link.href = track.url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = linkText;
+            statusEl.appendChild(link);
+        }
+
         function scWatchdog(track) {
             window.clearTimeout(scLoadTimer);
             scLoadTimer = window.setTimeout(() => {
                 if (!widgetReady) {
-                    statusEl.innerHTML = `The SoundCloud player is taking too long to load. <a href="${track.url}" target="_blank" rel="noopener noreferrer" style="color:var(--gold);">Open ${track.title} on SoundCloud ↗</a>`;
+                    setStatusWithLink('The SoundCloud player is taking too long to load.', track, `Open ${track.title} on SoundCloud ↗`);
                 }
             }, 10000);
         }
@@ -802,6 +818,7 @@
 
             widgetReady = false;
             scDuration = 0;
+            const requestToken = ++scRequestToken;
             renderFeaturedList();
 
             // The Now Playing box only mirrors the drops when there are no self-hosted tracks.
@@ -817,7 +834,7 @@
             }
 
             resolveTrackUrl(track.url).then((resolved) => {
-                if (featuredTracks[scIndex] !== track) return;
+                if (requestToken !== scRequestToken) return;
                 if (widget) {
                     widget.load(resolved, {
                         auto_play: autoplay,
@@ -833,7 +850,7 @@
                 }
                 // The widget can only be controlled once the iframe points at the
                 // SoundCloud player, so the first drop is loaded through the src.
-                featuredIframe.src = buildFeaturedEmbedUrl(resolved) + (autoplay ? '&auto_play=true' : '');
+                featuredIframe.src = buildFeaturedEmbedUrl(resolved, autoplay);
                 widget = SC.Widget(featuredIframe);
                 bindWidgetEvents();
                 widget.bind(SC.Widget.Events.READY, () => onWidgetReady(track));
@@ -885,7 +902,7 @@
             });
             widget.bind(SC.Widget.Events.PLAY_PROGRESS, (data) => {
                 if (!data || mode !== 'soundcloud') return;
-                if (!scDuration && data.relativePosition) {
+                if (!scDuration && data.relativePosition > 0.01) {
                     scDuration = data.currentPosition / data.relativePosition;
                     durationEl.textContent = formatTime(scDuration / 1000);
                     seekBar.max = scDuration > 0 ? scDuration : 100;
@@ -897,7 +914,7 @@
                 if (mode !== 'soundcloud') return;
                 const track = featuredTracks[scIndex];
                 window.clearTimeout(scLoadTimer);
-                statusEl.innerHTML = `That drop could not be loaded here. <a href="${track.url}" target="_blank" rel="noopener noreferrer" style="color:var(--gold);">Open it on SoundCloud \u2197</a>`;
+                setStatusWithLink('That drop could not be loaded here.', track, 'Open it on SoundCloud ↗');
                 setPlayingUI(false);
             });
         }
