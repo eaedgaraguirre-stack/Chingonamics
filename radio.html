@@ -732,6 +732,10 @@
         let scRequestToken = 0;
         const resolvedUrlCache = new Map();
 
+        function scApiAvailable() {
+            return typeof SC !== 'undefined' && !!SC.Widget;
+        }
+
         function buildFeaturedEmbedUrl(trackUrl, autoplay = false) {
             const encoded = encodeURIComponent(trackUrl);
             return `https://w.soundcloud.com/player/?url=${encoded}&color=%23ff7a18&auto_play=${autoplay}&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
@@ -810,12 +814,7 @@
 
         function selectFeaturedTrack(index, autoplay = false) {
             if (!featuredTracks.length) return;
-            if (typeof SC === 'undefined' || !SC.Widget) {
-                if (mode === 'soundcloud') {
-                    setStatusWithLink('The SoundCloud player could not be loaded.', featuredTracks[(index + featuredTracks.length) % featuredTracks.length], 'Open this drop on SoundCloud ↗');
-                }
-                return;
-            }
+
             scIndex = (index + featuredTracks.length) % featuredTracks.length;
             const track = featuredTracks[scIndex];
 
@@ -841,6 +840,16 @@
                 if (!resolution.ok && mode === 'soundcloud') {
                     // Share links the widget cannot resolve would otherwise hang on "Loading".
                     setStatusWithLink('This drop could not be resolved for the embedded player.', track, `Open ${track.title} on SoundCloud ↗`);
+                }
+                if (!scApiAvailable()) {
+                    // Without the widget API the embed still plays, it just can't be
+                    // driven from the Now Playing controls.
+                    featuredIframe.src = buildFeaturedEmbedUrl(resolution.url, autoplay);
+                    if (mode === 'soundcloud') {
+                        window.clearTimeout(scLoadTimer);
+                        setStatusWithLink('Use the embedded player above, or', track, `open ${track.title} on SoundCloud ↗`);
+                    }
+                    return;
                 }
                 if (widget) {
                     widget.load(resolution.url, {
@@ -929,8 +938,12 @@
         }
 
         function startSoundCloudMode() {
-            if (!featuredTracks.length || typeof SC === 'undefined' || !SC.Widget) {
+            if (!featuredTracks.length || !scApiAvailable()) {
                 showEmptyStation();
+                if (featuredTracks.length) {
+                    selectFeaturedTrack(0, false);
+                    statusEl.textContent = 'Play the drops from the Featured Drops player below.';
+                }
                 return;
             }
 
@@ -1054,6 +1067,8 @@
             audio.volume = Number(volumeBar.value);
             setControlsEnabled(true);
             loadTrack(0, false);
+            // Prime the Featured Drops embed so the section isn't blank on load.
+            selectFeaturedTrack(0, false);
         }
 
         renderFeaturedList();
