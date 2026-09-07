@@ -29,6 +29,7 @@ jobs:
             --accept 200,206,301,302,429
             --exclude "x.com"
             --exclude "twitter.com"
+            --root-dir "${{ github.workspace }}"
             './**/*.html'
           format: markdown
           output: ./lychee-report.md
