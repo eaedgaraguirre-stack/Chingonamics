@@ -328,31 +328,55 @@
             margin-bottom: 10px;
         }
 
-        .featured-tracks {
-            display: grid;
-            gap: 14px;
-            margin-bottom: 28px;
-        }
-
-        .featured-track {
+        .featured-player {
             background: #101010;
             border: 2px solid #242424;
             border-radius: 16px;
             padding: 14px;
-            text-align: left;
+            margin-bottom: 14px;
         }
 
-        .featured-track-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .featured-track iframe {
+        .featured-player iframe {
             display: block;
             width: 100%;
             border: 0;
             border-radius: 10px;
+        }
+
+        .featured-list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            text-align: left;
+            margin-bottom: 28px;
+        }
+
+        .featured-list button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: #111;
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: var(--white);
+            font-weight: 700;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .featured-list button:hover,
+        .featured-list button:focus-visible {
+            border-color: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        .featured-list button[aria-current="true"] {
+            border-color: var(--orange);
+            box-shadow: 0 10px 26px rgba(255, 122, 24, 0.18);
         }
 
         .cta-box {
@@ -477,221 +501,15 @@
         </div>
 
         <h2 class="featured-heading">🔥 Featured Drops</h2>
-        <div class="featured-tracks">
-            <!-- Featured SoundCloud tracks. To highlight another, copy a block below, swap the
-                 title and the track URL passed to the player's `url` query param, and place
-                 the new block right after the last one (newest first). -->
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #1</p>
-                <iframe title="Chingonamics featured track 1 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FvwRVJ1HGsjAtyAEmo5ams&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #2</p>
-                <iframe title="Chingonamics featured track 2 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FezZIklnOmwhONNtBR8&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #3</p>
-                <iframe title="Chingonamics featured track 3 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FRyq7AJZWiITp0045tC&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #4</p>
-                <iframe title="Chingonamics featured track 4 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FboYKZ2vr735rde3IT1&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #5</p>
-                <iframe title="Chingonamics featured track 5 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2F2IjyAY95tvt2Wjqe06&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #6</p>
-                <iframe title="Chingonamics featured track 6 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FUtzKIyjmUHxS8WVvK5&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #7</p>
-                <iframe title="Chingonamics featured track 7 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FYV3JmyPdrbfhwAQ3Fm&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #8</p>
-                <iframe title="Chingonamics featured track 8 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2F1EDdykrhSS1fZqDiFM&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #9</p>
-                <iframe title="Chingonamics featured track 9 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FrAKiaCwv9QCOSgOhmg&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #10</p>
-                <iframe title="Chingonamics featured track 10 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FdmQdlGlzI6YGIxWzVm&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #11</p>
-                <iframe title="Chingonamics featured track 11 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FxY3X0hnBLTBuMRoPo4&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #12</p>
-                <iframe title="Chingonamics featured track 12 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2Flp0ZnLav7pBw5moCpD&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #13</p>
-                <iframe title="Chingonamics featured track 13 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FFplSRuVLusonkFyo6t&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #14</p>
-                <iframe title="Chingonamics featured track 14 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FrtL4pz0fT5iAe1rbDF&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #15</p>
-                <iframe title="Chingonamics featured track 15 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FiUCLg5TJCw4O7DDoLu&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #16</p>
-                <iframe title="Chingonamics featured track 16 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FIQSIPAeAvkOMpxZvvW&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #17</p>
-                <iframe title="Chingonamics featured track 17 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FDMtEmMoS8VgRgCFCXC&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #18</p>
-                <iframe title="Chingonamics featured track 18 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FCprfTfHCmLrwXnWsOZ&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #19</p>
-                <iframe title="Chingonamics featured track 19 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2F6CBJZwbXafNjNMSSfU&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #20</p>
-                <iframe title="Chingonamics featured track 20 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2FQwgjarLAfv5lnCIVHG&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
-            <div class="featured-track">
-                <p class="featured-track-title">Drop #21</p>
-                <iframe title="Chingonamics featured track 21 on SoundCloud"
-                    loading="lazy"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    height="120"
-                    src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fon.soundcloud.com%2F07aVIxEXcceKP6jfwI&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-            </div>
+        <div class="featured-player">
+            <iframe id="featured-iframe" title="Chingonamics featured track on SoundCloud"
+                loading="lazy"
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                height="120"></iframe>
         </div>
+        <ul class="featured-list" id="featured-list"></ul>
 
         <div class="cta-box">
             <a href="/videos.html" class="btn btn-x">
@@ -906,6 +724,70 @@
             .then((response) => (response.ok ? response.json() : Promise.reject(new Error('radio.json unavailable'))))
             .then((data) => startStation(Array.isArray(data) ? data : (data && data.tracks)))
             .catch(() => startStation(fallbackRadioTracks));
+    </script>
+
+    <script>
+        // Featured Drops: individual SoundCloud tracks highlighted outside the self-hosted
+        // player above. Only one SoundCloud embed is ever loaded at a time (whichever track
+        // is selected below), which keeps this section lightweight no matter how many tracks
+        // are listed. To add a track, append { title, url } to this array (newest last).
+        const featuredTracks = [
+            { title: 'Drop #1', url: 'https://on.soundcloud.com/vwRVJ1HGsjAtyAEmo5ams' },
+            { title: 'Drop #2', url: 'https://on.soundcloud.com/ezZIklnOmwhONNtBR8' },
+            { title: 'Drop #3', url: 'https://on.soundcloud.com/Ryq7AJZWiITp0045tC' },
+            { title: 'Drop #4', url: 'https://on.soundcloud.com/boYKZ2vr735rde3IT1' },
+            { title: 'Drop #5', url: 'https://on.soundcloud.com/2IjyAY95tvt2Wjqe06' },
+            { title: 'Drop #6', url: 'https://on.soundcloud.com/UtzKIyjmUHxS8WVvK5' },
+            { title: 'Drop #7', url: 'https://on.soundcloud.com/YV3JmyPdrbfhwAQ3Fm' },
+            { title: 'Drop #8', url: 'https://on.soundcloud.com/1EDdykrhSS1fZqDiFM' },
+            { title: 'Drop #9', url: 'https://on.soundcloud.com/rAKiaCwv9QCOSgOhmg' },
+            { title: 'Drop #10', url: 'https://on.soundcloud.com/dmQdlGlzI6YGIxWzVm' },
+            { title: 'Drop #11', url: 'https://on.soundcloud.com/xY3X0hnBLTBuMRoPo4' },
+            { title: 'Drop #12', url: 'https://on.soundcloud.com/lp0ZnLav7pBw5moCpD' },
+            { title: 'Drop #13', url: 'https://on.soundcloud.com/FplSRuVLusonkFyo6t' },
+            { title: 'Drop #14', url: 'https://on.soundcloud.com/rtL4pz0fT5iAe1rbDF' },
+            { title: 'Drop #15', url: 'https://on.soundcloud.com/iUCLg5TJCw4O7DDoLu' },
+            { title: 'Drop #16', url: 'https://on.soundcloud.com/IQSIPAeAvkOMpxZvvW' },
+            { title: 'Drop #17', url: 'https://on.soundcloud.com/DMtEmMoS8VgRgCFCXC' },
+            { title: 'Drop #18', url: 'https://on.soundcloud.com/CprfTfHCmLrwXnWsOZ' },
+            { title: 'Drop #19', url: 'https://on.soundcloud.com/6CBJZwbXafNjNMSSfU' },
+            { title: 'Drop #20', url: 'https://on.soundcloud.com/QwgjarLAfv5lnCIVHG' },
+            { title: 'Drop #21', url: 'https://on.soundcloud.com/07aVIxEXcceKP6jfwI' },
+        ];
+
+        const featuredIframe = document.getElementById('featured-iframe');
+        const featuredListEl = document.getElementById('featured-list');
+        let currentFeaturedIndex = 0;
+
+        function buildFeaturedEmbedUrl(trackUrl) {
+            const encoded = encodeURIComponent(trackUrl);
+            return `https://w.soundcloud.com/player/?url=${encoded}&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
+        }
+
+        function loadFeaturedTrack(index) {
+            if (!featuredTracks.length) return;
+            currentFeaturedIndex = (index + featuredTracks.length) % featuredTracks.length;
+            featuredIframe.src = buildFeaturedEmbedUrl(featuredTracks[currentFeaturedIndex].url);
+            renderFeaturedList();
+        }
+
+        function renderFeaturedList() {
+            featuredListEl.innerHTML = '';
+            featuredTracks.forEach((track, index) => {
+                const item = document.createElement('li');
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = track.title;
+                button.setAttribute('aria-current', index === currentFeaturedIndex ? 'true' : 'false');
+                button.addEventListener('click', () => loadFeaturedTrack(index));
+                item.appendChild(button);
+                featuredListEl.appendChild(item);
+            });
+        }
+
+        if (featuredTracks.length) {
+            loadFeaturedTrack(0);
+        }
     </script>
 </body>
 </html>
