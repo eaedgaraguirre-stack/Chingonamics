@@ -525,7 +525,6 @@
             currentIndex = (index + tracks.length) % tracks.length;
             const track = tracks[currentIndex];
             audio.src = track.src;
-            audio.load();
             titleEl.textContent = track.title;
             metaEl.textContent = track.description || 'Chingonamics Radio';
             statusEl.textContent = 'Ready to play.';
@@ -597,15 +596,21 @@
             isSeeking = false;
         });
 
+        ['pointerup', 'pointercancel', 'blur'].forEach((eventName) => {
+            seekBar.addEventListener(eventName, () => { isSeeking = false; });
+        });
+
         volumeBar.addEventListener('input', () => {
             audio.volume = Number(volumeBar.value);
         });
 
         document.addEventListener('keydown', (event) => {
             const tag = (event.target.tagName || '').toLowerCase();
-            const isInteractive = ['input', 'textarea', 'button', 'a', 'select'].includes(tag);
-            if (isInteractive || !tracks.length) return;
+            const isTextEntry = ['input', 'textarea', 'select'].includes(tag);
+            if (isTextEntry || !tracks.length) return;
             if (event.code === 'Space') {
+                // Let focused buttons and links keep their native activation.
+                if (tag === 'button' || tag === 'a') return;
                 event.preventDefault();
                 playBtn.click();
             } else if (event.code === 'ArrowRight' && tracks.length > 1) {
