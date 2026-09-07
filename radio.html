@@ -476,6 +476,7 @@
 
         let tracks = [];
         let currentIndex = 0;
+        let isSeeking = false;
 
         function formatTime(seconds) {
             if (!isFinite(seconds) || seconds < 0) return '0:00';
@@ -512,17 +513,14 @@
 
                 button.appendChild(label);
                 button.appendChild(icon);
-                button.addEventListener('click', () => {
-                    loadTrack(index);
-                    audio.play().catch(handlePlayError);
-                });
+                button.addEventListener('click', () => loadTrack(index, true));
 
                 item.appendChild(button);
                 playlistEl.appendChild(item);
             });
         }
 
-        function loadTrack(index, autoplay) {
+        function loadTrack(index, autoplay = false) {
             if (!tracks.length) return;
             currentIndex = (index + tracks.length) % tracks.length;
             const track = tracks[currentIndex];
@@ -571,7 +569,9 @@
 
         audio.addEventListener('timeupdate', () => {
             currentTimeEl.textContent = formatTime(audio.currentTime);
-            seekBar.value = audio.currentTime;
+            if (!isSeeking) {
+                seekBar.value = audio.currentTime;
+            }
         });
 
         audio.addEventListener('ended', () => {
@@ -588,7 +588,13 @@
         });
 
         seekBar.addEventListener('input', () => {
+            isSeeking = true;
+            currentTimeEl.textContent = formatTime(Number(seekBar.value));
+        });
+
+        seekBar.addEventListener('change', () => {
             audio.currentTime = Number(seekBar.value);
+            isSeeking = false;
         });
 
         volumeBar.addEventListener('input', () => {
@@ -597,7 +603,8 @@
 
         document.addEventListener('keydown', (event) => {
             const tag = (event.target.tagName || '').toLowerCase();
-            if (tag === 'input' || tag === 'textarea' || !tracks.length) return;
+            const isInteractive = ['input', 'textarea', 'button', 'a', 'select'].includes(tag);
+            if (isInteractive || !tracks.length) return;
             if (event.code === 'Space') {
                 event.preventDefault();
                 playBtn.click();
@@ -635,7 +642,7 @@
 
         fetch('radio.json', { cache: 'no-store' })
             .then((response) => (response.ok ? response.json() : Promise.reject(new Error('radio.json unavailable'))))
-            .then((data) => startStation(Array.isArray(data) ? data : data.tracks))
+            .then((data) => startStation(Array.isArray(data) ? data : (data && data.tracks)))
             .catch(() => startStation(fallbackRadioTracks));
     </script>
 </body>
