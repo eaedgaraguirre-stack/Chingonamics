@@ -495,34 +495,13 @@
     </footer>
 
 
+    <script src="/radio-tracks.js"></script>
     <script>
         // Featured Drops: individual SoundCloud tracks highlighted outside the self-hosted
         // player above. Only one SoundCloud embed is ever loaded at a time (whichever track
         // is selected below), which keeps this section lightweight no matter how many tracks
-        // are listed. To add a track, append { title, url } to this array (newest last).
-        const featuredTracks = [
-    { title: 'De Veras?', url: 'https://soundcloud.com/eaallupinyou/de-veras-10-7-24-2-29-pm-m4a' },
-    { title: 'Chaka Khan', url: 'https://soundcloud.com/eaallupinyou/chaka-khan' },
-    { title: 'Kinkys', url: 'https://soundcloud.com/eaallupinyou/kinkys-12-3-23-3-46-pm-m4a' },
-    { title: 'No Tickling', url: 'https://soundcloud.com/eaallupinyou/no-tickling' },
-    { title: "Kendall's Remorse", url: 'https://soundcloud.com/eaallupinyou/kendalls-remorse' },
-    { title: 'Critical Replacement Theory', url: 'https://soundcloud.com/eaallupinyou/critical-replacement-theory' },
-    { title: 'Knock Knock', url: 'https://soundcloud.com/eaallupinyou/knock-knock' },
-    { title: 'Forgive Him, Janet', url: 'https://soundcloud.com/eaallupinyou/forgive-him-janet' },
-    { title: 'Except That', url: 'https://soundcloud.com/eaallupinyou/except-that' },
-    { title: 'Lightning Strikes', url: 'https://soundcloud.com/eaallupinyou/lightning-strikes' },
-    { title: 'Vote for Summer', url: 'https://soundcloud.com/eaallupinyou/vote-for-summer' },
-    { title: 'Reconquista', url: 'https://soundcloud.com/eaallupinyou/reconquista' },
-    { title: 'PCH and Sunset', url: 'https://soundcloud.com/eaallupinyou/pch-and-sunset' },
-    { title: 'Easter Island', url: 'https://soundcloud.com/eaallupinyou/easter-island' },
-    { title: 'Cheesecake in the Future', url: 'https://soundcloud.com/eaallupinyou/cheesecake-in-the-future' },
-    { title: 'Nectar', url: 'https://soundcloud.com/eaallupinyou/nectar' },
-    { title: 'The Son of Flynn (Remixed)', url: 'https://soundcloud.com/eaallupinyou/remix-the-son-of-flynn-remixed' },
-    { title: 'Scarlet Pimpernel', url: 'https://soundcloud.com/eaallupinyou/scarlet-pimpernel' },
-    { title: 'Thinking About Tomorrow', url: 'https://soundcloud.com/eaallupinyou/thinking-about-tomorrow-2' },
-    { title: 'Alivianate', url: 'https://soundcloud.com/eaallupinyou/alivianate' },
-    { title: 'This Is for My Dogs', url: 'https://soundcloud.com/eaallupinyou/this-is-for-my-dogs-7' },
-];
+        // are listed. The track list lives in radio-tracks.js so index.html can share it.
+        const featuredTracks = window.chingonamicsTracks || [];
 
 
         const featuredIframe = document.getElementById('featured-iframe');

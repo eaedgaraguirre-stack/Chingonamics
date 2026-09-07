@@ -248,6 +248,38 @@
             margin-bottom: 40px;
         }
 
+        .radio-section {
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .radio-player {
+            border: 1px solid #333;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .radio-player iframe {
+            display: block;
+            width: 100%;
+            border: 0;
+        }
+
+        .radio-note {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #9A9A9A;
+        }
+
+        .radio-note a {
+            color: var(--orange);
+            font-weight: 700;
+        }
+
         .section-heading {
             color: var(--gold);
             font-size: 1.45rem;
@@ -500,6 +532,18 @@
             </a>
         </div>
     </div>
+
+    <section class="radio-section" aria-labelledby="radio-heading">
+        <h2 class="section-heading" id="radio-heading">📻 Now Playing — <span id="radio-track-title">Chingonamics Radio</span></h2>
+        <div class="radio-player">
+            <iframe id="radio-iframe" title="Chingonamics Radio shuffle player"
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                height="120"></iframe>
+        </div>
+        <p class="radio-note">A random drop every visit. <a href="/radio.html">Open the full radio →</a></p>
+    </section>
 
     <section class="share-section" aria-labelledby="share-heading">
         <h2 class="section-heading" id="share-heading">Spread the Chingonería</h2>
@@ -783,6 +827,51 @@
                 shareUrl('Join the Chingonamics Meme Machine 🔥', window.location.href, button.dataset.share);
             });
         });
+    </script>
+
+    <script src="/radio-tracks.js"></script>
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script>
+        // Shuffle player: picks one random track from the shared Chingonamics Radio list and
+        // tries to start it on landing. Browsers block unmuted autoplay until the visitor
+        // interacts with the page, so we also start playback on the first user gesture.
+        (function () {
+            const tracks = window.chingonamicsTracks || [];
+            const iframe = document.getElementById('radio-iframe');
+            const titleEl = document.getElementById('radio-track-title');
+            if (!iframe || !tracks.length) return;
+
+            const track = tracks[Math.floor(Math.random() * tracks.length)];
+            if (titleEl) titleEl.textContent = track.title;
+
+            const params = new URLSearchParams({
+                url: track.url,
+                color: '#ff7a18',
+                auto_play: 'true',
+                hide_related: 'true',
+                show_comments: 'false',
+                show_user: 'true',
+                show_reposts: 'false',
+                show_teaser: 'false',
+                visual: 'false'
+            });
+            iframe.src = 'https://w.soundcloud.com/player/?' + params.toString();
+
+            if (typeof SC === 'undefined' || !SC.Widget) return;
+
+            const widget = SC.Widget(iframe);
+            let hasPlayed = false;
+            widget.bind(SC.Widget.Events.PLAY, () => { hasPlayed = true; });
+
+            const startOnGesture = () => {
+                if (!hasPlayed) widget.play();
+                document.removeEventListener('pointerdown', startOnGesture);
+                document.removeEventListener('keydown', startOnGesture);
+            };
+
+            document.addEventListener('pointerdown', startOnGesture, { once: true });
+            document.addEventListener('keydown', startOnGesture, { once: true });
+        })();
     </script>
 
 </body>
