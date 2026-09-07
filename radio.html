@@ -351,6 +351,33 @@
             margin-bottom: 28px;
         }
 
+        .featured-list li {
+            display: flex;
+            align-items: stretch;
+            gap: 8px;
+        }
+
+        .featured-list .featured-link {
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            border: 1px solid #262626;
+            border-radius: 12px;
+            background: #111;
+            color: #8f8f8f;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .featured-list .featured-link:hover,
+        .featured-list .featured-link:focus-visible {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
         .featured-list button {
             width: 100%;
             display: flex;
@@ -460,7 +487,7 @@
         <span class="badge">📻 Chingonamics Radio</span>
 
         <h1>Chingonamics Radio</h1>
-        <p class="subtitle">Meme anthems, community drops and pure <i>chingonería</i> — straight from the machine, streamed right here. No third-party player required.</p>
+        <p class="subtitle">Meme anthems, community drops and pure <i>chingonería</i> — straight from the machine. Pick a drop below and hit play.</p>
 
         <section class="player" aria-labelledby="player-heading">
             <h2 class="now-playing-label" id="player-heading">Now Playing</h2>
@@ -528,9 +555,39 @@
         &copy; 2026 Chingonamics. NFA. DYOR.
     </footer>
 
+    <script src="https://w.soundcloud.com/player/api.js"></script>
     <script>
-        // Add a track: drop the audio file in the repo root and add an entry below
-        // (or to radio.json, which takes priority when present).
+        // Featured Drops: the official Chingonamics tracks hosted on SoundCloud.
+        // Only one SoundCloud embed is ever loaded at a time (whichever drop is selected),
+        // which keeps this page light no matter how many drops are listed.
+        // To add a drop, append { title, url } to this array (newest last).
+        const featuredTracks = [
+            { title: 'Drop #1', url: 'https://on.soundcloud.com/vwRVJ1HGsjAtyAEmo5ams' },
+            { title: 'Drop #2', url: 'https://on.soundcloud.com/ezZIklnOmwhONNtBR8' },
+            { title: 'Drop #3', url: 'https://on.soundcloud.com/Ryq7AJZWiITp0045tC' },
+            { title: 'Drop #4', url: 'https://on.soundcloud.com/boYKZ2vr735rde3IT1' },
+            { title: 'Drop #5', url: 'https://on.soundcloud.com/2IjyAY95tvt2Wjqe06' },
+            { title: 'Drop #6', url: 'https://on.soundcloud.com/UtzKIyjmUHxS8WVvK5' },
+            { title: 'Drop #7', url: 'https://on.soundcloud.com/YV3JmyPdrbfhwAQ3Fm' },
+            { title: 'Drop #8', url: 'https://on.soundcloud.com/1EDdykrhSS1fZqDiFM' },
+            { title: 'Drop #9', url: 'https://on.soundcloud.com/rAKiaCwv9QCOSgOhmg' },
+            { title: 'Drop #10', url: 'https://on.soundcloud.com/dmQdlGlzI6YGIxWzVm' },
+            { title: 'Drop #11', url: 'https://on.soundcloud.com/xY3X0hnBLTBuMRoPo4' },
+            { title: 'Drop #12', url: 'https://on.soundcloud.com/lp0ZnLav7pBw5moCpD' },
+            { title: 'Drop #13', url: 'https://on.soundcloud.com/FplSRuVLusonkFyo6t' },
+            { title: 'Drop #14', url: 'https://on.soundcloud.com/rtL4pz0fT5iAe1rbDF' },
+            { title: 'Drop #15', url: 'https://on.soundcloud.com/iUCLg5TJCw4O7DDoLu' },
+            { title: 'Drop #16', url: 'https://on.soundcloud.com/IQSIPAeAvkOMpxZvvW' },
+            { title: 'Drop #17', url: 'https://on.soundcloud.com/DMtEmMoS8VgRgCFCXC' },
+            { title: 'Drop #18', url: 'https://on.soundcloud.com/CprfTfHCmLrwXnWsOZ' },
+            { title: 'Drop #19', url: 'https://on.soundcloud.com/6CBJZwbXafNjNMSSfU' },
+            { title: 'Drop #20', url: 'https://on.soundcloud.com/QwgjarLAfv5lnCIVHG' },
+            { title: 'Drop #21', url: 'https://on.soundcloud.com/07aVIxEXcceKP6jfwI' },
+        ];
+
+        // Add a self-hosted track: drop the audio file in the repo root and add an entry
+        // below (or to radio.json, which takes priority when present). When there are no
+        // self-hosted tracks the Now Playing box drives the SoundCloud drops instead.
         const fallbackRadioTracks = [];
 
         const audio = document.getElementById('radio-audio');
@@ -548,7 +605,10 @@
         const equalizerEl = document.getElementById('equalizer');
         const currentTimeEl = document.getElementById('current-time');
         const durationEl = document.getElementById('duration');
+        const featuredIframe = document.getElementById('featured-iframe');
+        const featuredListEl = document.getElementById('featured-list');
 
+        let mode = 'local';
         let tracks = [];
         let currentIndex = 0;
         let isSeeking = false;
@@ -560,12 +620,20 @@
             return `${mins}:${String(secs).padStart(2, '0')}`;
         }
 
-        function setControlsEnabled(enabled) {
+        function setControlsEnabled(enabled, count) {
+            const total = typeof count === 'number' ? count : tracks.length;
             playBtn.disabled = !enabled;
             seekBar.disabled = !enabled;
-            prevBtn.disabled = !enabled || tracks.length < 2;
-            nextBtn.disabled = !enabled || tracks.length < 2;
+            prevBtn.disabled = !enabled || total < 2;
+            nextBtn.disabled = !enabled || total < 2;
         }
+
+        function setPlayingUI(playing) {
+            playBtn.textContent = playing ? '⏸ Pause' : '▶ Play';
+            equalizerEl.classList.toggle('is-playing', playing);
+        }
+
+        /* ---------------- Self-hosted player ---------------- */
 
         function renderPlaylist() {
             playlistEl.innerHTML = '';
@@ -613,26 +681,13 @@
             statusEl.textContent = 'Playback was blocked or the track could not be loaded. Try pressing play again.';
         }
 
-        playBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play().catch(handlePlayError);
-            } else {
-                audio.pause();
-            }
-        });
-
-        prevBtn.addEventListener('click', () => loadTrack(currentIndex - 1, true));
-        nextBtn.addEventListener('click', () => loadTrack(currentIndex + 1, true));
-
         audio.addEventListener('play', () => {
-            playBtn.textContent = '⏸ Pause';
-            equalizerEl.classList.add('is-playing');
+            setPlayingUI(true);
             statusEl.textContent = 'On air.';
         });
 
         audio.addEventListener('pause', () => {
-            playBtn.textContent = '▶ Play';
-            equalizerEl.classList.remove('is-playing');
+            setPlayingUI(false);
             statusEl.textContent = 'Paused.';
         });
 
@@ -657,17 +712,270 @@
         });
 
         audio.addEventListener('error', () => {
+            if (mode !== 'local') return;
             statusEl.textContent = 'That track could not be loaded. Catch the drops on 𝕏 @chingonamics instead.';
             equalizerEl.classList.remove('is-playing');
         });
 
+        /* ---------------- SoundCloud player ---------------- */
+
+        let widget = null;
+        let widgetReady = false;
+        let scIndex = 0;
+        let scDuration = 0;
+        let scIsPlaying = false;
+        let scLoadTimer = null;
+        const resolvedUrlCache = new Map();
+
+        function buildFeaturedEmbedUrl(trackUrl) {
+            const encoded = encodeURIComponent(trackUrl);
+            return `https://w.soundcloud.com/player/?url=${encoded}&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
+        }
+
+        // `on.soundcloud.com` share links are redirects that the SoundCloud widget cannot
+        // resolve on its own, so ask the public oEmbed endpoint for the real permalink first.
+        function resolveTrackUrl(shareUrl) {
+            if (resolvedUrlCache.has(shareUrl)) {
+                return Promise.resolve(resolvedUrlCache.get(shareUrl));
+            }
+            const oembed = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(shareUrl)}`;
+            return fetch(oembed)
+                .then((response) => (response.ok ? response.json() : Promise.reject(new Error('oembed failed'))))
+                .then((data) => {
+                    const match = /src="([^"]+)"/.exec((data && data.html) || '');
+                    if (!match) throw new Error('no embed html');
+                    const src = match[1].replace(/&amp;/g, '&');
+                    const embedded = new URL(src, 'https://w.soundcloud.com').searchParams.get('url');
+                    const resolved = embedded || shareUrl;
+                    resolvedUrlCache.set(shareUrl, resolved);
+                    return resolved;
+                })
+                .catch(() => {
+                    resolvedUrlCache.set(shareUrl, shareUrl);
+                    return shareUrl;
+                });
+        }
+
+        function renderFeaturedList() {
+            featuredListEl.innerHTML = '';
+            featuredTracks.forEach((track, index) => {
+                const item = document.createElement('li');
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = track.title;
+                button.setAttribute('aria-current', mode === 'soundcloud' && index === scIndex ? 'true' : 'false');
+                button.addEventListener('click', () => selectFeaturedTrack(index, true));
+
+                const icon = document.createElement('span');
+                icon.setAttribute('aria-hidden', 'true');
+                icon.textContent = '▶';
+                button.appendChild(icon);
+
+                const link = document.createElement('a');
+                link.className = 'featured-link';
+                link.href = track.url;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = 'Open ↗';
+                link.setAttribute('aria-label', `Open ${track.title} on SoundCloud`);
+
+                item.appendChild(button);
+                item.appendChild(link);
+                featuredListEl.appendChild(item);
+            });
+        }
+
+        function scWatchdog(track) {
+            window.clearTimeout(scLoadTimer);
+            scLoadTimer = window.setTimeout(() => {
+                if (!widgetReady) {
+                    statusEl.innerHTML = `The SoundCloud player is taking too long to load. <a href="${track.url}" target="_blank" rel="noopener noreferrer" style="color:var(--gold);">Open ${track.title} on SoundCloud ↗</a>`;
+                }
+            }, 10000);
+        }
+
+        function selectFeaturedTrack(index, autoplay = false) {
+            if (!featuredTracks.length) return;
+            scIndex = (index + featuredTracks.length) % featuredTracks.length;
+            const track = featuredTracks[scIndex];
+
+            widgetReady = false;
+            scDuration = 0;
+            renderFeaturedList();
+
+            // The Now Playing box only mirrors the drops when there are no self-hosted tracks.
+            if (mode === 'soundcloud') {
+                setPlayingUI(false);
+                seekBar.value = 0;
+                currentTimeEl.textContent = '0:00';
+                durationEl.textContent = '0:00';
+                titleEl.textContent = track.title;
+                metaEl.textContent = 'Chingonamics on SoundCloud';
+                statusEl.textContent = 'Loading the drop…';
+                scWatchdog(track);
+            }
+
+            resolveTrackUrl(track.url).then((resolved) => {
+                if (featuredTracks[scIndex] !== track) return;
+                if (widget) {
+                    widget.load(resolved, {
+                        auto_play: autoplay,
+                        color: '#ff7a18',
+                        hide_related: true,
+                        show_comments: false,
+                        show_user: true,
+                        show_reposts: false,
+                        show_teaser: false,
+                        callback: () => onWidgetReady(track)
+                    });
+                    return;
+                }
+                // The widget can only be controlled once the iframe points at the
+                // SoundCloud player, so the first drop is loaded through the src.
+                featuredIframe.src = buildFeaturedEmbedUrl(resolved) + (autoplay ? '&auto_play=true' : '');
+                widget = SC.Widget(featuredIframe);
+                bindWidgetEvents();
+                widget.bind(SC.Widget.Events.READY, () => onWidgetReady(track));
+            });
+        }
+
+        function onWidgetReady(track) {
+            widgetReady = true;
+            window.clearTimeout(scLoadTimer);
+            widget.setVolume(Number(volumeBar.value) * 100);
+            if (mode !== 'soundcloud') return;
+            setControlsEnabled(true, featuredTracks.length);
+            statusEl.textContent = 'Ready to play.';
+            widget.getDuration((duration) => {
+                scDuration = duration || 0;
+                durationEl.textContent = formatTime(scDuration / 1000);
+                seekBar.max = scDuration > 0 ? scDuration : 100;
+            });
+            widget.getCurrentSound((sound) => {
+                if (sound && sound.title) {
+                    titleEl.textContent = sound.title;
+                    metaEl.textContent = `${track.title} · Chingonamics on SoundCloud`;
+                }
+            });
+        }
+
+        function bindWidgetEvents() {
+            widget.bind(SC.Widget.Events.PLAY, () => {
+                scIsPlaying = true;
+                if (mode !== 'soundcloud') return;
+                setPlayingUI(true);
+                statusEl.textContent = 'On air.';
+            });
+            widget.bind(SC.Widget.Events.PAUSE, () => {
+                scIsPlaying = false;
+                if (mode !== 'soundcloud') return;
+                setPlayingUI(false);
+                statusEl.textContent = 'Paused.';
+            });
+            widget.bind(SC.Widget.Events.FINISH, () => {
+                scIsPlaying = false;
+                if (mode !== 'soundcloud') return;
+                setPlayingUI(false);
+                if (featuredTracks.length > 1) {
+                    selectFeaturedTrack(scIndex + 1, true);
+                } else {
+                    statusEl.textContent = 'Drop finished. Press play to run it back.';
+                }
+            });
+            widget.bind(SC.Widget.Events.PLAY_PROGRESS, (data) => {
+                if (!data || mode !== 'soundcloud') return;
+                if (!scDuration && data.relativePosition) {
+                    scDuration = data.currentPosition / data.relativePosition;
+                    durationEl.textContent = formatTime(scDuration / 1000);
+                    seekBar.max = scDuration > 0 ? scDuration : 100;
+                }
+                currentTimeEl.textContent = formatTime(data.currentPosition / 1000);
+                if (!isSeeking) seekBar.value = data.currentPosition;
+            });
+            widget.bind(SC.Widget.Events.ERROR, () => {
+                if (mode !== 'soundcloud') return;
+                const track = featuredTracks[scIndex];
+                window.clearTimeout(scLoadTimer);
+                statusEl.innerHTML = `That drop could not be loaded here. <a href="${track.url}" target="_blank" rel="noopener noreferrer" style="color:var(--gold);">Open it on SoundCloud \u2197</a>`;
+                setPlayingUI(false);
+            });
+        }
+
+        function startSoundCloudMode() {
+            if (!featuredTracks.length || typeof SC === 'undefined' || !SC.Widget) {
+                showEmptyStation();
+                return;
+            }
+
+            mode = 'soundcloud';
+            fallbackEl.hidden = true;
+            playlistEl.hidden = true;
+            playlistHeadingEl.hidden = true;
+            metaEl.textContent = 'Chingonamics on SoundCloud';
+            statusEl.textContent = 'Loading the drop\u2026';
+            setControlsEnabled(false, featuredTracks.length);
+
+            selectFeaturedTrack(0, false);
+        }
+
+        function showEmptyStation() {
+            fallbackEl.hidden = false;
+            playlistEl.hidden = true;
+            playlistHeadingEl.hidden = true;
+            statusEl.textContent = 'No tracks are on the air yet.';
+            metaEl.textContent = 'New drops are on the way.';
+            setControlsEnabled(false, 0);
+        }
+
+        /* ---------------- Shared controls ---------------- */
+
+        playBtn.addEventListener('click', () => {
+            if (mode === 'soundcloud') {
+                if (!widget) return;
+                if (scIsPlaying) {
+                    widget.pause();
+                } else {
+                    widget.play();
+                }
+                return;
+            }
+            if (audio.paused) {
+                audio.play().catch(handlePlayError);
+            } else {
+                audio.pause();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (mode === 'soundcloud') {
+                selectFeaturedTrack(scIndex - 1, true);
+            } else {
+                loadTrack(currentIndex - 1, true);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (mode === 'soundcloud') {
+                selectFeaturedTrack(scIndex + 1, true);
+            } else {
+                loadTrack(currentIndex + 1, true);
+            }
+        });
+
         seekBar.addEventListener('input', () => {
             isSeeking = true;
-            currentTimeEl.textContent = formatTime(Number(seekBar.value));
+            const value = Number(seekBar.value);
+            currentTimeEl.textContent = formatTime(mode === 'soundcloud' ? value / 1000 : value);
         });
 
         seekBar.addEventListener('change', () => {
-            audio.currentTime = Number(seekBar.value);
+            const value = Number(seekBar.value);
+            if (mode === 'soundcloud') {
+                if (widget && widgetReady) widget.seekTo(value);
+            } else {
+                audio.currentTime = value;
+            }
             isSeeking = false;
         });
 
@@ -676,22 +984,28 @@
         });
 
         volumeBar.addEventListener('input', () => {
-            audio.volume = Number(volumeBar.value);
+            const value = Number(volumeBar.value);
+            if (mode === 'soundcloud') {
+                if (widget) widget.setVolume(value * 100);
+            } else {
+                audio.volume = value;
+            }
         });
 
         document.addEventListener('keydown', (event) => {
             const tag = (event.target.tagName || '').toLowerCase();
             const isTextEntry = ['input', 'textarea', 'select'].includes(tag);
-            if (isTextEntry || !tracks.length) return;
+            const count = mode === 'soundcloud' ? featuredTracks.length : tracks.length;
+            if (isTextEntry || !count) return;
             if (event.code === 'Space') {
                 // Let focused buttons and links keep their native activation.
                 if (tag === 'button' || tag === 'a') return;
                 event.preventDefault();
                 playBtn.click();
-            } else if (event.code === 'ArrowRight' && tracks.length > 1) {
-                loadTrack(currentIndex + 1, true);
-            } else if (event.code === 'ArrowLeft' && tracks.length > 1) {
-                loadTrack(currentIndex - 1, true);
+            } else if (event.code === 'ArrowRight' && count > 1) {
+                nextBtn.click();
+            } else if (event.code === 'ArrowLeft' && count > 1) {
+                prevBtn.click();
             }
         });
 
@@ -703,15 +1017,11 @@
             tracks = Array.isArray(list) ? list.filter(isValidTrack) : [];
 
             if (!tracks.length) {
-                fallbackEl.hidden = false;
-                playlistEl.hidden = true;
-                playlistHeadingEl.hidden = true;
-                statusEl.textContent = 'No tracks are on the air yet.';
-                metaEl.textContent = 'New drops are on the way.';
-                setControlsEnabled(false);
+                startSoundCloudMode();
                 return;
             }
 
+            mode = 'local';
             fallbackEl.hidden = true;
             playlistEl.hidden = false;
             playlistHeadingEl.hidden = false;
@@ -720,74 +1030,12 @@
             loadTrack(0, false);
         }
 
+        renderFeaturedList();
+
         fetch('radio.json', { cache: 'no-store' })
             .then((response) => (response.ok ? response.json() : Promise.reject(new Error('radio.json unavailable'))))
             .then((data) => startStation(Array.isArray(data) ? data : (data && data.tracks)))
             .catch(() => startStation(fallbackRadioTracks));
-    </script>
-
-    <script>
-        // Featured Drops: individual SoundCloud tracks highlighted outside the self-hosted
-        // player above. Only one SoundCloud embed is ever loaded at a time (whichever track
-        // is selected below), which keeps this section lightweight no matter how many tracks
-        // are listed. To add a track, append { title, url } to this array (newest last).
-        const featuredTracks = [
-            { title: 'Drop #1', url: 'https://on.soundcloud.com/vwRVJ1HGsjAtyAEmo5ams' },
-            { title: 'Drop #2', url: 'https://on.soundcloud.com/ezZIklnOmwhONNtBR8' },
-            { title: 'Drop #3', url: 'https://on.soundcloud.com/Ryq7AJZWiITp0045tC' },
-            { title: 'Drop #4', url: 'https://on.soundcloud.com/boYKZ2vr735rde3IT1' },
-            { title: 'Drop #5', url: 'https://on.soundcloud.com/2IjyAY95tvt2Wjqe06' },
-            { title: 'Drop #6', url: 'https://on.soundcloud.com/UtzKIyjmUHxS8WVvK5' },
-            { title: 'Drop #7', url: 'https://on.soundcloud.com/YV3JmyPdrbfhwAQ3Fm' },
-            { title: 'Drop #8', url: 'https://on.soundcloud.com/1EDdykrhSS1fZqDiFM' },
-            { title: 'Drop #9', url: 'https://on.soundcloud.com/rAKiaCwv9QCOSgOhmg' },
-            { title: 'Drop #10', url: 'https://on.soundcloud.com/dmQdlGlzI6YGIxWzVm' },
-            { title: 'Drop #11', url: 'https://on.soundcloud.com/xY3X0hnBLTBuMRoPo4' },
-            { title: 'Drop #12', url: 'https://on.soundcloud.com/lp0ZnLav7pBw5moCpD' },
-            { title: 'Drop #13', url: 'https://on.soundcloud.com/FplSRuVLusonkFyo6t' },
-            { title: 'Drop #14', url: 'https://on.soundcloud.com/rtL4pz0fT5iAe1rbDF' },
-            { title: 'Drop #15', url: 'https://on.soundcloud.com/iUCLg5TJCw4O7DDoLu' },
-            { title: 'Drop #16', url: 'https://on.soundcloud.com/IQSIPAeAvkOMpxZvvW' },
-            { title: 'Drop #17', url: 'https://on.soundcloud.com/DMtEmMoS8VgRgCFCXC' },
-            { title: 'Drop #18', url: 'https://on.soundcloud.com/CprfTfHCmLrwXnWsOZ' },
-            { title: 'Drop #19', url: 'https://on.soundcloud.com/6CBJZwbXafNjNMSSfU' },
-            { title: 'Drop #20', url: 'https://on.soundcloud.com/QwgjarLAfv5lnCIVHG' },
-            { title: 'Drop #21', url: 'https://on.soundcloud.com/07aVIxEXcceKP6jfwI' },
-        ];
-
-        const featuredIframe = document.getElementById('featured-iframe');
-        const featuredListEl = document.getElementById('featured-list');
-        let currentFeaturedIndex = 0;
-
-        function buildFeaturedEmbedUrl(trackUrl) {
-            const encoded = encodeURIComponent(trackUrl);
-            return `https://w.soundcloud.com/player/?url=${encoded}&color=%23ff7a18&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
-        }
-
-        function loadFeaturedTrack(index) {
-            if (!featuredTracks.length) return;
-            currentFeaturedIndex = (index + featuredTracks.length) % featuredTracks.length;
-            featuredIframe.src = buildFeaturedEmbedUrl(featuredTracks[currentFeaturedIndex].url);
-            renderFeaturedList();
-        }
-
-        function renderFeaturedList() {
-            featuredListEl.innerHTML = '';
-            featuredTracks.forEach((track, index) => {
-                const item = document.createElement('li');
-                const button = document.createElement('button');
-                button.type = 'button';
-                button.textContent = track.title;
-                button.setAttribute('aria-current', index === currentFeaturedIndex ? 'true' : 'false');
-                button.addEventListener('click', () => loadFeaturedTrack(index));
-                item.appendChild(button);
-                featuredListEl.appendChild(item);
-            });
-        }
-
-        if (featuredTracks.length) {
-            loadFeaturedTrack(0);
-        }
     </script>
 </body>
 </html>
