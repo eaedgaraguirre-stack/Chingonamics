@@ -803,10 +803,10 @@
             statusEl.appendChild(link);
         }
 
-        function scWatchdog(track) {
+        function scWatchdog(track, requestToken) {
             window.clearTimeout(scLoadTimer);
             scLoadTimer = window.setTimeout(() => {
-                if (!widgetReady) {
+                if (!widgetReady && requestToken === scRequestToken) {
                     setStatusWithLink('The SoundCloud player is taking too long to load.', track, `Open ${track.title} on SoundCloud ↗`);
                 }
             }, 10000);
@@ -832,7 +832,7 @@
                 titleEl.textContent = track.title;
                 metaEl.textContent = 'Chingonamics on SoundCloud';
                 statusEl.textContent = 'Loading the drop…';
-                scWatchdog(track);
+                scWatchdog(track, requestToken);
             }
 
             resolveTrackUrl(track.url).then((resolution) => {
@@ -877,10 +877,11 @@
             if (requestToken !== scRequestToken) return;
             widgetReady = true;
             window.clearTimeout(scLoadTimer);
-            widget.setVolume(Number(volumeBar.value) * 100);
             if (mode !== 'soundcloud') return;
+            widget.setVolume(Number(volumeBar.value) * 100);
             setControlsEnabled(true, featuredTracks.length);
             statusEl.textContent = 'Ready to play.';
+            seekBar.step = 1;
             widget.getDuration((duration) => {
                 scDuration = duration || 0;
                 durationEl.textContent = formatTime(scDuration / 1000);
