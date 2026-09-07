@@ -246,6 +246,54 @@
             margin-bottom: 16px;
         }
 
+        .sound-section {
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .sound-preview-card {
+            background:
+                linear-gradient(135deg, rgba(0,104,71,0.24), rgba(206,37,43,0.2)),
+                var(--card-bg);
+            border: 2px solid rgba(255, 215, 0, 0.35);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.12);
+            text-align: left;
+        }
+
+        .sound-preview-card h3 {
+            color: var(--white);
+            font-size: clamp(1.3rem, 4vw, 2rem);
+            line-height: 1.1;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .sound-preview-card p {
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .sound-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .sound-actions .token-share {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 12px;
+            text-decoration: none;
+        }
+
         .launches-section {
             max-width: 1000px;
             width: 100%;
@@ -410,6 +458,7 @@
             body { padding: 12px; }
             .container { padding: 28px 18px; }
             .share-buttons { grid-template-columns: 1fr; }
+            .sound-actions { grid-template-columns: 1fr; }
         }
 
         footer {
@@ -471,6 +520,18 @@
             <button class="share-button" type="button" data-share="whatsapp">💬 WhatsApp</button>
             <button class="share-button" type="button" data-share="copy">🔗 Copy Link</button>
         </div>
+    </section>
+
+    <section class="sound-section" aria-labelledby="sound-heading">
+        <h2 class="section-heading" id="sound-heading">🎧 Chingonamics Radio</h2>
+        <article class="sound-preview-card">
+            <h3>The soundtrack to the Mexican Meme Machine</h3>
+            <p>Beats, memes, launches, and pure <i>chingonería</i> from the official Chingonamics SoundCloud.</p>
+            <div class="sound-actions">
+                <a href="sounds.html" class="token-button">🎧 Open Radio Page</a>
+                <a href="https://on.soundcloud.com/r7FP55rkpDVPqs9rcJ" target="_blank" rel="noopener noreferrer" class="token-share">SoundCloud</a>
+            </div>
+        </article>
     </section>
 
     <section class="launches-section" aria-labelledby="launches-heading">
