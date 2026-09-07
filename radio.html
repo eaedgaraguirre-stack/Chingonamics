@@ -731,6 +731,8 @@
         let scLoadTimer = null;
         let scRequestToken = 0;
         const resolvedUrlCache = new Map();
+        // How long to wait for the SoundCloud player before offering a direct link instead.
+        const SC_LOAD_TIMEOUT_MS = 10000;
 
         function scApiAvailable() {
             return typeof SC !== 'undefined' && !!SC.Widget;
@@ -751,9 +753,9 @@
             return fetch(oembed)
                 .then((response) => (response.ok ? response.json() : Promise.reject(new Error('oembed failed'))))
                 .then((data) => {
-                    const match = /src="([^"]+)"/.exec((data && data.html) || '');
-                    if (!match) throw new Error('no embed html');
-                    const src = match[1].replace(/&amp;/g, '&');
+                    const doc = new DOMParser().parseFromString((data && data.html) || '', 'text/html');
+                    const src = doc.querySelector('iframe') && doc.querySelector('iframe').getAttribute('src');
+                    if (!src) throw new Error('no embed html');
                     const embedded = new URL(src, 'https://w.soundcloud.com').searchParams.get('url');
                     const resolved = { url: embedded || shareUrl, ok: true };
                     resolvedUrlCache.set(shareUrl, resolved);
@@ -809,7 +811,7 @@
                 if (!widgetReady && requestToken === scRequestToken) {
                     setStatusWithLink('The SoundCloud player is taking too long to load.', track, `Open ${track.title} on SoundCloud ↗`);
                 }
-            }, 10000);
+            }, SC_LOAD_TIMEOUT_MS);
         }
 
         function selectFeaturedTrack(index, autoplay = false) {
@@ -1066,6 +1068,7 @@
             playlistEl.hidden = false;
             playlistHeadingEl.hidden = false;
             audio.volume = Number(volumeBar.value);
+            seekBar.step = 0.1;
             setControlsEnabled(true);
             loadTrack(0, false);
             // Prime the Featured Drops embed so the section isn't blank on load.
