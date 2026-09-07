@@ -337,6 +337,48 @@
         &copy; 2026 Chingonamics. NFA. DYOR.
     </footer>
 
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script>
+        // Lazy-load Twitter/X embeds: only convert a card into a full embed once
+        // it actually scrolls near the viewport, instead of loading all cards at
+        // once. Keeps the page fast no matter how many videos get added later.
+        let twitterWidgetsPromise = null;
+
+        function loadTwitterWidgets() {
+            if (twitterWidgetsPromise) return twitterWidgetsPromise;
+            twitterWidgetsPromise = new Promise((resolve) => {
+                const script = document.createElement('script');
+                script.src = 'https://platform.twitter.com/widgets.js';
+                script.async = true;
+                script.onload = () => resolve(window.twttr);
+                document.body.appendChild(script);
+            });
+            return twitterWidgetsPromise;
+        }
+
+        const videoCards = document.querySelectorAll('.video-card');
+
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    observer.unobserve(entry.target);
+                    loadTwitterWidgets().then((twttr) => {
+                        if (twttr && twttr.widgets) {
+                            twttr.widgets.load(entry.target);
+                        }
+                    });
+                });
+            }, { rootMargin: '400px 0px' });
+
+            videoCards.forEach((card) => observer.observe(card));
+        } else {
+            // Fallback for older browsers without IntersectionObserver support:
+            // just load everything immediately, same as before.
+            loadTwitterWidgets().then((twttr) => {
+                if (twttr && twttr.widgets) twttr.widgets.load();
+            });
+        }
+    </script>
+
 </body>
 </html>
