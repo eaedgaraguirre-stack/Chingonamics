@@ -261,12 +261,34 @@
             border-radius: 12px;
             overflow: hidden;
             background: #111;
+            position: relative;
         }
 
         .radio-player iframe {
             display: block;
             width: 100%;
             border: 0;
+        }
+
+        .radio-play-overlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.8);
+            border: none;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .radio-play-overlay:hover {
+            background: rgba(10, 10, 10, 0.65);
         }
 
         .radio-note {
@@ -533,21 +555,18 @@
         </div>
     </div>
 
-        <section class="radio-section" aria-labelledby="radio-heading">
+    <section class="radio-section" aria-labelledby="radio-heading">
         <h2 class="section-heading" id="radio-heading">📻 Now Playing — <span id="radio-track-title">Chingonamics Radio</span></h2>
-        <div class="radio-player" style="position:relative;">
+        <div class="radio-player">
             <iframe id="radio-iframe" title="Chingonamics Radio shuffle player"
                 scrolling="no"
                 frameborder="no"
                 allow="autoplay"
                 height="120"></iframe>
-            <button type="button" id="radio-play-overlay" style="position:absolute;inset:0;width:100%;height:100%;background:rgba(10,10,10,0.75);border:none;color:var(--gold);font-weight:700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-                ▶ Play Chingonamics Radio
-            </button>
+            <button type="button" id="radio-play-overlay" class="radio-play-overlay">▶ Play Chingonamics Radio</button>
         </div>
         <p class="radio-note">A random drop every visit. <a href="/radio.html">Open the full radio →</a></p>
     </section>
-
 
     <section class="share-section" aria-labelledby="share-heading">
         <h2 class="section-heading" id="share-heading">Spread the Chingonería</h2>
@@ -836,13 +855,14 @@
     <script src="/radio-tracks.js"></script>
     <script src="https://w.soundcloud.com/player/api.js"></script>
     <script>
-        // Shuffle player: picks one random track from the shared Chingonamics Radio list and
-        // tries to start it on landing. Browsers block unmuted autoplay until the visitor
-        // interacts with the page, so we also start playback on the first user gesture.
+        // Shuffle player: picks one random track from the shared Chingonamics Radio list.
+        // Playback only starts when the visitor taps the Play overlay on this widget —
+        // not from any click elsewhere on the page.
         (function () {
             const tracks = window.chingonamicsTracks || [];
             const iframe = document.getElementById('radio-iframe');
             const titleEl = document.getElementById('radio-track-title');
+            const overlay = document.getElementById('radio-play-overlay');
             if (!iframe || !tracks.length) return;
 
             const track = tracks[Math.floor(Math.random() * tracks.length)];
@@ -851,7 +871,7 @@
             const params = new URLSearchParams({
                 url: track.url,
                 color: '#ff7a18',
-                auto_play: 'true',
+                auto_play: 'false',
                 hide_related: 'true',
                 show_comments: 'false',
                 show_user: 'true',
@@ -861,20 +881,14 @@
             });
             iframe.src = 'https://w.soundcloud.com/player/?' + params.toString();
 
-            if (typeof SC === 'undefined' || !SC.Widget) return;
+            if (!overlay) return;
 
-            const widget = SC.Widget(iframe);
-            let hasPlayed = false;
-            widget.bind(SC.Widget.Events.PLAY, () => { hasPlayed = true; });
-
-            const startOnGesture = () => {
-                if (!hasPlayed) widget.play();
-                document.removeEventListener('pointerdown', startOnGesture);
-                document.removeEventListener('keydown', startOnGesture);
-            };
-
-            document.addEventListener('pointerdown', startOnGesture, { once: true });
-            document.addEventListener('keydown', startOnGesture, { once: true });
+            overlay.addEventListener('click', () => {
+                overlay.style.display = 'none';
+                if (typeof SC !== 'undefined' && SC.Widget) {
+                    SC.Widget(iframe).play();
+                }
+            }, { once: true });
         })();
     </script>
 
