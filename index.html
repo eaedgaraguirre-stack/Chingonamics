@@ -533,17 +533,21 @@
         </div>
     </div>
 
-    <section class="radio-section" aria-labelledby="radio-heading">
+        <section class="radio-section" aria-labelledby="radio-heading">
         <h2 class="section-heading" id="radio-heading">📻 Now Playing — <span id="radio-track-title">Chingonamics Radio</span></h2>
-        <div class="radio-player">
+        <div class="radio-player" style="position:relative;">
             <iframe id="radio-iframe" title="Chingonamics Radio shuffle player"
                 scrolling="no"
                 frameborder="no"
                 allow="autoplay"
                 height="120"></iframe>
+            <button type="button" id="radio-play-overlay" style="position:absolute;inset:0;width:100%;height:100%;background:rgba(10,10,10,0.75);border:none;color:var(--gold);font-weight:700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+                ▶ Play Chingonamics Radio
+            </button>
         </div>
         <p class="radio-note">A random drop every visit. <a href="/radio.html">Open the full radio →</a></p>
     </section>
+
 
     <section class="share-section" aria-labelledby="share-heading">
         <h2 class="section-heading" id="share-heading">Spread the Chingonería</h2>
