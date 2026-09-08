@@ -359,9 +359,16 @@
             border: 2px solid #222;
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             text-align: left;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .token-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .token-card:hover {
@@ -489,8 +496,14 @@
         @media (prefers-reduced-motion: reduce) {
             .hero-video { display: none; }
             .video-hero { background: url('IMG_0325.jpg') center / cover; min-height: 220px; }
-            .btn, .token-card { transition: none; }
+            .btn, .token-button { transition: none; }
             .btn-equalizer i { animation: none; height: 60%; }
+            .token-card {
+                opacity: 1;
+                transform: none;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                transition-delay: 0s !important;
+            }
         }
 
         @media (max-width: 860px) {
@@ -775,8 +788,9 @@
                 const about = escapeHtml(coin.about || '');
                 const status = escapeHtml(coin.status || (isFeatured ? 'Latest' : ''));
                 const shortContract = rawContract ? escapeHtml(rawContract.slice(0, 4)) + '...pump' : '';
+                const staggerDelay = Math.min(index, 10) * 70;
                 return `
-                    <article class="token-card ${isFeatured ? 'featured-token-card' : ''}">
+                    <article class="token-card ${isFeatured ? 'featured-token-card' : ''}" style="transition-delay: ${staggerDelay}ms;">
                         ${image ? `<img src="${image}" alt="${name} meme coin artwork" class="token-image" loading="lazy">` : ''}
                         <div class="token-content">
                             <div class="token-meta">
@@ -798,6 +812,31 @@
                     </article>
                 `;
             }).join('');
+
+            observeTokenCards();
+        }
+
+        function observeTokenCards() {
+            const cards = document.querySelectorAll('.token-card:not(.is-visible)');
+            if (!cards.length) return;
+
+            if (!('IntersectionObserver' in window)) {
+                cards.forEach((card) => card.classList.add('is-visible'));
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                    entry.target.addEventListener('transitionend', () => {
+                        entry.target.style.transitionDelay = '0s';
+                    }, { once: true });
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+            cards.forEach((card) => observer.observe(card));
         }
 
         function bindLaunchInteractions() {
