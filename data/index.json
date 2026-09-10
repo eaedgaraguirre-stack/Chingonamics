@@ -1,0 +1,50 @@
+{
+  "methodology": {
+    "weights": {
+      "cultural_heat": 0.35,
+      "economic_signal": 0.30,
+      "authenticity": 0.20,
+      "engagement_potential": 0.15
+    },
+    "cap": 20,
+    "rebalance": "monthly"
+  },
+  "entries": [
+    {
+      "name": "Siete Foods",
+      "tier": "legacy",
+      "scores": { "cultural_heat": 88, "economic_signal": 95, "authenticity": 86, "engagement_potential": 72 },
+      "note": "Austin family brand. PepsiCo $1.2B. The coin that graduated."
+    },
+    {
+      "name": "Takis",
+      "tier": "legacy",
+      "scores": { "cultural_heat": 92, "economic_signal": 90, "authenticity": 70, "engagement_potential": 85 },
+      "note": "Barcel’s answer to Sabritas. The purple bag outgrew the meme."
+    },
+    {
+      "name": "Valentina",
+      "tier": "legacy",
+      "scores": { "cultural_heat": 90, "economic_signal": 78, "authenticity": 88, "engagement_potential": 80 },
+      "note": "The bottle on every table. Heat as infrastructure."
+    },
+    {
+      "name": "Josh Leyva",
+      "tier": "creator",
+      "scores": { "cultural_heat": 84, "economic_signal": 62, "authenticity": 82, "engagement_potential": 88 },
+      "note": "Voice of the feed. Audience is the asset."
+    },
+    {
+      "name": "Jailyne Ojeda",
+      "tier": "creator",
+      "scores": { "cultural_heat": 80, "economic_signal": 68, "authenticity": 60, "engagement_potential": 90 },
+      "note": "Reach machine. Culture as distribution."
+    },
+    {
+      "name": "Victoria Venin",
+      "tier": "creator",
+      "scores": { "cultural_heat": 76, "economic_signal": 55, "authenticity": 74, "engagement_potential": 82 },
+      "note": "Story first. Under-covered heat."
+    }
+  ]
+}
