@@ -373,6 +373,74 @@
             margin-bottom: 18px;
         }
 
+        .cx-issue {
+            background: #111;
+            border: 2px solid var(--gold);
+            border-radius: 16px;
+            padding: 22px 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .cx-issue-kicker {
+            color: var(--gold);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .cx-issue-score {
+            font-size: clamp(3rem, 12vw, 5rem);
+            font-weight: 900;
+            line-height: 1;
+            color: var(--gold);
+            margin: 4px 0 6px;
+        }
+
+        .cx-issue-base {
+            color: #9a9a9a;
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+        }
+
+        .cx-issue-blurb {
+            color: #cfcfcf;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            text-align: left;
+            margin-bottom: 16px;
+        }
+
+        .cx-gauges {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            text-align: left;
+        }
+
+        .cx-gauge {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 10px 12px;
+            background: #0d0d0d;
+        }
+
+        .cx-gauge span { color: #ccc; font-size: 0.9rem; }
+        .cx-gauge strong { color: var(--gold); font-size: 1rem; }
+        .cx-gauge strong.down { color: #CE252B; }
+
+        .cx-issue-note {
+            margin-top: 14px;
+            color: #8f8f8f;
+            font-size: 0.8rem;
+            line-height: 1.45;
+        }
+
         .cx-manifesto {
             background: var(--card-bg);
             border: 2px solid #222;
@@ -680,6 +748,20 @@
   <span class="cx-kicker">Independent scoreboard</span>
   <h2 id="cx-heading">The Chingonamics Index</h2>
   <p class="cx-lede">The official story sells the premiere. We score the plant.</p>
+  <div class="cx-issue" id="issue-00">
+    <p class="cx-issue-kicker">Issue 00 / Estimate · 11 September 2026</p>
+    <div class="cx-issue-score">101</div>
+    <p class="cx-issue-base">Base year 2024 = 100. Above 100 = stronger than 2024.</p>
+    <p class="cx-issue-blurb">San Pedro Bay is doing work the payroll will not admit. Manufacturing jobs in the Los Angeles–Long Beach–Anaheim MSA are still below 2024 even while the South Bay aerospace floor stays tight and Long Beach just posted its best August on record. Hollywood is not in this number.</p>
+    <div class="cx-gauges">
+      <div class="cx-gauge"><span>Aerospace &amp; Space</span><strong>108</strong></div>
+      <div class="cx-gauge"><span>Plants</span><strong class="down">92</strong></div>
+      <div class="cx-gauge"><span>Ports &amp; Movement</span><strong>106</strong></div>
+      <div class="cx-gauge"><span>Building the Basin</span><strong>97</strong></div>
+      <div class="cx-gauge"><span>Quiet Giants</span><strong>101</strong></div>
+    </div>
+    <p class="cx-issue-note">Not a live ticker. Next print when QCEW Q2 2026 and September TEUs are both public. Independent Chingonamics work product.</p>
+  </div>
   <div class="cx-manifesto">
     <p>Southern California did not become worth crossing a border for because a studio had a good quarter. It became that because there were docks, assembly lines, tool rooms, ports, and shops that turned wages into houses, tuition, and a second generation that could aim higher than the first.</p>
     <p>Hollywood is real. It is also a costume. Underneath it is one of the country’s largest manufacturing workforces, the busiest container complex in North America, and a South Bay aerospace spine that is hiring again. That is the body. This Index exists so the costume is not mistaken for the body.</p>
