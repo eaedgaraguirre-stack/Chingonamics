@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <meta name="description" content="The Chingonamics Index scores Southern California’s plants, ports, and aerospace floor. Presence-weighted. Independent. Hollywood is not in the number.">
     <link rel="canonical" href="https://chingonamics.com/">
     <link rel="icon" type="image/png" href="favicon.png">
@@ -17,882 +15,308 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Chingonamics | We score the plant">
     <meta name="twitter:description" content="Independent presence-weighted Index of SoCal plants, ports, and aerospace. Issue 00: 101.">
-    <meta name="twitter:image" content="https://chingonamics.com/IMG_0325.jpg">
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Chingonamics",
-            "url": "https://chingonamics.com/",
-            "sameAs": ["https://x.com/chingonamics"]
-        }
-    </script>
-    <title>Chingonamics | We score the plant</title>
+    <title>Chingonamics | Occupancy desk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/chingonomics.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --green: #3d9a5f;
-            --white: #e8efe6;
-            --red: #c45c4a;
-            --gold: #b6f09c;
-            --phosphor: #b6f09c;
-            --amber: #c4a35a;
-            --orange: #c4a35a;
-            --dark: #070908;
-            --card-bg: #0c1210;
-            --line: #1c2a20;
+            --bg: #07090d;
+            --panel: #0d1218;
+            --line: #243040;
+            --text: #e6edf3;
+            --muted: #8b97a6;
+            --amber: #e8a317;
+            --amber-dim: rgba(232, 163, 23, 0.14);
+            --orange: #ff7a18;
+            --down: #d16b5a;
+            --up: #d4c48a;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { background: var(--bg); color: var(--text); }
         body {
-            background-color: var(--dark);
-            background-image:
-                linear-gradient(rgba(7,9,8,0.15) 50%, transparent 50%),
-                radial-gradient(ellipse at top, rgba(61,154,95,0.08), transparent 55%);
-            background-size: 100% 4px, 100% 100%;
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 16px 16px 48px;
-            text-align: left;
-            overflow-x: hidden;
-        }
-        body::before {
-            content: "";
-            pointer-events: none;
-            position: fixed;
-            inset: 0;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0,
-                transparent 2px,
-                rgba(0,0,0,0.12) 3px
-            );
-            z-index: 40;
+            font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+            line-height: 1.5;
         }
         .term-bar {
-            width: 100%;
-            max-width: 720px;
-            font-family: 'IBM Plex Mono', ui-monospace, monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--phosphor);
-            border: 1px solid var(--line);
-            background: #0a100c;
-            padding: 8px 12px;
-            margin-bottom: 14px;
-            z-index: 2;
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-        }
-        .term-bar span { opacity: 0.85; }
-        code, .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
-
-        .bg-glow {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(206,37,43,0.3) 0%, rgba(0,0,0,0) 70%);
-            z-index: 0;
-            top: 20%;
-        }
-
-        .video-hero {
-            position: relative;
-            width: 100%;
-            max-width: 720px;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 8px;
-            box-shadow: none;
-            z-index: 1;
-            border: 1px solid var(--phosphor);
-            aspect-ratio: 4 / 5;
-            max-height: 72vh;
-        }
-
-        .hero-video {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center 20%;
-        }
-
-        .hero-tagline {
-            color: var(--phosphor);
-            font-family: 'IBM Plex Mono', ui-monospace, monospace;
-            font-size: 0.82rem;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            margin: 8px 0 16px;
-            text-align: left;
-        }
-        .video-hero {
-            border: 1px solid var(--line);
-            background: #000;
-        }
-
-        .video-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(10,10,10,0.6) 100%);
-            pointer-events: none;
-        }
-
-        .container {
-            max-width: 720px;
-            width: 100%;
-            background: var(--card-bg);
-            border: 1px solid var(--line);
-            border-radius: 2px;
-            padding: 40px 24px;
-            box-shadow: none;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 40px;
-        }
-
-        .flag-bar {
-            display: flex;
-            height: 6px;
-            width: 100%;
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-
-        .flag-bar .g { background: var(--green); flex: 1; }
-        .flag-bar .w { background: var(--white); flex: 1; }
-        .flag-bar .r { background: var(--red); flex: 1; }
-
-        .badge {
-            display: inline-block;
-            background: rgba(255, 215, 0, 0.1);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 6px 16px;
-            border-radius: 2px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: clamp(1.5rem, 6.5vw, 3rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 12px;
-            letter-spacing: 0.02em;
-            background: none;
-            color: var(--white);
-        }
-
-        p.subtitle {
-            font-size: 1.15rem;
-            color: #888;
-            margin-bottom: 32px;
-            line-height: 1.5;
-        }
-
-        .cta-box {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 18px 24px;
-            border-radius: 2px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .btn-pump {
-            background: #0e1a12;
-            color: var(--phosphor);
-            border: 1px solid var(--phosphor);
-            box-shadow: none;
-            font-family: 'IBM Plex Mono', ui-monospace, monospace;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-        }
-
-        .btn-pump:hover {
-            background: #132318;
-            transform: none;
-        }
-
-        .btn-x {
-            background: #111;
-            color: var(--white);
-            border: 1px solid #333;
-        }
-
-        .btn-x:hover {
-            background: #1A1A1A;
-            border-color: #555;
-            transform: translateY(-2px);
-        }
-
-        .btn-radio {
-            background: linear-gradient(135deg, var(--orange) 0%, #FFB347 100%);
-            color: #1A1A1A;
-            box-shadow: 0 8px 25px rgba(255, 122, 24, 0.28);
-        }
-
-        .btn-radio:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(255, 122, 24, 0.45);
-        }
-
-        .btn-equalizer {
-            display: inline-flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 16px;
-        }
-
-        .btn-equalizer i {
-            width: 4px;
-            height: 30%;
-            border-radius: 2px;
-            background: #1A1A1A;
-            animation: btn-bounce 900ms ease-in-out infinite;
-        }
-
-        .btn-equalizer i:nth-child(2) { animation-delay: 150ms; }
-        .btn-equalizer i:nth-child(3) { animation-delay: 300ms; }
-        .btn-equalizer i:nth-child(4) { animation-delay: 450ms; }
-
-        @keyframes btn-bounce {
-            0%, 100% { height: 30%; }
-            50% { height: 100%; }
-        }
-
-        .share-section {
-            max-width: 720px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 40px;
-        }
-
-        .radio-section {
-            max-width: 720px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 40px;
-        }
-
-        .radio-player {
-            border: 1px solid #333;
-            border-radius: 2px;
-            overflow: hidden;
-            background: #111;
-            position: relative;
-        }
-
-        .radio-player iframe {
-            display: block;
-            width: 100%;
-            border: 0;
-        }
-
-        .radio-play-overlay {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 10, 0.8);
-            border: none;
-            color: var(--gold);
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .radio-play-overlay:hover {
-            background: rgba(10, 10, 10, 0.65);
-        }
-
-        .radio-note {
-            margin-top: 10px;
-            font-size: 0.85rem;
-            color: #9A9A9A;
-        }
-
-        .radio-note a {
-            color: var(--orange);
-            font-weight: 700;
-        }
-
-        .section-heading {
-            color: var(--gold);
-            font-size: 1.45rem;
-            margin-bottom: 14px;
-        }
-
-        .share-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .share-button {
-            border: 1px solid #333;
-            border-radius: 2px;
-            padding: 12px;
-            background: #111;
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .share-button:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-
-        .community-copy {
-            color: #aaa;
-            line-height: 1.5;
-            margin-bottom: 16px;
-        }
-
-        .cx-index {
-            max-width: 1000px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 40px;
-            text-align: left;
-        }
-
-        .cx-index #cx-heading {
-            color: var(--gold);
-            font-size: 1.45rem;
-            margin-bottom: 8px;
-            text-align: left;
-        }
-
-        .cx-kicker {
-            display: block;
-            text-align: left;
-            color: var(--gold);
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .cx-lede {
-            text-align: left;
-            color: #ddd;
-            font-size: 1.15rem;
-            font-weight: 700;
-            line-height: 1.45;
-            margin-bottom: 18px;
-        }
-
-        .cx-issue {
-            background: #111;
-            border: 1px solid var(--phosphor);
-            border-radius: 2px;
-            padding: 22px 20px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .cx-issue-kicker {
-            color: var(--gold);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .cx-issue-score {
-            font-size: clamp(3rem, 12vw, 5rem);
-            font-weight: 900;
-            line-height: 1;
-            color: var(--gold);
-            margin: 4px 0 6px;
-        }
-
-        .cx-issue-base {
-            color: #9a9a9a;
-            font-size: 0.85rem;
-            margin-bottom: 14px;
-        }
-
-        .cx-issue-blurb {
-            color: #cfcfcf;
-            font-size: 0.95rem;
-            line-height: 1.55;
-            text-align: left;
-            margin-bottom: 16px;
-        }
-
-        .cx-gauges {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 8px;
-            text-align: left;
-        }
-
-        .cx-gauge {
             display: flex;
             justify-content: space-between;
             gap: 12px;
-            border: 1px solid #333;
-            border-radius: 2px;
-            padding: 10px 12px;
-            background: #0d0d0d;
-        }
-
-        .cx-gauge span { color: #ccc; font-size: 0.9rem; }
-        .cx-gauge strong { color: var(--gold); font-size: 1rem; }
-        .cx-gauge strong.down { color: #CE252B; }
-
-        .cx-issue-note {
-            margin-top: 14px;
-            color: #8f8f8f;
-            font-size: 0.8rem;
-            line-height: 1.45;
-        }
-
-        .cx-floor {
-            background: #0d160f;
-            border: 1px solid var(--phosphor);
-            border-radius: 2px;
-            padding: 24px 20px;
-            margin: 0 0 20px;
-        }
-
-        .cx-floor-kicker {
-            color: #00B377;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 2px;
+            padding: 10px 18px;
+            border-bottom: 1px solid var(--line);
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
+            color: var(--amber);
+            background: #080b10;
+        }
+        .hero {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-bottom: 1px solid var(--line);
+        }
+        .hero video {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 72vh;
+            object-fit: cover;
+            aspect-ratio: 16 / 9;
+        }
+        .hero-fade {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 28%;
+            background: linear-gradient(transparent, var(--bg));
+            pointer-events: none;
+        }
+        .wrap {
+            width: min(920px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 64px;
+        }
+        .mast {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            padding: 28px 24px;
+            margin-bottom: 18px;
+        }
+        .mast h1 {
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
             margin-bottom: 8px;
         }
-
-        .cx-floor h3 {
-            color: var(--gold);
-            font-size: 1.35rem;
-            margin-bottom: 10px;
+        .mast .tag {
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+            color: var(--amber);
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+            margin-bottom: 14px;
         }
-
-        .cx-floor p, .cx-floor li {
-            color: #cfcfcf;
-            font-size: 0.95rem;
-            line-height: 1.55;
+        .mast .lede {
+            color: var(--muted);
+            font-size: 1.02rem;
+            max-width: 62ch;
         }
-
-        .cx-floor ol {
-            margin: 10px 0 14px 18px;
+        .cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
         }
-
-        .cx-floor a {
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        .cx-manifesto {
-            background: var(--card-bg);
+        .cta a {
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 12px 16px;
             border: 1px solid var(--line);
-            border-radius: 2px;
+            color: var(--text);
+        }
+        .cta a.primary {
+            border-color: var(--amber);
+            color: var(--amber);
+            background: var(--amber-dim);
+        }
+        .cta a:hover { border-color: var(--amber); color: var(--amber); }
+
+        .cx-kicker, .cx-floor-kicker, .cx-issue-kicker {
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 8px;
+        }
+        #cx-heading {
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+        }
+        .cx-lede {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+        .cx-issue {
+            border: 1px solid var(--amber);
+            background: #0c1016;
+            padding: 22px 20px;
+            margin-bottom: 18px;
+        }
+        .cx-issue-score {
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+            font-size: clamp(3.2rem, 12vw, 5.2rem);
+            font-weight: 500;
+            color: var(--amber);
+            line-height: 1;
+            margin: 6px 0 8px;
+        }
+        .cx-issue-base, .cx-issue-note {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+        .cx-issue-blurb {
+            margin: 14px 0 16px;
+            color: #c9d3dd;
+            font-size: 0.95rem;
+        }
+        .cx-gauges {
+            display: grid;
+            gap: 6px;
+        }
+        .cx-gauge {
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid var(--line);
+            padding: 9px 12px;
+            background: #090c11;
+            font-size: 0.9rem;
+        }
+        .cx-gauge strong {
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+            color: var(--amber);
+        }
+        .cx-gauge strong.down { color: var(--down); }
+
+        .cx-floor, .cx-manifesto, .cx-method {
+            border: 1px solid var(--line);
+            background: var(--panel);
             padding: 22px 20px;
             margin-bottom: 16px;
         }
-
-        .cx-manifesto p {
-            color: #cfcfcf;
-            font-size: 0.98rem;
-            line-height: 1.6;
-            margin-bottom: 12px;
+        .cx-floor h3, .cx-method h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
-
-        .cx-manifesto p:last-child {
-            margin-bottom: 0;
+        .cx-floor p, .cx-manifesto p, .cx-method p, .cx-floor li, .cx-method li {
+            color: #c5ced8;
+            margin-bottom: 10px;
         }
-
+        .cx-floor ol, .cx-method ul { margin: 8px 0 14px 18px; }
+        a { color: var(--amber); }
         .cx-disclaimer {
-            text-align: left;
-            color: #8f8f8f;
-            font-size: 0.8rem;
-            margin-bottom: 14px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            margin: 8px 0 16px;
         }
-
-        .cx-actions {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 22px;
-        }
-
+        .cx-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
         .cx-actions a {
-            display: inline-block;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            border-radius: 2px;
-            padding: 10px 16px;
-        }
-
-        .cx-actions a:hover {
-            background: rgba(255, 215, 0, 0.1);
-        }
-
-        .cx-method {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 2px;
-            padding: 20px;
-            margin-bottom: 28px;
-        }
-
-        .cx-method h3 {
-            color: var(--gold);
-            font-size: 1.05rem;
-            margin-bottom: 10px;
-        }
-
-        .cx-method p,
-        .cx-method li {
-            color: #bdbdbd;
-            font-size: 0.9rem;
-            line-height: 1.55;
-        }
-
-        .cx-method ul {
-            margin: 8px 0 12px 18px;
-        }
-
-        .cx-culture-label {
-            text-align: left;
-            color: #888;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .launches-section {
-            max-width: 1000px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 40px;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-            align-items: stretch;
-        }
-
-        .token-card {
-            flex: 0 0 100%;
-            background: var(--card-bg);
+            text-decoration: none;
             border: 1px solid var(--line);
-            border-radius: 2px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            text-align: left;
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 10px 14px;
+            color: var(--text);
         }
-
-        .token-card.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .token-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--gold);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
-        }
-
-        .featured-token-card {
-            border-color: rgba(255, 215, 0, 0.8);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.15);
-        }
-
-        .token-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .token-content {
-            padding: 20px;
-        }
-
-        .token-ticker {
-            display: inline-block;
-            background: rgba(255, 215, 0, 0.1);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 4px 12px;
-            border-radius: 2px;
-            font-weight: 700;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .token-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .launch-status {
-            color: #61e294;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .contract-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 14px;
-            color: #8f8f8f;
-            font-size: 0.75rem;
-        }
-
-        .copy-contract {
-            border: 1px solid #444;
-            border-radius: 6px;
-            background: transparent;
-            color: var(--gold);
-            padding: 4px 7px;
-            cursor: pointer;
-        }
-
-        .token-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .token-name {
-            font-size: 1.3rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-            color: var(--white);
-            text-transform: uppercase;
-        }
-
-        .token-description {
-            font-size: 0.9rem;
-            color: #aaa;
-            line-height: 1.5;
-            margin-bottom: 16px;
-        }
-
-        .token-button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #006847 0%, #00B377 100%);
-            color: var(--white);
-            border: none;
-            border-radius: 2px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .token-button:hover {
-            box-shadow: 0 8px 20px rgba(0, 179, 119, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .token-share {
-            border: 1px solid var(--green);
-            border-radius: 2px;
-            background: transparent;
-            color: var(--white);
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .hero-video { display: none; }
-            .video-hero { background: url('IMG_0325.jpg') center / cover; min-height: 420px; aspect-ratio: 4 / 5; }
-            .btn, .token-button { transition: none; }
-            .btn-equalizer i { animation: none; height: 60%; }
-            .token-card {
-                opacity: 1;
-                transform: none;
-                transition: border-color 0.3s ease, box-shadow 0.3s ease;
-                transition-delay: 0s !important;
-            }
-        }
-
-        @media (max-width: 860px) {
-            .portfolio-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 480px) {
-            body { padding: 12px; }
-            .container { padding: 28px 18px; }
-            .share-buttons { grid-template-columns: 1fr; }
-        }
-
         footer {
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: #808080;
-            position: relative;
-            z-index: 1;
+            border-top: 1px solid var(--line);
+            padding: 16px 18px 28px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero video { display: none; }
+            .hero {
+                min-height: 180px;
+                background: linear-gradient(180deg, #2a1608, var(--bg));
+            }
         }
     </style>
 </head>
 <body>
-    <div class="term-bar"><span>CHINGONAMICS // OCCUPANCY DESK</span><span>ISSUE 00 · 101 · EST</span></div>
+    <div class="term-bar"><span>Chingonamics // Occupancy desk</span><span>Issue 00 · 101 · EST</span></div>
 
-    <main>
-    <div class="container">
-        <div class="flag-bar">
-            <div class="g"></div>
-            <div class="w"></div>
-            <div class="r"></div>
-        </div>
-
-        <h1>CHINGONAMICS</h1>
-        <p class="hero-tagline">We score the plant. Not the letterhead.</p>
-        <p class="subtitle">Independent, presence-weighted Index of the docks, tool rooms, and aerospace lots that keep Southern California productive. Headquarters can live in Texas. If the floor is in Hawthorne, it counts here. Hollywood does not.</p>
-
-        <div class="cta-box">
-            <a href="#floor" class="btn btn-pump">
-                <span>Send a lot →</span>
-            </a>
-            <a href="#issue-00" class="btn btn-x">
-                <span>Issue 00 · 101</span>
-            </a>
-        </div>
+    <div class="hero">
+        <video autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+            <source src="hero.mp4" type="video/mp4">
+        </video>
+        <div class="hero-fade"></div>
     </div>
 
-    <section class="cx-index" id="chingonomics-index" aria-labelledby="cx-heading">
-  <span class="cx-kicker">Independent scoreboard</span>
-  <h2 id="cx-heading">The Chingonamics Index</h2>
-  <p class="cx-lede">The official story sells the premiere. We score the plant.</p>
-  <div class="cx-issue" id="issue-00">
-    <p class="cx-issue-kicker">Issue 00 / Estimate · 11 September 2026</p>
-    <div class="cx-issue-score">101</div>
-    <p class="cx-issue-base">Base year 2024 = 100. Above 100 = stronger than 2024.</p>
-    <p class="cx-issue-blurb">San Pedro Bay is doing work the payroll will not admit. Manufacturing jobs in the Los Angeles–Long Beach–Anaheim MSA are still below 2024 even while the South Bay aerospace floor stays tight and Long Beach just posted its best August on record. Hollywood is not in this number.</p>
-    <div class="cx-gauges">
-      <div class="cx-gauge"><span>Aerospace &amp; Space</span><strong>108</strong></div>
-      <div class="cx-gauge"><span>Plants</span><strong class="down">92</strong></div>
-      <div class="cx-gauge"><span>Ports &amp; Movement</span><strong>106</strong></div>
-      <div class="cx-gauge"><span>Building the Basin</span><strong>97</strong></div>
-      <div class="cx-gauge"><span>Quiet Giants</span><strong>101</strong></div>
+    <div class="wrap">
+        <header class="mast">
+            <h1>CHINGONAMICS</h1>
+            <p class="tag">We score the plant. Not the letterhead.</p>
+            <p class="lede">Independent, presence-weighted Index of the docks, tool rooms, and aerospace lots that keep Southern California productive. Headquarters can live in Texas. If the floor is in Hawthorne, it counts here. Hollywood does not.</p>
+            <div class="cta">
+                <a class="primary" href="#floor">Send a lot →</a>
+                <a href="#issue-00">Issue 00 · 101</a>
+            </div>
+        </header>
+
+        <section class="cx-index" id="chingonomics-index" aria-labelledby="cx-heading">
+            <span class="cx-kicker">Independent scoreboard</span>
+            <h2 id="cx-heading">The Chingonamics Index</h2>
+            <p class="cx-lede">The official story sells the premiere. We score the plant.</p>
+
+            <div class="cx-issue" id="issue-00">
+                <p class="cx-issue-kicker">Issue 00 / Estimate · 11 September 2026</p>
+                <div class="cx-issue-score">101</div>
+                <p class="cx-issue-base">Base year 2024 = 100. Above 100 = stronger than 2024.</p>
+                <p class="cx-issue-blurb">San Pedro Bay is doing work the payroll will not admit. Manufacturing jobs in the Los Angeles–Long Beach–Anaheim MSA are still below 2024 even while the South Bay aerospace floor stays tight and Long Beach just posted its best August on record. Hollywood is not in this number.</p>
+                <div class="cx-gauges">
+                    <div class="cx-gauge"><span>Aerospace &amp; Space</span><strong>108</strong></div>
+                    <div class="cx-gauge"><span>Plants</span><strong class="down">92</strong></div>
+                    <div class="cx-gauge"><span>Ports &amp; Movement</span><strong>106</strong></div>
+                    <div class="cx-gauge"><span>Building the Basin</span><strong>97</strong></div>
+                    <div class="cx-gauge"><span>Quiet Giants</span><strong>101</strong></div>
+                </div>
+                <p class="cx-issue-note">Not a live ticker. Next print when QCEW Q2 2026 and September TEUs are both public. Independent Chingonamics work product.</p>
+            </div>
+
+            <div class="cx-floor" id="floor">
+                <p class="cx-floor-kicker">The product under the score</p>
+                <h3>The floor file</h3>
+                <p>The Index is the billboard. The asset is who is actually on the lot — city, not “L.A.”; a floor fact; a public link. Letterhead does not count. Costume does not count.</p>
+                <p>Work a plant, port, aero lot, or shop? Send four lines to <a href="https://x.com/chingonamics" target="_blank" rel="noopener noreferrer">@chingonamics</a> or <a href="mailto:lots@chingonamics.com">lots@chingonamics.com</a>:</p>
+                <ol>
+                    <li>Firm</li>
+                    <li>City (Hawthorne, San Pedro, Palmdale — not “LA”)</li>
+                    <li>What’s on the lot</li>
+                    <li>Public source (permit, award, job listing, gate photo)</li>
+                </ol>
+                <p>Confirmed rows feed Issue 01. No source = not data. We credit the handle. We do not sell rankings of the book.</p>
+            </div>
+
+            <div class="cx-manifesto">
+                <p>Southern California did not become worth crossing a border for because a studio had a good quarter. It became that because there were docks, assembly lines, tool rooms, ports, and shops that turned wages into houses, tuition, and a second generation that could aim higher than the first.</p>
+                <p>Hollywood is real. It is also a costume. Underneath it is one of the country’s largest manufacturing workforces, the busiest container complex in North America, and a South Bay aerospace spine that is hiring again. That is the body. This Index exists so the costume is not mistaken for the body.</p>
+                <p>Chingonamics is proud of how <i>chingón</i> this place is — specifically for the children of immigrants who were told the only L.A. that counted was the one on a screen. The Index is the receipt.</p>
+            </div>
+            <p class="cx-disclaimer">Independent Chingonamics work product. Not official content of the Los Angeles Area Chamber of Commerce or any public agency.</p>
+            <div class="cx-actions">
+                <a href="#floor">Send a lot</a>
+                <a href="#method">Read the method</a>
+                <a href="https://x.com/chingonamics" target="_blank" rel="noopener noreferrer">@chingonamics</a>
+            </div>
+
+            <div class="cx-method" id="method">
+                <h3>Method, short version</h3>
+                <p>Presence-weighted. Not headquarters-weighted. SpaceX can live in Texas on paper and still be a Hawthorne company in this book. Tips without a public source stay out of the file.</p>
+                <p>Composite, base year 2024 = 100:</p>
+                <ul>
+                    <li>30% Jobs that pay — aero/defense, manufacturing, trade/transport, construction</li>
+                    <li>25% Metal and dirt — industrial absorption, plant permits, announced capex</li>
+                    <li>25% Contracts and capital — federal awards by place of performance, port TEUs, public hard-tech rounds</li>
+                    <li>20% The ladder — establishment births and apprenticeships when a public series exists</li>
+                </ul>
+                <p>Gauges: Aerospace &amp; Space · Plants · Ports &amp; Movement · Building the Basin · Quiet Giants. Entertainment sits on a satellite strip called The Costume. It is never the cover.</p>
+                <p>Above 100 = stronger than 2024. Below 90 = the costume is doing more work than the body. First live score ships as Issue 00 / ESTIMATE.</p>
+            </div>
+        </section>
     </div>
-    <p class="cx-issue-note">Not a live ticker. Next print when QCEW Q2 2026 and September TEUs are both public. Independent Chingonamics work product.</p>
-  </div>
-
-  <div class="cx-floor" id="floor">
-    <p class="cx-floor-kicker">The product under the score</p>
-    <h3>The floor file</h3>
-    <p>The Index is the billboard. The asset is who is actually on the lot — city, not “L.A.”; a floor fact; a public link. Letterhead does not count. Costume does not count.</p>
-    <p>Work a plant, port, aero lot, or shop? Send four lines to <a href="https://x.com/chingonamics" target="_blank" rel="noopener noreferrer">@chingonamics</a> or <a href="mailto:lots@chingonamics.com">lots@chingonamics.com</a>:</p>
-    <ol>
-      <li>Firm</li>
-      <li>City (Hawthorne, San Pedro, Palmdale — not “LA”)</li>
-      <li>What’s on the lot</li>
-      <li>Public source (permit, award, job listing, gate photo)</li>
-    </ol>
-    <p>Confirmed rows feed Issue 01. No source = not data. We credit the handle. We do not sell rankings of the book.</p>
-  </div>
-
-  <div class="cx-manifesto">
-    <p>Southern California did not become worth crossing a border for because a studio had a good quarter. It became that because there were docks, assembly lines, tool rooms, ports, and shops that turned wages into houses, tuition, and a second generation that could aim higher than the first.</p>
-    <p>Hollywood is real. It is also a costume. Underneath it is one of the country’s largest manufacturing workforces, the busiest container complex in North America, and a South Bay aerospace spine that is hiring again. That is the body. This Index exists so the costume is not mistaken for the body.</p>
-    <p>Chingonamics is proud of how <i>chingón</i> this place is — specifically for the children of immigrants who were told the only L.A. that counted was the one on a screen. The Index is the receipt.</p>
-  </div>
-  <p class="cx-disclaimer">Independent Chingonamics work product. Not official content of the Los Angeles Area Chamber of Commerce or any public agency.</p>
-  <div class="cx-actions">
-    <a href="#floor">Send a lot</a>
-    <a href="#method">Read the method</a>
-    <a href="https://x.com/chingonamics" target="_blank" rel="noopener noreferrer">@chingonamics</a>
-  </div>
-
-  <div class="cx-method" id="method">
-    <h3>Method, short version</h3>
-    <p>Presence-weighted. Not headquarters-weighted. SpaceX can live in Texas on paper and still be a Hawthorne company in this book. Tips without a public source stay out of the file.</p>
-    <p>Composite, base year 2024 = 100:</p>
-    <ul>
-      <li>30% Jobs that pay — aero/defense, manufacturing, trade/transport, construction</li>
-      <li>25% Metal and dirt — industrial absorption, plant permits, announced capex</li>
-      <li>25% Contracts and capital — federal awards by place of performance, port TEUs, public hard-tech rounds</li>
-      <li>20% The ladder — establishment births and apprenticeships when a public series exists</li>
-    </ul>
-    <p>Gauges: Aerospace &amp; Space · Plants · Ports &amp; Movement · Building the Basin · Quiet Giants. Entertainment sits on a satellite strip called The Costume. It is never the cover.</p>
-    <p>Above 100 = stronger than 2024. Below 90 = the costume is doing more work than the body. First live score ships as Issue 00 / ESTIMATE.</p>
-  </div>
-</section>
-    </main>
 
     <footer>
-        &copy; 2026 Chingonamics. Independent index. Not Chamber content.
+        <span>&copy; 2026 Chingonamics. Independent index. Not Chamber content.</span>
         <a href="https://x.com/chingonamics" target="_blank" rel="noopener noreferrer">@chingonamics</a>
     </footer>
 </body>
