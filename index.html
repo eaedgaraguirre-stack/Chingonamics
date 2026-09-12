@@ -120,13 +120,16 @@
             box-shadow: none;
             z-index: 1;
             border: 1px solid var(--phosphor);
+            aspect-ratio: 4 / 5;
+            max-height: 72vh;
         }
 
         .hero-video {
             display: block;
             width: 100%;
-            height: auto;
-            aspect-ratio: 16 / 9;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
         }
 
         .hero-tagline {
@@ -230,14 +233,19 @@
         }
 
         .btn-pump {
-            background: linear-gradient(135deg, #006847 0%, #00B377 100%);
-            color: var(--white);
-            box-shadow: 0 8px 25px rgba(0, 179, 119, 0.3);
+            background: #0e1a12;
+            color: var(--phosphor);
+            border: 1px solid var(--phosphor);
+            box-shadow: none;
+            font-family: 'IBM Plex Mono', ui-monospace, monospace;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
         }
 
         .btn-pump:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(0, 179, 119, 0.5);
+            background: #132318;
+            transform: none;
         }
 
         .btn-x {
@@ -767,7 +775,7 @@
 
         @media (prefers-reduced-motion: reduce) {
             .hero-video { display: none; }
-            .video-hero { background: url('IMG_0325.jpg') center / cover; min-height: 220px; }
+            .video-hero { background: url('IMG_0325.jpg') center / cover; min-height: 420px; aspect-ratio: 4 / 5; }
             .btn, .token-button { transition: none; }
             .btn-equalizer i { animation: none; height: 60%; }
             .token-card {
@@ -800,17 +808,7 @@
 <body>
     <div class="term-bar"><span>CHINGONAMICS // OCCUPANCY DESK</span><span>ISSUE 00 · 101 · EST</span></div>
 
-    <div class="bg-glow"></div>
-
     <main>
-    <div class="video-hero">
-        <video autoplay muted loop playsinline poster="IMG_0325.jpg" preload="metadata" class="hero-video" aria-hidden="true">
-            <source src="_users_b7c824c7-4b1c-403b-93b7-0ec6eff1df3c_generated_b8b7bb04-0586-46dd-bab8-cee206c3e80b_generated_video.mp4" type="video/mp4">
-            Your browser doesn't support HTML5 video.
-        </video>
-        <div class="video-overlay"></div>
-    </div>
-
     <div class="container">
         <div class="flag-bar">
             <div class="g"></div>
@@ -824,7 +822,7 @@
 
         <div class="cta-box">
             <a href="#floor" class="btn btn-pump">
-                <span>📍 Send a lot</span>
+                <span>Send a lot →</span>
             </a>
             <a href="#issue-00" class="btn btn-x">
                 <span>Issue 00 · 101</span>
