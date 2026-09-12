@@ -24,44 +24,82 @@
             "@type": "Organization",
             "name": "Chingonamics",
             "url": "https://chingonamics.com/",
-            "sameAs": ["https://x.com/chingonamics?s=11", "https://pump.fun/join/Chingonamics"]
+            "sameAs": ["https://x.com/chingonamics"]
         }
     </script>
     <title>Chingonamics | We score the plant</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/chingonomics.css">
     <style>
         :root {
-            --green: #006847;
-            --white: #FFFFFF;
-            --red: #CE252B;
-            --gold: #FFD700;
-            --orange: #FF7A18;
-            --dark: #0A0A0A;
-            --card-bg: #141414;
+            --green: #3d9a5f;
+            --white: #e8efe6;
+            --red: #c45c4a;
+            --gold: #b6f09c;
+            --phosphor: #b6f09c;
+            --amber: #c4a35a;
+            --orange: #c4a35a;
+            --dark: #070908;
+            --card-bg: #0c1210;
+            --line: #1c2a20;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
         }
 
         body {
             background-color: var(--dark);
+            background-image:
+                linear-gradient(rgba(7,9,8,0.15) 50%, transparent 50%),
+                radial-gradient(ellipse at top, rgba(61,154,95,0.08), transparent 55%);
+            background-size: 100% 4px, 100% 100%;
             color: var(--white);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            padding: 20px;
-            text-align: center;
+            padding: 16px 16px 48px;
+            text-align: left;
             overflow-x: hidden;
         }
+        body::before {
+            content: "";
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0,
+                transparent 2px,
+                rgba(0,0,0,0.12) 3px
+            );
+            z-index: 40;
+        }
+        .term-bar {
+            width: 100%;
+            max-width: 720px;
+            font-family: 'IBM Plex Mono', ui-monospace, monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--phosphor);
+            border: 1px solid var(--line);
+            background: #0a100c;
+            padding: 8px 12px;
+            margin-bottom: 14px;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .term-bar span { opacity: 0.85; }
+        code, .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 
         .bg-glow {
             position: absolute;
@@ -75,12 +113,13 @@
         .video-hero {
             position: relative;
             width: 100%;
-            max-width: 600px;
-            border-radius: 24px;
+            max-width: 720px;
+            border-radius: 2px;
             overflow: hidden;
-            margin-bottom: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            margin-bottom: 8px;
+            box-shadow: none;
             z-index: 1;
+            border: 1px solid var(--phosphor);
         }
 
         .hero-video {
@@ -91,10 +130,18 @@
         }
 
         .hero-tagline {
-            color: var(--gold);
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin: -4px 0 14px;
+            color: var(--phosphor);
+            font-family: 'IBM Plex Mono', ui-monospace, monospace;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin: 8px 0 16px;
+            text-align: left;
+        }
+        .video-hero {
+            border: 1px solid var(--line);
+            background: #000;
         }
 
         .video-overlay {
@@ -105,13 +152,13 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 720px;
             width: 100%;
             background: var(--card-bg);
-            border: 2px solid #222;
-            border-radius: 24px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
             padding: 40px 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            box-shadow: none;
             position: relative;
             z-index: 1;
             margin-bottom: 40px;
@@ -136,7 +183,7 @@
             color: var(--gold);
             border: 1px solid var(--gold);
             padding: 6px 16px;
-            border-radius: 50px;
+            border-radius: 2px;
             font-weight: 700;
             font-size: 0.85rem;
             letter-spacing: 2px;
@@ -149,10 +196,9 @@
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 12px;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, #FFF 0%, #AAA 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.02em;
+            background: none;
+            color: var(--white);
         }
 
         p.subtitle {
@@ -175,7 +221,7 @@
             gap: 10px;
             width: 100%;
             padding: 18px 24px;
-            border-radius: 14px;
+            border-radius: 2px;
             font-size: 1.1rem;
             font-weight: 700;
             text-decoration: none;
@@ -242,7 +288,7 @@
         }
 
         .share-section {
-            max-width: 600px;
+            max-width: 720px;
             width: 100%;
             position: relative;
             z-index: 1;
@@ -250,7 +296,7 @@
         }
 
         .radio-section {
-            max-width: 600px;
+            max-width: 720px;
             width: 100%;
             position: relative;
             z-index: 1;
@@ -259,7 +305,7 @@
 
         .radio-player {
             border: 1px solid #333;
-            border-radius: 12px;
+            border-radius: 2px;
             overflow: hidden;
             background: #111;
             position: relative;
@@ -317,7 +363,7 @@
 
         .share-button {
             border: 1px solid #333;
-            border-radius: 10px;
+            border-radius: 2px;
             padding: 12px;
             background: #111;
             color: var(--white);
@@ -350,12 +396,12 @@
             color: var(--gold);
             font-size: 1.45rem;
             margin-bottom: 8px;
-            text-align: center;
+            text-align: left;
         }
 
         .cx-kicker {
             display: block;
-            text-align: center;
+            text-align: left;
             color: var(--gold);
             font-size: 0.8rem;
             font-weight: 700;
@@ -365,7 +411,7 @@
         }
 
         .cx-lede {
-            text-align: center;
+            text-align: left;
             color: #ddd;
             font-size: 1.15rem;
             font-weight: 700;
@@ -375,11 +421,11 @@
 
         .cx-issue {
             background: #111;
-            border: 2px solid var(--gold);
-            border-radius: 16px;
+            border: 1px solid var(--phosphor);
+            border-radius: 2px;
             padding: 22px 20px;
             margin-bottom: 20px;
-            text-align: center;
+            text-align: left;
         }
 
         .cx-issue-kicker {
@@ -425,7 +471,7 @@
             justify-content: space-between;
             gap: 12px;
             border: 1px solid #333;
-            border-radius: 10px;
+            border-radius: 2px;
             padding: 10px 12px;
             background: #0d0d0d;
         }
@@ -443,8 +489,8 @@
 
         .cx-floor {
             background: #0d160f;
-            border: 2px solid #00B377;
-            border-radius: 16px;
+            border: 1px solid var(--phosphor);
+            border-radius: 2px;
             padding: 24px 20px;
             margin: 0 0 20px;
         }
@@ -481,8 +527,8 @@
 
         .cx-manifesto {
             background: var(--card-bg);
-            border: 2px solid #222;
-            border-radius: 16px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
             padding: 22px 20px;
             margin-bottom: 16px;
         }
@@ -499,7 +545,7 @@
         }
 
         .cx-disclaimer {
-            text-align: center;
+            text-align: left;
             color: #8f8f8f;
             font-size: 0.8rem;
             margin-bottom: 14px;
@@ -520,7 +566,7 @@
             text-decoration: none;
             font-weight: 700;
             font-size: 0.9rem;
-            border-radius: 50px;
+            border-radius: 2px;
             padding: 10px 16px;
         }
 
@@ -531,7 +577,7 @@
         .cx-method {
             background: #111;
             border: 1px solid #333;
-            border-radius: 16px;
+            border-radius: 2px;
             padding: 20px;
             margin-bottom: 28px;
         }
@@ -554,7 +600,7 @@
         }
 
         .cx-culture-label {
-            text-align: center;
+            text-align: left;
             color: #888;
             font-size: 0.8rem;
             letter-spacing: 1px;
@@ -582,8 +628,8 @@
         .token-card {
             flex: 0 0 100%;
             background: var(--card-bg);
-            border: 2px solid #222;
-            border-radius: 16px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             text-align: left;
@@ -625,7 +671,7 @@
             color: var(--gold);
             border: 1px solid var(--gold);
             padding: 4px 12px;
-            border-radius: 50px;
+            border-radius: 2px;
             font-weight: 700;
             font-size: 0.75rem;
             letter-spacing: 1px;
@@ -693,7 +739,7 @@
             background: linear-gradient(135deg, #006847 0%, #00B377 100%);
             color: var(--white);
             border: none;
-            border-radius: 10px;
+            border-radius: 2px;
             font-weight: 700;
             font-size: 0.95rem;
             cursor: pointer;
@@ -712,7 +758,7 @@
 
         .token-share {
             border: 1px solid var(--green);
-            border-radius: 10px;
+            border-radius: 2px;
             background: transparent;
             color: var(--white);
             font-weight: 700;
@@ -752,6 +798,7 @@
     </style>
 </head>
 <body>
+    <div class="term-bar"><span>CHINGONAMICS // OCCUPANCY DESK</span><span>ISSUE 00 · 101 · EST</span></div>
 
     <div class="bg-glow"></div>
 
