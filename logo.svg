@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">Chingonamics logo</title>
-  <desc id="desc">A bold geometric logo mark for Chingonamics.</desc>
-  <rect width="512" height="512" rx="96" fill="#07090d"/>
-  <circle cx="256" cy="256" r="170" fill="none" stroke="#e8a317" stroke-width="24"/>
-  <path d="M156 188h68l32 56 32-56h68l-66 108 72 116h-70l-36-64-36 64h-70l72-116-66-108Z" fill="#e8a317"/>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="favTitle">
+  <title id="favTitle">Chingonamics</title>
+  <rect width="512" height="512" rx="96" fill="#1c1917"/>
+  <circle cx="256" cy="256" r="176" fill="none" stroke="#fafaf9" stroke-width="10"/>
+  <text x="256" y="308" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="400" font-size="176" fill="#fafaf9">C</text>
 </svg>

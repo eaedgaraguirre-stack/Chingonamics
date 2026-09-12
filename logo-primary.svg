@@ -1,0 +1,6 @@
+<svg width="1200" height="260" viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle">
+  <title id="logoTitle">Chingonamics</title>
+  <circle cx="140" cy="130" r="82" fill="none" stroke="#fafaf9" stroke-width="3"/>
+  <text x="140" y="152" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="300" font-size="62" fill="#fafaf9">C</text>
+  <text x="270" y="150" font-family="Helvetica Neue, Arial, sans-serif" font-weight="200" font-size="60" letter-spacing="28" fill="#fafaf9">CHINGONAMICS</text>
+</svg>
