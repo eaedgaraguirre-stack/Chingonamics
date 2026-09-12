@@ -11,10 +11,14 @@
     <meta property="og:url" content="https://chingonamics.com/">
     <meta property="og:title" content="Chingonamics | We score the plant">
     <meta property="og:description" content="Independent presence-weighted Index of SoCal productive vitality. Issue 00 / ESTIMATE: 101.">
-    <meta property="og:image" content="https://chingonamics.com/logo.svg">
+    <meta property="og:image" content="https://chingonamics.com/og-hero.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Chingonamics | We score the plant">
     <meta name="twitter:description" content="Independent presence-weighted Index of SoCal plants, ports, and aerospace. Issue 00: 101.">
+    <meta name="twitter:image" content="https://chingonamics.com/og-hero.jpg">
     <title>Chingonamics | Occupancy desk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,6 +86,24 @@
             background: var(--panel);
             padding: 28px 24px;
             margin-bottom: 18px;
+        }
+
+        .mast-logo {
+            display: block;
+            width: min(520px, 100%);
+            height: auto;
+            margin-bottom: 14px;
+        }
+        .mast h1.visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
         .mast h1 {
             font-size: clamp(1.6rem, 5vw, 2.4rem);
@@ -256,7 +278,7 @@
     <div class="term-bar"><span>Chingonamics // Occupancy desk</span><span>Issue 00 · 101 · EST</span></div>
 
     <div class="hero">
-        <video id="hero-video" autoplay muted loop playsinline preload="auto">
+        <video id="hero-video" autoplay muted loop playsinline preload="auto" poster="/og-hero.jpg">
             <source src="_users_b7c824c7-4b1c-403b-93b7-0ec6eff1df3c_generated_1dcdd775-d1e6-4fd2-87b4-7889c7bdf202_generated_video.mp4" type="video/mp4">
         </video>
         <div class="hero-fade"></div>
@@ -265,7 +287,8 @@
 
     <div class="wrap">
         <header class="mast">
-            <h1>CHINGONAMICS</h1>
+            <h1 class="visually-hidden">Chingonamics</h1>
+            <img class="mast-logo" src="/logo-primary.svg" width="1200" height="260" alt="Chingonamics">
             <p class="tag">We score the plant. Not the letterhead.</p>
             <p class="lede">Independent, presence-weighted Index of the docks, tool rooms, and aerospace lots that keep Southern California productive. Headquarters can live in Texas. If the floor is here, it counts here.</p>
             <div class="cta">
