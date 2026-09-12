@@ -149,8 +149,6 @@
         .cx-issue-score {
             font-family: "IBM Plex Mono", ui-monospace, monospace;
             font-size: clamp(3.2rem, 12vw, 5.2rem);
-            font-weight: 500;
-            color: var(--amber);
             line-height: 1;
             margin: 6px 0 8px;
         }
@@ -230,23 +228,44 @@
                 background: linear-gradient(180deg, #2a1608, var(--bg));
             }
         }
+
+        .hero-sound {
+            position: absolute;
+            right: 16px;
+            bottom: 18px;
+            z-index: 2;
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 10px 14px;
+            border: 1px solid var(--line);
+            background: rgba(7, 9, 13, 0.82);
+            color: var(--amber);
+            cursor: pointer;
+        }
+        .hero-sound:hover, .hero-sound[aria-pressed="true"] {
+            border-color: var(--amber);
+            background: var(--amber-dim);
+        }
     </style>
 </head>
 <body>
     <div class="term-bar"><span>Chingonamics // Occupancy desk</span><span>Issue 00 · 101 · EST</span></div>
 
     <div class="hero">
-        <video autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <video id="hero-video" autoplay muted loop playsinline preload="auto">
             <source src="_users_b7c824c7-4b1c-403b-93b7-0ec6eff1df3c_generated_1dcdd775-d1e6-4fd2-87b4-7889c7bdf202_generated_video.mp4" type="video/mp4">
         </video>
         <div class="hero-fade"></div>
+        <button type="button" class="hero-sound" id="hero-sound" aria-pressed="false" aria-label="Turn sound on">Sound off</button>
     </div>
 
     <div class="wrap">
         <header class="mast">
             <h1>CHINGONAMICS</h1>
             <p class="tag">We score the plant. Not the letterhead.</p>
-            <p class="lede">Independent, presence-weighted Index of the docks, tool rooms, and aerospace lots that keep Southern California productive. Headquarters can live in Texas. If the floor is [...]</p>
+            <p class="lede">Independent, presence-weighted Index of the docks, tool rooms, and aerospace lots that keep Southern California productive. Headquarters can live in Texas. If the floor is here, it counts here.</p>
             <div class="cta">
                 <a class="primary" href="#floor">Send a lot →</a>
                 <a href="#issue-00">Issue 00 · 101</a>
@@ -262,7 +281,7 @@
                 <p class="cx-issue-kicker">Issue 00 / Estimate · 11 September 2026</p>
                 <div class="cx-issue-score">101</div>
                 <p class="cx-issue-base">Base year 2024 = 100. Above 100 = stronger than 2024.</p>
-                <p class="cx-issue-blurb">San Pedro Bay is doing work the payroll will not admit. Manufacturing jobs in the Los Angeles–Long Beach–Anaheim MSA are still below 2024 even while [...]</p>
+                <p class="cx-issue-blurb">San Pedro Bay is doing work the payroll will not admit. Manufacturing jobs in the Los Angeles–Long Beach–Anaheim MSA are still below 2024 even while the docks keep moving boxes.</p>
                 <div class="cx-gauges">
                     <div class="cx-gauge"><span>Aerospace &amp; Space</span><strong>108</strong></div>
                     <div class="cx-gauge"><span>Plants</span><strong class="down">92</strong></div>
@@ -323,5 +342,29 @@
         <span>&copy; 2026 Chingonamics. Fully independent data source.</span>
         <a href="https://x.com/chingonamics" target="_blank" rel="noopener noreferrer">@chingonamics</a>
     </footer>
+
+<script>
+(function () {
+  var v = document.getElementById('hero-video');
+  var b = document.getElementById('hero-sound');
+  if (!v || !b) return;
+  function setOn(on) {
+    v.muted = !on;
+    if (on) {
+      v.volume = 1;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on');
+    b.textContent = on ? 'Sound on' : 'Sound off';
+  }
+  b.addEventListener('click', function () {
+    setOn(v.muted);
+  });
+  // start muted for autoplay policy; click enables audio
+  setOn(false);
+})();
+</script>
 </body>
 </html>
