@@ -72,6 +72,17 @@
             background: linear-gradient(transparent, var(--bg));
             pointer-events: none;
         }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
         .wrap {
             width: min(920px, calc(100% - 32px));
             margin: 0 auto;
@@ -236,9 +247,10 @@
     <div class="term-bar"><span>Chingonamics // Occupancy desk</span><span>Issue 00 · 101 · EST</span></div>
 
     <div class="hero">
-        <video loop playsinline preload="metadata" controls aria-label="Chingonamics homepage intro video">
+        <video loop playsinline preload="metadata" controls aria-label="Chingonamics homepage intro video" aria-describedby="hero-video-description">
             <source src="_users_b7c824c7-4b1c-403b-93b7-0ec6eff1df3c_generated_1dcdd775-d1e6-4fd2-87b4-7889c7bdf202_generated_video.mp4" type="video/mp4">
         </video>
+        <p id="hero-video-description" class="sr-only">Intro video montage for Chingonamics with audible soundtrack.</p>
         <div class="hero-fade"></div>
     </div>
 
