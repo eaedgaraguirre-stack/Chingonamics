@@ -1,329 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta name="description" content="The Chingonamics Index scores Southern California’s plants, ports, and aerospace floor. Presence-weighted. Independent. Hollywood is not in the number.">
-    <link rel="canonical" href="https://chingonamics.com/">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://chingonamics.com/">
-    <meta property="og:title" content="Chingonamics | We score the plant">
-    <meta property="og:description" content="Independent presence-weighted Index of SoCal productive vitality. Issue 00 / ESTIMATE: 101.">
-    <meta property="og:image" content="https://chingonamics.com/IMG_0325.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Chingonamics | We score the plant">
-    <meta name="twitter:description" content="Independent presence-weighted Index of SoCal plants, ports, and aerospace. Issue 00: 101.">
-    <title>Chingonamics | Occupancy desk</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #07090d;
-            --panel: #0d1218;
-            --line: #243040;
-            --text: #e6edf3;
-            --muted: #8b97a6;
-            --amber: #e8a317;
-            --amber-dim: rgba(232, 163, 23, 0.14);
-            --orange: #ff7a18;
-            --down: #d16b5a;
-            --up: #d4c48a;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { background: var(--bg); color: var(--text); }
-        body {
-            font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-            line-height: 1.5;
-        }
-        .term-bar {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 10px 18px;
-            border-bottom: 1px solid var(--line);
-            font-family: "IBM Plex Mono", ui-monospace, monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--amber);
-            background: #080b10;
-        }
-        .hero {
-            position: relative;
-            width: 100%;
-            background: #000;
-            border-bottom: 1px solid var(--line);
-        }
-        .hero video {
-            display: block;
-            width: 100%;
-            height: auto;
-            max-height: 72vh;
-            object-fit: cover;
-            aspect-ratio: 16 / 9;
-        }
-        .hero-fade {
-            position: absolute;
-            left: 0; right: 0; bottom: 0;
-            height: 28%;
-            background: linear-gradient(transparent, var(--bg));
-            pointer-events: none;
-        }
-        .wrap {
-            width: min(920px, calc(100% - 32px));
-            margin: 0 auto;
-            padding: 28px 0 64px;
-        }
-        .mast {
-            border: 1px solid var(--line);
-            background: var(--panel);
-            padding: 28px 24px;
-            margin-bottom: 18px;
-        }
-        .mast h1 {
-            font-size: clamp(1.6rem, 5vw, 2.4rem);
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            margin-bottom: 8px;
-        }
-        .mast .tag {
-            font-family: "IBM Plex Mono", ui-monospace, monospace;
-            color: var(--amber);
-            font-size: 0.82rem;
-            letter-spacing: 0.04em;
-            margin-bottom: 14px;
-        }
-        .mast .lede {
-            color: var(--muted);
-            font-size: 1.02rem;
-            max-width: 62ch;
-        }
-        .cta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .cta a {
-            font-family: "IBM Plex Mono", ui-monospace, monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding: 12px 16px;
-            border: 1px solid var(--line);
-            color: var(--text);
-        }
-        .cta a.primary {
-            border-color: var(--amber);
-            color: var(--amber);
-            background: var(--amber-dim);
-        }
-        .cta a:hover { border-color: var(--amber); color: var(--amber); }
-
-        .cx-kicker, .cx-floor-kicker, .cx-issue-kicker {
-            font-family: "IBM Plex Mono", ui-monospace, monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--amber);
-            margin-bottom: 8px;
-        }
-        #cx-heading {
-            font-size: 1.35rem;
-            margin-bottom: 6px;
-        }
-        .cx-lede {
-            color: var(--muted);
-            margin-bottom: 18px;
-        }
-        .cx-issue {
-            border: 1px solid var(--amber);
-            background: #0c1016;
-            padding: 22px 20px;
-            margin-bottom: 18px;
-        }
-        .cx-issue-score {
-            font-family: "IBM Plex Mono", ui-monospace, monospace;
-            font-size: clamp(3.2rem, 12vw, 5.2rem);
-            font-weight: 500;
-            color: var(--amber);
-            line-height: 1;
-            margin: 6px 0 8px;
-        }
-        .cx-issue-base, .cx-issue-note {
-            color: var(--muted);
-            font-size: 0.82rem;
-        }
-        .cx-issue-blurb {
-            margin: 14px 0 16px;
-            color: #c9d3dd;
-            font-size: 0.95rem;
-        }
-        .cx-gauges {
-            display: grid;
-            gap: 6px;
-        }
-        .cx-gauge {
-            display: flex;
-            justify-content: space-between;
-            border: 1px solid var(--line);
-            padding: 9px 12px;
-            background: #090c11;
-            font-size: 0.9rem;
-        }
-        .cx-gauge strong {
-            font-family: "IBM Plex Mono", ui-monospace, monospace;
-            color: var(--amber);
-        }
-        .cx-gauge strong.down { color: var(--down); }
-
-        .cx-floor, .cx-manifesto, .cx-method {
-            border: 1px solid var(--line);
-            background: var(--panel);
-            padding: 22px 20px;
-            margin-bottom: 16px;
-        }
-        .cx-floor h3, .cx-method h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-        .cx-floor p, .cx-manifesto p, .cx-method p, .cx-floor li, .cx-method li {
-            color: #c5ced8;
-            margin-bottom: 10px;
-        }
-        .cx-floor ol, .cx-method ul { margin: 8px 0 14px 18px; }
-        a { color: var(--amber); }
-        .cx-disclaimer {
-            color: var(--muted);
-            font-size: 0.78rem;
-            margin: 8px 0 16px;
-        }
-        .cx-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
-        .cx-actions a {
-            font-family: "IBM Plex Mono", ui-monospace, monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            text-decoration: none;
-            border: 1px solid var(--line);
-            padding: 10px 14px;
-            color: var(--text);
-        }
-        footer {
-            border-top: 1px solid var(--line);
-            padding: 16px 18px 28px;
-            color: var(--muted);
-            font-size: 0.78rem;
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .hero video { display: none; }
-            .hero {
-                min-height: 180px;
-                background: linear-gradient(180deg, #2a1608, var(--bg));
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Caminos y Presidios — a historical atlas of the northern Mexican presidio system (1822–1846).">
+  <meta name="theme-color" content="#2b2620">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Caminos y Presidios">
+  <meta property="og:description" content="The northern line, 1822–1846. Same posts. Different logistics.">
+  <meta property="og:image" content="hero-poster.jpg">
+  <!-- TODO: replace canonical URL once production domain is final -->
+  <link rel="canonical" href="https://example.github.io/caminos-y-presidios/">
+  <title>Caminos y Presidios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="term-bar"><span>Chingonamics // Occupancy desk</span><span>Issue 00 · 101 · EST</span></div>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-    <div class="hero">
-        <video autoplay loop playsinline webkit-playsinline preload="auto" poster="hero-poster.jpg" aria-hidden="true">
-            <source src="hero.mp4" type="video/mp4">
-        </video>
-        <div class="hero-fade"></div>
+  <header class="site-header" id="top">
+    <div class="site-title-wrap">
+      <p class="site-kicker">Pilot atlas</p>
+      <h1 class="site-title">Caminos y Presidios</h1>
     </div>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#hero" class="is-active">Hero</a>
+      <a href="#thesis">Thesis</a>
+      <a href="#atlas">Atlas</a>
+      <a href="#presidios">Presidios</a>
+      <a href="#watch">Watch</a>
+      <a href="#tours-shop">Tours &amp; Shop</a>
+    </nav>
+  </header>
 
-    <div class="wrap">
-        <header class="mast">
-            <h1>CHINGONAMICS</h1>
-            <p class="tag">We score the plant. Not the letterhead.</p>
-            <p class="lede">Independent, presence-weighted Index of the docks, tool rooms, and aerospace lots that keep Southern California productive. Headquarters can live in Texas. If the floor is in Hawthorne, it counts here. Hollywood does not.</p>
-            <div class="cta">
-                <a class="primary" href="#floor">Send a lot →</a>
-                <a href="#issue-00">Issue 00 · 101</a>
+  <main id="main">
+    <section class="panel hero reveal" id="hero" aria-labelledby="hero-title">
+      <div class="hero-terrain" aria-hidden="true">
+        <svg viewBox="0 0 1200 800" role="presentation" focusable="false">
+          <defs>
+            <pattern id="terrain-hatch" width="32" height="32" patternUnits="userSpaceOnUse" patternTransform="rotate(18)">
+              <path d="M0 16H32" stroke="currentColor" stroke-width="0.9" opacity="0.12" />
+              <path d="M0 28H32" stroke="currentColor" stroke-width="0.6" opacity="0.08" />
+            </pattern>
+          </defs>
+          <rect width="1200" height="800" fill="url(#terrain-hatch)"></rect>
+          <path d="M60,640 C220,540 310,590 430,510 C550,430 680,470 810,390 C930,316 1020,340 1140,260"
+                stroke="currentColor" stroke-width="2" fill="none" opacity="0.35" />
+          <path d="M80,460 C260,420 380,360 520,380 C690,405 830,290 1090,320"
+                stroke="currentColor" stroke-width="1.4" fill="none" opacity="0.25" />
+          <path d="M140,705 C290,658 420,640 600,598 C760,560 900,540 1110,488"
+                stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.2" />
+        </svg>
+      </div>
+      <div class="hero-content">
+        <p class="subtitle">The northern line, 1822-1846</p>
+        <h2 id="hero-title">Caminos y Presidios</h2>
+        <p class="tagline">Same posts. Different logistics.</p>
+        <a href="#atlas" class="cta-btn">Explore the Atlas</a>
+      </div>
+    </section>
+
+    <section class="panel reveal" id="thesis" aria-labelledby="thesis-title">
+      <div class="neatline">
+        <h2 id="thesis-title">Thesis</h2>
+        <p>
+          Northern Mexico in 1846 was not empty. It was a military grid collapsing in place.
+          After independence in 1821, an arc of presidios from Alta California to Texas remained on the map,
+          but payroll, munitions, remounts, and roads thinned as Apache and Comanche pressure intensified.
+        </p>
+        <p>
+          Caminos mattered as much as forts: El Camino Real de Tierra Adentro and the Sonora–Tucson line were
+          logistical lifelines that determined whether presidios could function as more than symbols.
+        </p>
+        <blockquote>
+          By 1841 the minister of war described what remained as "immense deserts." The map survived. The supply did not.
+          — Almonte, <cite>Memoria del Ministro de Guerra</cite>, January 1841.
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="panel reveal" id="atlas" aria-labelledby="atlas-title">
+      <div class="neatline">
+        <h2 id="atlas-title">Atlas</h2>
+        <p class="atlas-lede">Drag or use keyboard arrows on the year slider to compare 1822 and 1846.</p>
+
+        <div class="slider-wrap">
+          <label for="year-slider" class="slider-label">Year blend: <output id="year-output" for="year-slider">1822</output></label>
+          <input id="year-slider" type="range" min="0" max="100" value="0" aria-describedby="slider-help" aria-label="Slide from 1822 to 1846">
+          <p id="slider-help" class="small-note">0 = 1822 and 100 = 1846. Intermediate positions show transitional decay.</p>
+        </div>
+
+        <div class="map-card" role="img" aria-label="Stylized northern frontier map with presidio status markers">
+          <svg id="atlas-map" viewBox="0 0 1200 700" aria-hidden="true" focusable="false">
+            <path class="route" d="M130,500 C280,450 360,410 500,380 C650,350 780,300 910,270" />
+            <path class="route" d="M170,560 C300,520 460,470 650,440 C790,420 960,380 1100,330" />
+            <path class="ridge" d="M100,230 C260,170 360,210 490,160 C650,100 860,130 1050,90" />
+            <path class="ridge" d="M100,640 C260,590 390,560 580,550 C760,540 930,510 1120,470" />
+            <!-- TODO: replace with full cartographic SVG geometry for the atlas -->
+            <g id="presidio-layer"></g>
+          </svg>
+        </div>
+
+        <ul class="legend" aria-label="Status legend">
+          <li><span class="dot operational"></span>Operational</li>
+          <li><span class="dot hollow"></span>Hollow</li>
+          <li><span class="dot abandoned"></span>Abandoned</li>
+          <li><span class="dot unresolved"></span>UNRESOLVED</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel reveal" id="presidios" aria-labelledby="presidios-title">
+      <div class="neatline">
+        <h2 id="presidios-title">Presidios</h2>
+        <p class="small-note">Twelve sample nodes from the northern grid. Rendered from the atlas dataset.</p>
+        <div id="presidio-cards" class="card-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="panel reveal" id="watch" aria-labelledby="watch-title">
+      <div class="neatline">
+        <h2 id="watch-title">Watch</h2>
+        <!-- TODO: replace this framed placeholder with real documentary trailer embed -->
+        <figure class="watch-frame" role="img" aria-label="Placeholder frame for documentary trailer">
+          <div class="play-overlay" aria-hidden="true">▶</div>
+          <figcaption>Presidio vignettes — documentary series, trailer coming.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="panel reveal" id="tours-shop" aria-labelledby="tours-shop-title">
+      <div class="neatline">
+        <h2 id="tours-shop-title">Tours &amp; Shop</h2>
+        <div class="split-grid">
+          <article class="split-card">
+            <h3>Presidio Trail tours</h3>
+            <p>Tucson to Janos to Casas Grandes. Join the interest list.</p>
+            <!-- TODO: wire this form action to a production backend endpoint -->
+            <form action="https://example.com/interest-list" method="post" class="interest-form">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+              <button type="submit">Join the list</button>
+            </form>
+          </article>
+          <article class="split-card">
+            <h3>Pilot print 01</h3>
+            <p>Limited print run coming soon.</p>
+            <!-- TODO: replace mock card with live product card and checkout link -->
+            <div class="print-mock" aria-label="Mock print preview">
+              <p class="print-title">Pilot print 01</p>
+              <p class="print-note">Archival map plate</p>
             </div>
-        </header>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        <section class="cx-index" id="chingonomics-index" aria-labelledby="cx-heading">
-            <span class="cx-kicker">Independent scoreboard</span>
-            <h2 id="cx-heading">The Chingonamics Index</h2>
-            <p class="cx-lede">The official story sells the premiere. We score the plant.</p>
+  <footer class="site-footer">
+    <p>Caminos y Presidios · Pilot site 01 · not a complete atlas.</p>
+    <a href="#top">Back to top</a>
+  </footer>
 
-            <div class="cx-issue" id="issue-00">
-                <p class="cx-issue-kicker">Issue 00 / Estimate · 11 September 2026</p>
-                <div class="cx-issue-score">101</div>
-                <p class="cx-issue-base">Base year 2024 = 100. Above 100 = stronger than 2024.</p>
-                <p class="cx-issue-blurb">San Pedro Bay is doing work the payroll will not admit. Manufacturing jobs in the Los Angeles–Long Beach–Anaheim MSA are still below 2024 even while the South Bay aerospace floor stays tight and Long Beach just posted its best August on record. Hollywood is not in this number.</p>
-                <div class="cx-gauges">
-                    <div class="cx-gauge"><span>Aerospace &amp; Space</span><strong>108</strong></div>
-                    <div class="cx-gauge"><span>Plants</span><strong class="down">92</strong></div>
-                    <div class="cx-gauge"><span>Ports &amp; Movement</span><strong>106</strong></div>
-                    <div class="cx-gauge"><span>Building the Basin</span><strong>97</strong></div>
-                    <div class="cx-gauge"><span>Quiet Giants</span><strong>101</strong></div>
-                </div>
-                <p class="cx-issue-note">Not a live ticker. Next print when QCEW Q2 2026 and September TEUs are both public. Independent Chingonamics work product.</p>
-            </div>
-
-            <div class="cx-floor" id="floor">
-                <p class="cx-floor-kicker">The product under the score</p>
-                <h3>The floor file</h3>
-                <p>The Index is the billboard. The asset is who is actually on the lot — city, not “L.A.”; a floor fact; a public link. Letterhead does not count. Costume does not count.</p>
-                <p>Work a plant, port, aero lot, or shop? Send four lines to <a href="https://x.com/chingonamics" target="_blank" rel="noopener noreferrer">@chingonamics</a> or <a href="mailto:lots@chingonamics.com">lots@chingonamics.com</a>:</p>
-                <ol>
-                    <li>Firm</li>
-                    <li>City (Hawthorne, San Pedro, Palmdale — not “LA”)</li>
-                    <li>What’s on the lot</li>
-                    <li>Public source (permit, award, job listing, gate photo)</li>
-                </ol>
-                <p>Confirmed rows feed Issue 01. No source = not data. We credit the handle. We do not sell rankings of the book.</p>
-            </div>
-
-            <div class="cx-manifesto">
-                <p>Southern California did not become worth crossing a border for because a studio had a good quarter. It became that because there were docks, assembly lines, tool rooms, ports, and shops that turned wages into houses, tuition, and a second generation that could aim higher than the first.</p>
-                <p>Hollywood is real. It is also a costume. Underneath it is one of the country’s largest manufacturing workforces, the busiest container complex in North America, and a South Bay aerospace spine that is hiring again. That is the body. This Index exists so the costume is not mistaken for the body.</p>
-                <p>Chingonamics is proud of how <i>chingón</i> this place is — specifically for the children of immigrants who were told the only L.A. that counted was the one on a screen. The Index is the receipt.</p>
-            </div>
-            <p class="cx-disclaimer">Independent Chingonamics work product. Not official content of the Los Angeles Area Chamber of Commerce or any public agency.</p>
-            <div class="cx-actions">
-                <a href="#floor">Send a lot</a>
-                <a href="#method">Read the method</a>
-                <a href="https://x.com/chingonamics" target="_blank" rel="noopener noreferrer">@chingonamics</a>
-            </div>
-
-            <div class="cx-method" id="method">
-                <h3>Method, short version</h3>
-                <p>Presence-weighted. Not headquarters-weighted. SpaceX can live in Texas on paper and still be a Hawthorne company in this book. Tips without a public source stay out of the file.</p>
-                <p>Composite, base year 2024 = 100:</p>
-                <ul>
-                    <li>30% Jobs that pay — aero/defense, manufacturing, trade/transport, construction</li>
-                    <li>25% Metal and dirt — industrial absorption, plant permits, announced capex</li>
-                    <li>25% Contracts and capital — federal awards by place of performance, port TEUs, public hard-tech rounds</li>
-                    <li>20% The ladder — establishment births and apprenticeships when a public series exists</li>
-                </ul>
-                <p>Gauges: Aerospace &amp; Space · Plants · Ports &amp; Movement · Building the Basin · Quiet Giants. Entertainment sits on a satellite strip called The Costume. It is never the cover.</p>
-                <p>Above 100 = stronger than 2024. Below 90 = the costume is doing more work than the body. First live score ships as Issue 00 / ESTIMATE.</p>
-
-            <div class="cx-method" id="method-addendum">
-                <h3>Method addendum</h3>
-                <p><strong>Lead-time.</strong> Presence on the lot (permit, award place-of-performance, a plant that still lists the city) moves before the payroll print. Issue 00 is an estimate because QCEW and TEUs lag the floor.</p>
-                <p><strong>POP_HQ_SKEW.</strong> Score the city on the floor. If headquarters is Texas and the Falcon line is Hawthorne, Hawthorne is the row. Letterhead does not relocate the plant.</p>
-                <p><strong>Freemium boundary.</strong> The Index and the four-field tip path stay free. A paid presence lookup does not ship until the book holds on the order of 200 confirmed rows. No Terminal panes and no API before Issue 01.</p>
-            </div>
-        </section>
-    </div>
-
-    <footer>
-        <span>&copy; 2026 Chingonamics. Independent index. Not Chamber content.</span>
-        <a href="https://x.com/chingonamics" target="_blank" rel="noopener noreferrer">@chingonamics</a>
-    </footer>
+  <script src="script.js" defer></script>
 </body>
 </html>
